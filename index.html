@@ -152,6 +152,78 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-forword-and-redirect" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/28/forword-and-redirect/">请求转发与重定向的理解</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/28/forword-and-redirect/" class="archive-article-date">
+  	<time datetime="2018-12-28T08:37:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="1-forward（转发）"><a href="#1-forward（转发）" class="headerlink" title="1.forward（转发）"></a><strong>1.forward（转发）</strong></h4><p>是服务器请求资源,服务器直接访问目标地址的URL,把那个URL的响应内容读取过来,然后把这些内容再发给浏览器.浏览器根本不知道服务器发送的内容从哪里来的,因为这个跳转过程实在服务器实现的，并不是在客户端实现的所以客户端并不知道这个跳转动作，所以它的地址栏还是原来的地址.</p>
+<h4 id="2-redirect（重定向）"><a href="#2-redirect（重定向）" class="headerlink" title="2.redirect（重定向）"></a>2.<strong>redirect（重定向）</strong></h4><p>是服务端根据逻辑,发送一个状态码,告诉浏览器重新去请求那个地址.所以地址栏显示的是新的URL.</p>
+<h4 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h4><p><strong>转发是服务器行为，重定向是客户端行为。</strong></p>
+<p>1 )请求转发只能将请求转发给同一个WEB应用中的组件，而重定向还可以重新定向到同一站点不同应用程序中的资源，甚至可以定向到一绝对的URL。   </p>
+<p>2)重定向可以看见目标页面的URL，转发只能看见第一次访问的页面URL，以后的工作都是有服  务器来做的。  </p>
+<p>3) 请求响应调用者和被调用者之间共享相同的request对象和response对象，重定向调用者和被调用者属于两个独立访问请求和响应过程。</p>
+<p>4)请求重定向：不加/是相对于本servlet所在请求的目录，加“/”表示端口号后面的根目录  http：//localhost:8080/</p>
+<p>请求转发：不加/是相对于本servlet，加/表示web应用的根目录http：//localhost:8080/Test/</p>
+<h5 id="———path”-“路径———"><a href="#———path”-“路径———" class="headerlink" title="———path”/“路径———"></a>———path”/“路径———</h5><p> —–只要是需要通过浏览器发送请求的地方（比如html代码，sendRedirect方法等）“/“一般代表虚拟主机根目录，即相当于端口号之后的“/”，例：http：//localhost:8080/</p>
+<p>——服务器程序内部跳转，“/”一般代表本web应用的根目录，如请求转发。例：http：//localhost:8080/Test/</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/28/forword-and-redirect/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-charset" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
