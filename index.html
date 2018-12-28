@@ -152,19 +152,92 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-9330" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-charset" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/12/9330/">change themes</a>
+      <a class="article-title" href="/2018/12/28/charset/">charset</a>
     </h1>
   
 
         
-        <a href="/2018/10/12/9330/" class="archive-article-date">
+        <a href="/2018/12/28/charset/" class="archive-article-date">
+  	<time datetime="2018-12-28T02:00:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="servlet的乱码问题"><a href="#servlet的乱码问题" class="headerlink" title="servlet的乱码问题"></a>servlet的乱码问题</h2><h3 id="1-post请求"><a href="#1-post请求" class="headerlink" title="1.post请求"></a>1.post请求</h3><h5 id="1）html、jsp等页面编码格式"><a href="#1）html、jsp等页面编码格式" class="headerlink" title="1）html、jsp等页面编码格式"></a>1）html、jsp等页面编码格式</h5><p>​               pageEncoding=”UTF-8”</p>
+<h5 id="2）设置请求信息的的解码格式"><a href="#2）设置请求信息的的解码格式" class="headerlink" title="2）设置请求信息的的解码格式"></a>2）设置请求信息的的解码格式</h5><p>​             req.setCharacterEncoding(“utf-8”);</p>
+<h5 id="3）设置响应信息的编码格式"><a href="#3）设置响应信息的编码格式" class="headerlink" title="3）设置响应信息的编码格式"></a>3）设置响应信息的编码格式</h5><p>​        resp.setCharacterEncoding(“utf-8”); </p>
+<h5 id="4）设置浏览器的解码格式"><a href="#4）设置浏览器的解码格式" class="headerlink" title="4）设置浏览器的解码格式"></a>4）设置浏览器的解码格式</h5><p>​             resp.setContentType(“text/html;charset=utf-8”);</p>
+<h3 id="3-get请求"><a href="#3-get请求" class="headerlink" title="3.get请求"></a>3.get请求</h3><p>​        同post请求所有的要求再加上  1)</p>
+<h5 id="1）-配置tomcat的server-xml"><a href="#1）-配置tomcat的server-xml" class="headerlink" title="1）  配置tomcat的server.xml"></a>1）  配置tomcat的server.xml</h5><p>​          在 &lt;Connector connectionTimeout=”20000” port=”8080”  </p>
+<p>​                          protocol=”HTTP/1.1” redirectPort=”8443”/&gt;</p>
+<p>​                      中加入 useBodyEncodingForURI=”true”</p>
+<p>​            加入后&lt;Connector connectionTimeout=”20000” port=”8080”  </p>
+<p>​                          protocol=”HTTP/1.1” redirectPort=”8443”    </p>
+<p>​                           useBodyEncodingForURI=”true”/&gt;</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/28/charset/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-change themes" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/12/change themes/">change themes</a>
+    </h1>
+  
+
+        
+        <a href="/2018/10/12/change themes/" class="archive-article-date">
   	<time datetime="2018-10-12T10:51:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-12</time>
 </a>
         
@@ -191,7 +264,7 @@ git clone https://github.com/litten/hexo-theme-yilia.git yilia
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/12/9330/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/10/12/change themes/">展开全文 >></a>
         </p>
       
 
