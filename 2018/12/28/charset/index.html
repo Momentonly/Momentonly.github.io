@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Momentonly">
 <meta property="og:description" content="1.post请求1）html、jsp等页面编码格式1pageEncoding=&amp;quot;UTF-8&amp;quot; 2）设置请求信息的的解码格式1req.setCharacterEncoding(&amp;quot;utf-8&amp;quot;); 3）设置响应信息的编码格式1resp.setCharacterEncoding(&amp;quot;utf-8&amp;quot;); 4）设置浏览器的解码格式1resp.setCo">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-28T02:39:38.079Z">
+<meta property="og:updated_time" content="2018-12-29T02:45:33.045Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="servlet的乱码问题">
 <meta name="twitter:description" content="1.post请求1）html、jsp等页面编码格式1pageEncoding=&amp;quot;UTF-8&amp;quot; 2）设置请求信息的的解码格式1req.setCharacterEncoding(&amp;quot;utf-8&amp;quot;); 3）设置响应信息的编码格式1resp.setCharacterEncoding(&amp;quot;utf-8&amp;quot;); 4）设置浏览器的解码格式1resp.setCo">
@@ -178,7 +178,7 @@
 <h5 id="2）设置请求信息的的解码格式"><a href="#2）设置请求信息的的解码格式" class="headerlink" title="2）设置请求信息的的解码格式"></a>2）设置请求信息的的解码格式</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">req.setCharacterEncoding(&quot;utf-8&quot;);</span><br></pre></td></tr></table></figure>
 <h5 id="3）设置响应信息的编码格式"><a href="#3）设置响应信息的编码格式" class="headerlink" title="3）设置响应信息的编码格式"></a>3）设置响应信息的编码格式</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">resp.setCharacterEncoding(&quot;utf-8&quot;);</span><br></pre></td></tr></table></figure>
 <h5 id="4）设置浏览器的解码格式"><a href="#4）设置浏览器的解码格式" class="headerlink" title="4）设置浏览器的解码格式"></a>4）设置浏览器的解码格式</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">resp.setContentType(&quot;text/html;charset=utf-8&quot;);</span><br></pre></td></tr></table></figure>
-<h3 id="3-get请求"><a href="#3-get请求" class="headerlink" title="3.get请求"></a>3.get请求</h3><p>​        同post请求所有要求再加上  1)</p>
+<h3 id="2-get请求"><a href="#2-get请求" class="headerlink" title="2.get请求"></a>2.get请求</h3><p>​        同post请求所有要求再加上  1)</p>
 <h5 id="1）-配置tomcat的server-xml"><a href="#1）-配置tomcat的server-xml" class="headerlink" title="1）  配置tomcat的server.xml"></a>1）  配置tomcat的server.xml</h5><p>​          在 &lt;Connector connectionTimeout=”20000” port=”8080”  </p>
 <p>​                          protocol=”HTTP/1.1” redirectPort=”8443”/&gt;</p>
 <p>​                      中加入 useBodyEncodingForURI=”true”</p>
