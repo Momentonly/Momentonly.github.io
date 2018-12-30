@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018/10 | Momentonly</title>
+  <title>请求转发与重定向的理解 | Momentonly</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Momentonly">
-<meta property="og:url" content="http://yoursite.com/archives/2018/10/index.html">
+  <meta name="description" content="1.forward（转发）是服务器请求资源,服务器直接访问目标地址的URL,把那个URL的响应内容读取过来,然后把这些内容再发给浏览器.浏览器根本不知道服务器发送的内容从哪里来的,因为这个跳转过程实在服务器实现的，并不是在客户端实现的所以客户端并不知道这个跳转动作，所以它的地址栏还是原来的地址. 2.redirect（重定向）是服务端根据逻辑,发送一个状态码,告诉浏览器重新去请求那个地址.所以地址">
+<meta property="og:type" content="article">
+<meta property="og:title" content="请求转发与重定向的理解">
+<meta property="og:url" content="http://yoursite.com/2018/12/28/请求转发与重定向/index.html">
 <meta property="og:site_name" content="Momentonly">
+<meta property="og:description" content="1.forward（转发）是服务器请求资源,服务器直接访问目标地址的URL,把那个URL的响应内容读取过来,然后把这些内容再发给浏览器.浏览器根本不知道服务器发送的内容从哪里来的,因为这个跳转过程实在服务器实现的，并不是在客户端实现的所以客户端并不知道这个跳转动作，所以它的地址栏还是原来的地址. 2.redirect（重定向）是服务端根据逻辑,发送一个状态码,告诉浏览器重新去请求那个地址.所以地址">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-28T08:48:22.846Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Momentonly">
+<meta name="twitter:title" content="请求转发与重定向的理解">
+<meta name="twitter:description" content="1.forward（转发）是服务器请求资源,服务器直接访问目标地址的URL,把那个URL的响应内容读取过来,然后把这些内容再发给浏览器.浏览器根本不知道服务器发送的内容从哪里来的,因为这个跳转过程实在服务器实现的，并不是在客户端实现的所以客户端并不知道这个跳转动作，所以它的地址栏还是原来的地址. 2.redirect（重定向）是服务端根据逻辑,发送一个状态码,告诉浏览器重新去请求那个地址.所以地址">
   
     <link rel="alternative" href="/atom.xml" title="Momentonly" type="application/atom+xml">
   
@@ -150,76 +154,174 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-请求转发与重定向" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/12/修改主题/" class="archive-article-date">
-  	<time datetime="2018-10-12T10:51:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-12</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/12/修改主题/">change themes</a>
+    <h1 class="article-title" itemprop="name">
+      请求转发与重定向的理解
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/11/hello-world/" class="archive-article-date">
-  	<time datetime="2018-10-11T14:51:01.594Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-11</time>
+        
+        <a href="/2018/12/28/请求转发与重定向/" class="archive-article-date">
+  	<time datetime="2018-12-28T08:37:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/11/hello-world/">Hello World</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="1-forward（转发）"><a href="#1-forward（转发）" class="headerlink" title="1.forward（转发）"></a><strong>1.forward（转发）</strong></h4><p>是服务器请求资源,服务器直接访问目标地址的URL,把那个URL的响应内容读取过来,然后把这些内容再发给浏览器.浏览器根本不知道服务器发送的内容从哪里来的,因为这个跳转过程实在服务器实现的，并不是在客户端实现的所以客户端并不知道这个跳转动作，所以它的地址栏还是原来的地址.</p>
+<h4 id="2-redirect（重定向）"><a href="#2-redirect（重定向）" class="headerlink" title="2.redirect（重定向）"></a>2.<strong>redirect（重定向）</strong></h4><p>是服务端根据逻辑,发送一个状态码,告诉浏览器重新去请求那个地址.所以地址栏显示的是新的URL.</p>
+<h4 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h4><p><strong>转发是服务器行为，重定向是客户端行为。</strong></p>
+<p>1 )请求转发只能将请求转发给同一个WEB应用中的组件，而重定向还可以重新定向到同一站点不同应用程序中的资源，甚至可以定向到一绝对的URL。   </p>
+<p>2)重定向可以看见目标页面的URL，转发只能看见第一次访问的页面URL，以后的工作都是有服  务器来做的。  </p>
+<p>3) 请求响应调用者和被调用者之间共享相同的request对象和response对象，重定向调用者和被调用者属于两个独立访问请求和响应过程。</p>
+<p>4)请求重定向：不加/是相对于本servlet所在请求的目录，加“/”表示端口号后面的根目录  http：//localhost:8080/</p>
+<p>请求转发：不加/是相对于本servlet，加/表示web应用的根目录http：//localhost:8080/Test/</p>
+<h5 id="———path”-“路径———"><a href="#———path”-“路径———" class="headerlink" title="———path”/“路径———"></a>———path”/“路径———</h5><p> —–只要是需要通过浏览器发送请求的地方（比如html代码，sendRedirect方法等）“/“一般代表虚拟主机根目录，即相当于端口号之后的“/”，例：http：//localhost:8080/</p>
+<p>——服务器程序内部跳转，“/”一般代表本web应用的根目录，如请求转发。例：http：//localhost:8080/Test/</p>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/12/28/请求转发与重定向/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/12/29/对cookie中的中文处理/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          保存和获取cookie中的中文信息
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2018/12/28/sevlet中的乱码/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">servlet的乱码问题</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -242,8 +344,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

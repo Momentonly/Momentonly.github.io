@@ -152,32 +152,35 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-cookie" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-字符串分割split" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/29/cookie/">保存和获取cookie中的中文信息</a>
+      <a class="article-title" href="/2018/12/30/字符串分割split/">split分割字符串的一些特殊分隔符</a>
     </h1>
   
 
         
-        <a href="/2018/12/29/cookie/" class="archive-article-date">
-  	<time datetime="2018-12-29T02:46:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-29</time>
+        <a href="/2018/12/30/字符串分割split/" class="archive-article-date">
+  	<time datetime="2018-12-30T02:49:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-30</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="1-保存cookie"><a href="#1-保存cookie" class="headerlink" title="1.保存cookie"></a>1.保存cookie</h4><p>问题： 出现500错误</p>
-<p>解决：设置字符编码</p>
-<p>Cookie cookie=new Cookie(“test”,<strong><em>URLEncoder.encode</em></strong>(“中文”,”utf-8”));</p>
-<h4 id="2-获取cookie"><a href="#2-获取cookie" class="headerlink" title="2.获取cookie"></a>2.获取cookie</h4><p>   问题：出现乱码</p>
-<p>   解决：设置字符解码</p>
-<p>System.out.println(“cookie:”+cookies[i].getName()+”:”+<strong><em>URLDecoder.decode</em></strong>(cookies[i].getValue()))；</p>
+        <p>1).</p>
+<p>2)|</p>
+<p>3)*</p>
+<p>4)^</p>
+<p>目前发现这几个需要转义的分隔符，需要加双斜杠。</p>
+<p> String[] splittest = address.split(“<strong><em>\\.</em></strong>“); </p>
+<p> String[] splittest = address.split(“\|”); </p>
+<p> String[] splittest = address.split(“<strong>*\**</strong>“); </p>
+<p> String[] splittest = address.split(“\^***”); </p>
 
       
 
@@ -190,7 +193,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/29/cookie/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/30/字符串分割split/">展开全文 >></a>
         </p>
       
 
@@ -220,19 +223,87 @@
 
 
   
-    <article id="post-forword-and-redirect" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-对cookie中的中文处理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/28/forword-and-redirect/">请求转发与重定向的理解</a>
+      <a class="article-title" href="/2018/12/29/对cookie中的中文处理/">保存和获取cookie中的中文信息</a>
     </h1>
   
 
         
-        <a href="/2018/12/28/forword-and-redirect/" class="archive-article-date">
+        <a href="/2018/12/29/对cookie中的中文处理/" class="archive-article-date">
+  	<time datetime="2018-12-29T02:46:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="1-保存cookie"><a href="#1-保存cookie" class="headerlink" title="1.保存cookie"></a>1.保存cookie</h4><p>问题： 出现500错误</p>
+<p>解决：设置字符编码</p>
+<p>Cookie cookie=new Cookie(“test”,<strong><em>URLEncoder.encode</em></strong>(“中文”,”utf-8”));</p>
+<h4 id="2-获取cookie"><a href="#2-获取cookie" class="headerlink" title="2.获取cookie"></a>2.获取cookie</h4><p>   问题：出现乱码</p>
+<p>   解决：设置字符解码</p>
+<p>System.out.println(“cookie:”+cookies[i].getName()+”:”+<strong><em>URLDecoder.decode</em></strong>(cookies[i].getValue()))；</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/29/对cookie中的中文处理/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-请求转发与重定向" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/28/请求转发与重定向/">请求转发与重定向的理解</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/28/请求转发与重定向/" class="archive-article-date">
   	<time datetime="2018-12-28T08:37:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
 </a>
         
@@ -262,7 +333,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/28/forword-and-redirect/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/28/请求转发与重定向/">展开全文 >></a>
         </p>
       
 
@@ -292,19 +363,19 @@
 
 
   
-    <article id="post-charset" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-sevlet中的乱码" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/28/charset/">servlet的乱码问题</a>
+      <a class="article-title" href="/2018/12/28/sevlet中的乱码/">servlet的乱码问题</a>
     </h1>
   
 
         
-        <a href="/2018/12/28/charset/" class="archive-article-date">
+        <a href="/2018/12/28/sevlet中的乱码/" class="archive-article-date">
   	<time datetime="2018-12-28T02:00:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
 </a>
         
@@ -335,7 +406,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/28/charset/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/28/sevlet中的乱码/">展开全文 >></a>
         </p>
       
 
@@ -365,19 +436,19 @@
 
 
   
-    <article id="post-change themes" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-修改主题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/12/change themes/">change themes</a>
+      <a class="article-title" href="/2018/10/12/修改主题/">change themes</a>
     </h1>
   
 
         
-        <a href="/2018/10/12/change themes/" class="archive-article-date">
+        <a href="/2018/10/12/修改主题/" class="archive-article-date">
   	<time datetime="2018-10-12T10:51:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-12</time>
 </a>
         
@@ -404,7 +475,7 @@ git clone https://github.com/litten/hexo-theme-yilia.git yilia
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/12/change themes/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/10/12/修改主题/">展开全文 >></a>
         </p>
       
 
