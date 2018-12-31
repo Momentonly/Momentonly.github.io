@@ -90,6 +90,11 @@
 	<div class="article-content">
 		
 		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-forward（转发）"><span class="toc-number">1.</span> <span class="toc-text">1.forward（转发）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-redirect（重定向）"><span class="toc-number">2.</span> <span class="toc-text">2.redirect（重定向）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#区别："><span class="toc-number">3.</span> <span class="toc-text">区别：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#———path”-“路径———"><span class="toc-number">3.1.</span> <span class="toc-text">———path”/“路径———</span></a></li></ol></li></ol>
+		</div>
+		
 		<h4 id="1-forward（转发）"><a href="#1-forward（转发）" class="headerlink" title="1.forward（转发）"></a><strong>1.forward（转发）</strong></h4><p>是服务器请求资源,服务器直接访问目标地址的URL,把那个URL的响应内容读取过来,然后把这些内容再发给浏览器.浏览器根本不知道服务器发送的内容从哪里来的,因为这个跳转过程实在服务器实现的，并不是在客户端实现的所以客户端并不知道这个跳转动作，所以它的地址栏还是原来的地址.</p>
 <h4 id="2-redirect（重定向）"><a href="#2-redirect（重定向）" class="headerlink" title="2.redirect（重定向）"></a>2.<strong>redirect（重定向）</strong></h4><p>是服务端根据逻辑,发送一个状态码,告诉浏览器重新去请求那个地址.所以地址栏显示的是新的URL.</p>
 <h4 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h4><p><strong>转发是服务器行为，重定向是客户端行为。</strong></p>

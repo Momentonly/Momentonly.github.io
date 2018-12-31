@@ -90,6 +90,11 @@
 	<div class="article-content">
 		
 		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-public-string-split-string-regex"><span class="toc-number">1.</span> <span class="toc-text">1.public string[] split(string regex)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、public-String-split-String-regex-int-limit"><span class="toc-number">2.</span> <span class="toc-text">2、public String[] split(String regex,int limit)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-”-”作为连字符的使用"><span class="toc-number">3.</span> <span class="toc-text">3.”|”作为连字符的使用</span></a></li></ol>
+		</div>
+		
 		<p>  split方法的参数是一个<strong><em>正则表达式</em></strong>，因此遇到<strong><em>正则表达式</em></strong>中的<strong><em>元字符</em></strong>需要进行转义，而<strong><em>java</em></strong>中的<strong><em>特殊字符</em></strong>也需要转义，因此，分隔的字符既是<strong><em>java特殊字符</em></strong>也是<strong><em>元字符</em></strong>就需要<strong><em>二次转义</em></strong>才能正确分割字符串。</p>
 <h4 id="1-public-string-split-string-regex"><a href="#1-public-string-split-string-regex" class="headerlink" title="1.public string[] split(string regex)"></a>1.public string[] split(string regex)</h4><p>这里的参数的名称是 regex ，也就是 regular expression （正则表达式）。这个参数并不是一个简单的分割用的字符，而是一个正则表达式，它对一些特殊的字符可能会出现你预想不到的结果，比如测试下面的代码： </p>
 <p>（1） 用竖线 | 分隔字符串，你将得不到预期的结果 </p>

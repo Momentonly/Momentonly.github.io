@@ -94,6 +94,11 @@ System.out.println">
 	<div class="article-content">
 		
 		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-保存cookie"><span class="toc-number">1.</span> <span class="toc-text">1.保存cookie</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-获取cookie"><span class="toc-number">2.</span> <span class="toc-text">2.获取cookie</span></a></li></ol>
+		</div>
+		
 		<h4 id="1-保存cookie"><a href="#1-保存cookie" class="headerlink" title="1.保存cookie"></a>1.保存cookie</h4><p>问题： 出现500错误</p>
 <p>解决：设置字符编码</p>
 <p>Cookie cookie=new Cookie(“test”,<strong><em>URLEncoder.encode</em></strong>(“中文”,”utf-8”));</p>
