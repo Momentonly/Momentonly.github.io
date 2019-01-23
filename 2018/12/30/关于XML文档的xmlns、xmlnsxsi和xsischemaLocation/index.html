@@ -1,0 +1,508 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>关于XML文档的xmlns、xmlns:xsi和xsi:schemaLocation | Momentonly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Moment Only">
+    
+    <meta name="description" content="摘要： 相信很多人和我一样，在编写Spring或者Maven或者其他需要用到XML文档的程序时，通常都是将这些XML文档头拷贝过来，并没有理解其中元素 （比如xmlns，xmlns:xsi，xsi:schemaLocation）的真正含义，不知道哪些元素是多余的，也不知道为什么要加那些元素。这样 当">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Momentonly" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Momentonly">Momentonly</a></h1>
+				<a class="blog-motto">或有或无，都没什么了吧</a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/tags/设计模式">设计模式</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= 17576509095696061073 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/12/30/关于XML文档的xmlns、xmlnsxsi和xsischemaLocation/" title="关于XML文档的xmlns、xmlns:xsi和xsi:schemaLocation" itemprop="url">关于XML文档的xmlns、xmlns:xsi和xsi:schemaLocation</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2018-12-30T02:49:33.000Z" itemprop="datePublished">2018-12-30</time>
+    更新日期:<time datetime="2019-01-23T15:12:50.388Z" itemprop="dateModified">2019-01-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要xmlns？"><span class="toc-number">1.</span> <span class="toc-text">为什么需要xmlns？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何是用xmlns？"><span class="toc-number">2.</span> <span class="toc-text">如何是用xmlns？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xmlns和xmlns-xsi有什么不同？"><span class="toc-number">3.</span> <span class="toc-text">xmlns和xmlns:xsi有什么不同？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xsi-schemaLocation有何作用？"><span class="toc-number">4.</span> <span class="toc-text">xsi:**schemaLocation有何作用？**</span></a></li></ol>
+		</div>
+		
+		<p><em>摘要：</em> 相信很多人和我一样，在编写Spring或者Maven或者其他需要用到XML文档的程序时，通常都是将这些XML文档头拷贝过来，并没有理解其中元素 （比如xmlns，xmlns:xsi，xsi:schemaLocation）的真正含义，不知道哪些元素是多余的，也不知道为什么要加那些元素。这样 当有时候网…</p>
+<p>相 信很多人和我一样，在编写Spring或者Maven或者其他需要用到XML文档的程序时，通常都是将这些XML文档头拷贝过来，并没有理解其中元素（比 如xmlns，xmlns:xsi，xsi:schemaLocation）的真正含义，不知道哪些元素是多余的，也不知道为什么要加那些元素。这样当有 时候网上Copy的XML头有错的时候自己却不知道怎么下手。我也是这样的，于是今天花了点时间好好的理解了一下这些元素及其用法，现整理与此，在此谢谢 各位前辈的经验，如有总结的不对或者不好的地方，欢迎留言提出各位的宝贵意见。</p>
+<p>话不多说，先来一段Spring的XML样本，相信大家都很眼熟：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`&lt;?``xml` `version``=``&quot;1.0&quot;` `encoding``=``&quot;UTF-8&quot;``?&gt;``&lt;``beans` `xmlns``=``&quot;http://www.springframework.org/schema/beans&quot;``       ``xmlns:xsi``=``&quot;http://www.w3.org/2001/XMLSchema-instance&quot;``       ``xmlns:context``=``&quot;http://www.springframework.org/schema/context&quot;``       ``xmlns:mvc``=``&quot;http://www.springframework.org/schema/mvc&quot;``       ``xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans ``                           ``http://www.springframework.org/schema/beans/spring-beans.xsd``                           ``http://www.springframework.org/schema/context ``                           ``http://www.springframework.org/schema/context/spring-context.xsd``                           ``http://www.springframework.org/schema/mvc``                           ``http://www.springframework.org/schema/mvc/spring-mvc.xsd&quot;&gt;``    ``&lt;``context:component-scan` `base-package``=``&quot;xxx.xxx.controller&quot;` `/&gt;``    ` `    ``&lt;``context:annotation-config``/&gt;``    ``&lt;``mvc:default-servlet-handler``/&gt;``    ``&lt;``mvc:annotation-driven``/&gt;``    ` `    ``&lt;``mvc:resources` `mapping``=``&quot;/images/**&quot;` `location``=``&quot;/images/&quot;` `/&gt;``    ` `    ``&lt;``bean` `id``=``&quot;xxx&quot;` `class``=``&quot;xxx.xxx.xxx.Xxx&quot;``&gt;``        ``&lt;``property` `name``=``&quot;xxx&quot;` `value``=``&quot;xxxx&quot;``/&gt;``    ``&lt;/``bean``&gt;``&lt;/``beans``&gt;`</span><br></pre></td></tr></table></figure>
+<p>​    这 个文档中，根元素<beans>就不用说了，接下来是xmlns。那么什么是xmlns呢？xmlns其实是XML Namespace的缩写，可译为“XML命名空间”，但个人觉得，翻译后的名字反而不好理解，所以我们就叫它为XML Namespace吧。 </beans></p>
+<p>​    </p>
+<h3 id="为什么需要xmlns？"><a href="#为什么需要xmlns？" class="headerlink" title="为什么需要xmlns？"></a>为什么需要xmlns？</h3><p>​    考虑这样两个XML文档：表示HTML表格元素的<table>：</table></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`&lt;``table``&gt;``  ``&lt;``tr``&gt;``    ``&lt;``td``&gt;Apples&lt;/``td``&gt;``    ``&lt;``td``&gt;Bananas&lt;/``td``&gt;``  ``&lt;/``tr``&gt;``&lt;/``table``&gt;`</span><br></pre></td></tr></table></figure>
+<p>​    和描述一张桌子的<table>：</table></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`&lt;``table``&gt;``  ``&lt;``name``&gt;African Coffee Table&lt;/``name``&gt;``  ``&lt;``width``&gt;80&lt;/``width``&gt;``  ``&lt;``length``&gt;120&lt;/``length``&gt;``&lt;/``table``&gt;`</span><br></pre></td></tr></table></figure>
+<p>​    假如这两个 XML 文档被一起使用，由于两个文档都包含带有不同内容和定义的 <table> 元素，就会发生命名冲突。XML 解析器是无法确定如何处理这类冲突。为了解决上述问题，xmlns就产生了。</table></p>
+<p>​    </p>
+<h3 id="如何是用xmlns？"><a href="#如何是用xmlns？" class="headerlink" title="如何是用xmlns？"></a><strong>如何是用xmlns？</strong></h3><p>​    很简单，使用语法： <strong>xmlns:namespace-prefix=”namespaceURI”</strong>。其中namespace-prefix为自定义前缀，只要在这个XML文档中保证前缀不重复即可；namespaceURI是这个前缀对应的XML Namespace的定义。例如，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`xmlns:context=&quot;http://www.springframework.org/schema/context&quot;`</span><br></pre></td></tr></table></figure>
+<p>​    这一句定义了一个<a href="http://www.springframwork.org/schema/context的Namespace（这和Java类中的包的声明很相似），并将其和前缀context绑定。所以上面的Spring" target="_blank" rel="noopener">http://www.springframwork.org/schema/context的Namespace（这和Java类中的包的声明很相似），并将其和前缀context绑定。所以上面的Spring</a> XML文档中会有这么一句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`&lt;``context:component-scan` `base-package``=``&quot;xxx.xxx.controller&quot;` `/&gt;`</span><br></pre></td></tr></table></figure>
+<p>​    这里的<component-scan>元素就来自别名为context的XML Namespace，也就是在<a href="http://www.springframework.org/schema/context中定义的。" target="_blank" rel="noopener">http://www.springframework.org/schema/context中定义的。</a></component-scan></p>
+<p>​    我们还可以将前缀定义为abc：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`xmlns:abc=&quot;namespaceURI&quot;`</span><br></pre></td></tr></table></figure>
+<p>​    这样再使用这个namespaceURI中的元素时，需要以abc为前缀，例如：<a href="abc:xxx/" target="_blank" rel="noopener">abc:xxx/</a>。再拿上面的例子解释怎么使用xmlns：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`&lt;!-- 这里xmlns:h=&quot;url1&quot;表示这个table是用h作为标记，table的写法在url1中定义 --&gt;``&lt;``h:table` `xmlns:h``=``&quot;url1&quot;``&gt;``  ``&lt;``h:tr``&gt;``    ``&lt;``h:td``&gt;Apples&lt;/``h:td``&gt;``    ``&lt;``h:td``&gt;Bananas&lt;/``h:td``&gt;``  ``&lt;/``h:tr``&gt;``&lt;/``h:table``&gt;`</span><br></pre></td></tr></table></figure>
+<p>​    和：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`&lt;!-- 这里xmlns:f=&quot;url2&quot;表示这个table是用f作为标记，table的写法在url2中定义 --&gt;``&lt;``f:table` `xmlns:f``=``&quot;url2&quot;``&gt;``  ``&lt;``f:name``&gt;African Coffee Table&lt;/``f:name``&gt;``  ``&lt;``f:width``&gt;80&lt;/``f:width``&gt;``  ``&lt;``f:length``&gt;120&lt;/``f:length``&gt;``&lt;/``f:table``&gt;`</span><br></pre></td></tr></table></figure>
+<p>​    后者与前者仅仅使用不同前缀，我们为 <table> 标签添加了一个 xmlns 属性，这样就为前缀赋予了一个与某个命名空间相关联的限定名称。此时再把它们放在一起，XML解析器就不会报错了。</table></p>
+<p>​    注意：当xmlns被定义在元素的开始标签中（如这里的&lt;f:table/&gt;）时，所有带有相同前缀的子元素都会与同一个Namespace相关联（即&lt;f:table/&gt;里面的&lt;f:name/&gt;和&lt;f:width/&gt;也会使用url2定义的写法）。</p>
+<p>​    </p>
+<h3 id="xmlns和xmlns-xsi有什么不同？"><a href="#xmlns和xmlns-xsi有什么不同？" class="headerlink" title="xmlns和xmlns:xsi有什么不同？"></a>xmlns和xmlns:xsi有什么不同？</h3><p>​    xmlns表示默认的Namespace。例如Spring XML文档中的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`xmlns=&quot;http://www.springframework.org/schema/beans&quot;`</span><br></pre></td></tr></table></figure>
+<p>​    这一句表示该文档默认的XML Namespace为<a href="http://www.springframwork.org/schema/beans。**对于默认的Namespace中的元素，可以不使用前缀**。例如Spring" target="_blank" rel="noopener">http://www.springframwork.org/schema/beans。**对于默认的Namespace中的元素，可以不使用前缀**。例如Spring</a> XML文档中的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`&lt;``bean` `id``=``&quot;xxx&quot;` `class``=``&quot;xxx.xxx.xxx.Xxx&quot;``&gt;``  ``&lt;``property` `name``=``&quot;xxx&quot;` `value``=``&quot;xxxx&quot;``/&gt;``&lt;/``bean``&gt;`</span><br></pre></td></tr></table></figure>
+<p>​    xmlns:xsi表示使用xsi作为前缀的Namespace，当然前缀xsi需要在文档中声明。</p>
+<h3 id="xsi-schemaLocation有何作用？"><a href="#xsi-schemaLocation有何作用？" class="headerlink" title="xsi:**schemaLocation有何作用？**"></a><strong>xsi:**</strong>schemaLocation有何作用？**</h3><p>​    xsi:schemaLocation属性其实是Namespace为<a href="http://www.w3.org/2001/XMLSchema-instance里的schemaLocation属性，正是因为我们一开始声明了" target="_blank" rel="noopener">http://www.w3.org/2001/XMLSchema-instance里的schemaLocation属性，正是因为我们一开始声明了</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;`</span><br></pre></td></tr></table></figure>
+<p>​    这里才写作xsi:schemaLocation（当然一般都使用这个前缀）。它定义了XML Namespace和对应的 XSD（Xml Schema Definition）文档的位置的关系。它的值由一个或多个URI引用对组成，两个URI之间以空白符分隔（空格和换行均可）。第一个URI是定义的 XML Namespace的值，第二个URI给出Schema文档的位置，Schema处理器将从这个位置读取Schema文档，<strong>该文档的targetNamespace必须与第一个URI相匹配</strong>。例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`xsi:schemaLocation=&quot;http://www.springframework.org/schema/context ``                    ``http://www.springframework.org/schema/context/spring-context.xsd&quot;`</span><br></pre></td></tr></table></figure>
+<p>​    这里表示Namespace为<a href="http://www.springframework.org/schema/context的Schema的位置为[http://www.springframework.org/schema/context/spring-context.xsd](http://www.springframework.org/schema/context/spring-context.xsd?spm=5176.100239.blogcont40353.18.KFHYwA&amp;file=spring-context.xsd)。这里我们可以打开这个Schema的位置，下面是这个文档的开始部分：" target="_blank" rel="noopener">http://www.springframework.org/schema/context的Schema的位置为[http://www.springframework.org/schema/context/spring-context.xsd](http://www.springframework.org/schema/context/spring-context.xsd?spm=5176.100239.blogcont40353.18.KFHYwA&amp;file=spring-context.xsd)。这里我们可以打开这个Schema的位置，下面是这个文档的开始部分：</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`&lt;``xsd:schema` `xmlns``=``&quot;http://www.springframework.org/schema/context&quot;``            ``xmlns:xsd``=``&quot;http://www.w3.org/2001/XMLSchema&quot;``            ``xmlns:beans``=``&quot;http://www.springframework.org/schema/beans&quot;``            ``xmlns:tool``=``&quot;http://www.springframework.org/schema/tool&quot;``            ` `            ``&lt;!-- 这里的targetNamespace和上方xsi:schemaLocation中的第一个URI匹配 --&gt;` `            ``targetNamespace=&quot;http://www.springframework.org/schema/context&quot;``            ``elementFormDefault=&quot;qualified&quot;``            ``attributeFormDefault=&quot;unqualified&quot;&gt;`</span><br></pre></td></tr></table></figure>
+<p>​        xmlns=”<a href="http://www.w3.org/2001/XMLSchema&quot;" target="_blank" rel="noopener">http://www.w3.org/2001/XMLSchema&quot;</a></p>
+<p>​            表示当前xml文件是一个schema约束文件（这个属性的值是确定的，不能改变，这个就是一个标志）</p>
+<p>targetNamespace=”<a href="http://www.springframework.org/schema/context&quot;" target="_blank" rel="noopener">http://www.springframework.org/schema/context&quot;</a></p>
+<p>​         定义schema地址，被约束文件可以通过这个地址引入使用</p>
+<p>　xmlns:xsi=”<a href="http://www.w3.org/2001/XMLSchema-instance&quot;" target="_blank" rel="noopener">http://www.w3.org/2001/XMLSchema-instance&quot;</a></p>
+<p>　　　　- 表示这是一个被约束的xml文件（标志）</p>
+<p>　　　　- :xsi  这个是别名，为了区分下面的xmlsn属性</p>
+<p>　　xmlns=”<a href="http://www.springframework.org/schema/context&quot;" target="_blank" rel="noopener">http://www.springframework.org/schema/context&quot;</a></p>
+<p>　　　　- 这个就是引入schema文件，这个值就是schema的地址（包名）</p>
+<p>　　xsi:schemaLocation=”<a href="http://www.example.org/1" target="_blank" rel="noopener">http://www.example.org/1</a> 1.xsd”</p>
+<p>　　　　- schema地址 空格 schema路径</p>
+<p>​    有了上面的说明后，再去理解开始的Spring XML文档，一定会有不一样的感觉！   </p>
+<p>​    最后再次感谢各位前辈的宝贵经验。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/XML/">XML</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/XML/">XML</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2018/12/30/关于XML文档的xmlns、xmlnsxsi和xsischemaLocation/" data-title="关于XML文档的xmlns、xmlns:xsi和xsi:schemaLocation | Momentonly" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/12/30/字符串分割split/" title="String.split()分割字符串用法">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  String.split()分割字符串用法</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/12/29/对cookie中的中文处理/"  title="保存和获取cookie中的中文信息">
+ <strong>NEXT:</strong><br/> 
+ <span>保存和获取cookie中的中文信息
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="关于XML文档的xmlns、xmlns:xsi和xsi:schemaLocation" data-thread-key="关于XML文档的xmlns、xmlnsxsi和xsischemaLocation" data-author-key="Moment Only" data-url="http://yoursite.com/post/关于XML文档的xmlns、xmlnsxsi和xsischemaLocation"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要xmlns？"><span class="toc-number">1.</span> <span class="toc-text">为什么需要xmlns？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何是用xmlns？"><span class="toc-number">2.</span> <span class="toc-text">如何是用xmlns？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xmlns和xmlns-xsi有什么不同？"><span class="toc-number">3.</span> <span class="toc-text">xmlns和xmlns:xsi有什么不同？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xsi-schemaLocation有何作用？"><span class="toc-number">4.</span> <span class="toc-text">xsi:**schemaLocation有何作用？**</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+		
+			<li><a href="/categories/Java/" title="Java">Java<sup>2</sup></a></li>
+		
+			<li><a href="/categories/Web开发/" title="Web开发">Web开发<sup>3</sup></a></li>
+		
+			<li><a href="/categories/XML/" title="XML">XML<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Web/" title="Web">Web<sup>3</sup></a></li>
+		
+			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/乱码/" title="乱码">乱码<sup>2</sup></a></li>
+		
+			<li><a href="/tags/配置/" title="配置">配置<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Web/" style="font-size: 16.67px;">Web</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/乱码/" style="font-size: 13.33px;">乱码</a> <a href="/tags/配置/" style="font-size: 10px;">配置</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2019 
+		
+		<a href="http://yoursite.com" target="_blank" title="Moment Only">Moment Only</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:""};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '', '');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+
