@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/2019/02/17/javaIO%E6%B5%81%E4%B8%AD%E7%9A%84InputStream%E4%B8%AD%E7%9A%84read()%E6%96%B9%E6%B3%95%E8%BF%94%E5%9B%9Eint/</loc>
+    <lastmod>2019-02-17T07:13:35.549Z</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/2019/01/22/%E5%85%B3%E4%BA%8EXML%E6%96%87%E6%A1%A3%E7%9A%84xmlns%E3%80%81xmlnsxsi%E5%92%8CxsischemaLocation/</loc>
     <lastmod>2019-02-16T07:29:10.351Z</lastmod>
   </url>  <url>
