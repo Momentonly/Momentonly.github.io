@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[title]]></title>
+    <url>%2F2019%2F03%2F03%2Fjava%E7%9A%84Package%2F</url>
+    <content type="text"><![CDATA[Java的Package没有包含关系 例如： com.szxy和com.szxy.test import com.szxy.*，则只能用com.szxy目录下的类 import com.szxy.test.*,则只能用com.szxy.test目录下的类]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[带标签的break和continue]]></title>
     <url>%2F2019%2F03%2F02%2F%E5%B8%A6%E6%A0%87%E7%AD%BE%E7%9A%84break%E5%92%8Ccontinue%2F</url>
     <content type="text"><![CDATA[1.不带标签的break和continue break：跳出当前的循环 continue:跳出本次循环 2.带标签的break和continuebreak label:跳出到label，并且不再执行该循环。即跳出label标签下的所有循环 12345678label: for(int i = 0; i &lt; 10; i++) &#123; for(int j = 0; j &lt; 10; j++) &#123; if(i == 5) &#123; break label; &#125; System.out.println(i + "\t" + j); &#125; &#125; continue label:跳出到label,继续执行该label标签后的循环。 12345678label: for(int i = 0; i &lt; 10; i++) &#123; for(int j = 0; j &lt; 10; j++) &#123; if(i == 5) &#123; continue label; &#125; System.out.println(i + "\t" + j); &#125; &#125;]]></content>
