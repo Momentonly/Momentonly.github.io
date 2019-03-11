@@ -108,14 +108,14 @@ import com.szxy.test.*,则只能用com.szxy.test目录下的类</p>
 
   <section class="post" itemscope itemprop="blogPost">
   
-    <a href="/2019/02/24/Java 内部类中使用局部变量必须是final/" title="Java 内部类中使用局部变量必须是final" itemprop="url">
+    <a href="/2019/02/24/Java 内部类中使用局部变量必须是final(jdk1.8之前)/" title="Java 内部类中使用局部变量必须是final(jdk1.8之前)" itemprop="url">
   
       <time datetime="2019-02-24T10:22:33.000Z" itemprop="datePublished">2019-02-24</time>
-    <h1 itemprop="name">Java 内部类中使用局部变量必须是final</h1>
+    <h1 itemprop="name">Java 内部类中使用局部变量必须是final(jdk1.8之前)</h1>
     
      
-           <p itemprop="description" >在java中， 方法的内部类可以访问方法中的局部变量，但必须用final修饰才能访问。原因：1.当方法被调用运行完毕之后，局部变量就已消亡了。但内部类对象可能还存在， 直到没有被引用时才会消亡。此时就会出现一种情况，就是内部类要访问一个不存在的局部变量。
-2.解决这一问题的办法就</p>
+           <p itemprop="description" >注：jdk1.8新特性，Java 内部类中使用局部变量可以不用final修饰
+在java中， 方法的内部类可以访问方法中的局部变量，但必须用final修饰才能访问。原因：1.当方法被调用运行完毕之后，局部变量就已消亡了。但内部类对象可能还存在， 直到没有被引用时才会消亡。此时就会</p>
         
     
   </a>
