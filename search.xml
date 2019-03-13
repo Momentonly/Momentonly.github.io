@@ -13,7 +13,7 @@
   </entry>
   <entry>
     <title><![CDATA[带标签的break和continue]]></title>
-    <url>%2F2019%2F03%2F02%2F%E5%B8%A6%E6%A0%87%E7%AD%BE%E7%9A%84break%E5%92%8Ccontinue%2F</url>
+    <url>%2F2019%2F03%2F02%2FJAVA%2F%E5%B8%A6%E6%A0%87%E7%AD%BE%E7%9A%84break%E5%92%8Ccontinue%2F</url>
     <content type="text"><![CDATA[1.不带标签的break和continue break：跳出当前的循环 continue:跳出本次循环 2.带标签的break和continuebreak label:跳出到label，并且不再执行该循环。即跳出label标签下的所有循环 12345678label: for(int i = 0; i &lt; 10; i++) &#123; for(int j = 0; j &lt; 10; j++) &#123; if(i == 5) &#123; break label; &#125; System.out.println(i + "\t" + j); &#125; &#125; continue label:跳出到label,继续执行该label标签后的循环。 12345678label: for(int i = 0; i &lt; 10; i++) &#123; for(int j = 0; j &lt; 10; j++) &#123; if(i == 5) &#123; continue label; &#125; System.out.println(i + "\t" + j); &#125; &#125;]]></content>
       <categories>
         <category>Java</category>
@@ -35,13 +35,13 @@
   </entry>
   <entry>
     <title><![CDATA[性能测试工具locust]]></title>
-    <url>%2F2019%2F02%2F17%2F%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7--locust%2F</url>
+    <url>%2F2019%2F02%2F17%2FTools%2F%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7--locust%2F</url>
     <content type="text"><![CDATA[An open source load testing tool. 一个开源性能测试工具。 define user behaviour with python code, and swarm your system with millions of simultaneous users. 使用Python代码来定义用户行为。用它可以模拟百万计的并发用户访问你的系统。 1.安装Python2.安装Locustpip install locust 3.安装成功，CMD敲入命令验证。​ locust –help 4.创建load_test.py文件，通过Python编写性能测试脚本。123456789101112from locust import HttpLocust, TaskSet, taskclass UserBehavior(TaskSet): @task(1) def indesx(self): self.client.get("/")class WebsiteUser(HttpLocust): task_set = UserBehavior min_wait = 3000 max_wait = 6000 创建UserBehavior()类继承TaskSet类，为用户行为类。 ​ 创建index() 方法表示一个行为。用@task() 装饰该方法为一个任务。1表示一个Locust实例被挑选执行的权重，数值越大，执行频率越高。在当前UserBehavior()行为下只有一个index()任务，所以，这里的权重设置为几，并无影响。 WebsiteUser()类用于设置性能测试。 task_set ：指向一个定义了的用户行为类。 min_wait ：用户执行任务之间等待时间的下界，单位：毫秒。 max_wait ：用户执行任务之间等待时间的上界，单位：毫秒。 5.命令行切换到性能测试脚本所在的目录，启动性能测试：1locust -f load_test.py --host=https://www.baidu.com ​ load_test.py 为测试脚本，https://www.baidu.com 为测试的网站。 ​ 打开浏览器访问：http://127.0.0.1:8089或者http://localhost:8089 ps:在pycharm中运行脚本 123if __name__ == '__main__':import osos.system("locust -f load_test.py --host=https://www.baidu.com")]]></content>
       <categories>
-        <category>tools</category>
+        <category>Tools</category>
       </categories>
       <tags>
-        <tag>tools</tag>
+        <tag>Tools</tag>
       </tags>
   </entry>
   <entry>
@@ -68,10 +68,10 @@
   </entry>
   <entry>
     <title><![CDATA[关于XML文档的xmlns、xmlns:xsi和xsi:schemaLocation]]></title>
-    <url>%2F2019%2F01%2F22%2F%E5%85%B3%E4%BA%8EXML%E6%96%87%E6%A1%A3%E7%9A%84xmlns%E3%80%81xmlnsxsi%E5%92%8CxsischemaLocation%2F</url>
+    <url>%2F2019%2F01%2F22%2FJava%20Web%2F%E5%85%B3%E4%BA%8EXML%E6%96%87%E6%A1%A3%E7%9A%84xmlns%E3%80%81xmlnsxsi%E5%92%8CxsischemaLocation%2F</url>
     <content type="text"><![CDATA[摘要： 相信很多人和我一样，在编写Spring或者Maven或者其他需要用到XML文档的程序时，通常都是将这些XML文档头拷贝过来，并没有理解其中元素 （比如xmlns，xmlns:xsi，xsi:schemaLocation）的真正含义，不知道哪些元素是多余的，也不知道为什么要加那些元素。相信很多人和我一样，在编写Spring或者Maven或者其他需要用到XML文档的程序时，通常都是将这些XML文档头拷贝过来，并没有理解其中元素（比 如xmlns，xmlns:xsi，xsi:schemaLocation）的真正含义，不知道哪些元素是多余的，也不知道为什么要加那些元素。这样当有 时候网上Copy的XML头有错的时候自己却不知道怎么下手。我也是这样的，于是今天花了点时间好好的理解了一下这些元素及其用法，现整理与此，在此谢谢 各位前辈的经验，如有总结的不对或者不好的地方，欢迎留言提出各位的宝贵意见。 话不多说，先来一段Spring的XML样本，相信大家都很眼熟： 12345678910111213141516171819202122&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd"&gt; &lt;context:component-scan base-package="xxx.xxx.controller" /&gt; &lt;context:annotation-config/&gt; &lt;mvc:default-servlet-handler/&gt; &lt;mvc:annotation-driven/&gt; &lt;mvc:resources mapping="/images/**" location="/images/" /&gt; &lt;bean id="xxx" class="xxx.xxx.xxx.Xxx"&gt; &lt;property name="xxx" value="xxxx"/&gt; &lt;/bean&gt;&lt;/beans&gt; ​ 这 个文档中，根元素就不用说了，接下来是xmlns。那么什么是xmlns呢？xmlns其实是XML Namespace的缩写，可译为“XML命名空间”，但个人觉得，翻译后的名字反而不好理解，所以我们就叫它为XML Namespace吧。 ​ 为什么需要xmlns？​ 考虑这样两个XML文档：表示HTML表格元素的： 123456&lt;table&gt; &lt;tr&gt; &lt;td&gt;Apples&lt;/td&gt; &lt;td&gt;Bananas&lt;/td&gt; &lt;/tr&gt;&lt;/table&gt; ​ 和描述一张桌子的： 12345&lt;table&gt; &lt;name&gt;African Coffee Table&lt;/name&gt; &lt;width&gt;80&lt;/width&gt; &lt;length&gt;120&lt;/length&gt;&lt;/table&gt; ​ 假如这两个 XML 文档被一起使用，由于两个文档都包含带有不同内容和定义的 元素，就会发生命名冲突。XML 解析器是无法确定如何处理这类冲突。为了解决上述问题，xmlns就产生了。 ​ 如何是用xmlns？​ 很简单，使用语法： xmlns:namespace-prefix=”namespaceURI”。其中namespace-prefix为自定义前缀，只要在这个XML文档中保证前缀不重复即可；namespaceURI是这个前缀对应的XML Namespace的定义。例如， 1xmlns:context=&quot;http://www.springframework.org/schema/context&quot; ​ 这一句定义了一个http://www.springframwork.org/schema/context的Namespace（这和Java类中的包的声明很相似），并将其和前缀context绑定。所以上面的Spring XML文档中会有这么一句： 1&lt;context:component-scan base-package=&quot;xxx.xxx.controller&quot;/&gt; ​ 这里的元素就来自别名为context的XML Namespace，也就是在http://www.springframework.org/schema/context中定义的。 ​ 我们还可以将前缀定义为abc： 1xmlns:abc=&quot;namespaceURI&quot; ​ 这样再使用这个namespaceURI中的元素时，需要以abc为前缀，例如：abc:xxx/。再拿上面的例子解释怎么使用xmlns： 123456&lt;!-- 这里xmlns:h=&quot;url1&quot;表示这个table是用h作为标记，table的写法在url1中定义 --&gt;&lt;h:table xmlns:h=&quot;url1&quot;&gt; &lt;h:tr&gt; &lt;h:td&gt;Apples&lt;/h:td&gt; &lt;h:td&gt;Bananas&lt;/h:td&gt; &lt;/h:tr&gt;&lt;/h:table&gt; ​ 和： 12345&lt;!-- 这里xmlns:f=&quot;url2&quot;表示这个table是用f作为标记，table的写法在url2中定义 --&gt;&lt;f:table xmlns:f=&quot;url2&quot;&gt; &lt;f:name&gt;African Coffee Table&lt;/f:name&gt; &lt;f:width&gt;80&lt;/f:width&gt; &lt;f:length&gt;120&lt;/f:length&gt;&lt;/f:table&gt; ​ 后者与前者仅仅使用不同前缀，我们为 标签添加了一个 xmlns 属性，这样就为前缀赋予了一个与某个命名空间相关联的限定名称。此时再把它们放在一起，XML解析器就不会报错了。 ​ 注意：当xmlns被定义在元素的开始标签中（如这里的&lt;f:table/&gt;）时，所有带有相同前缀的子元素都会与同一个Namespace相关联（即&lt;f:table/&gt;里面的&lt;f:name/&gt;和&lt;f:width/&gt;也会使用url2定义的写法）。 ​ xmlns和xmlns:xsi有什么不同？​ xmlns表示默认的Namespace。例如Spring XML文档中的 1xmlns=&quot;http://www.springframework.org/schema/beans&quot; ​ 这一句表示该文档默认的XML Namespace为http://www.springframwork.org/schema/beans。**对于默认的Namespace中的元素，可以不使用前缀**。例如Spring XML文档中的 123&lt;bean id=&quot;xxx&quot; class=&quot;xxx.xxx.xxx.Xxx&quot;&gt; &lt;property name=&quot;xxx&quot; value=&quot;xxxx&quot;/&gt;&lt;/bean&gt; ​ xmlns:xsi表示使用xsi作为前缀的Namespace，当然前缀xsi需要在文档中声明。 xsi:**schemaLocation有何作用？**​ xsi:schemaLocation属性其实是Namespace为http://www.w3.org/2001/XMLSchema-instance里的schemaLocation属性，正是因为我们一开始声明了 1xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; ​ 这里才写作xsi:schemaLocation（当然一般都使用这个前缀）。它定义了XML Namespace和对应的 XSD（Xml Schema Definition）文档的位置的关系。它的值由一个或多个URI引用对组成，两个URI之间以空白符分隔（空格和换行均可）。第一个URI是定义的 XML Namespace的值，第二个URI给出Schema文档的位置，Schema处理器将从这个位置读取Schema文档，该文档的targetNamespace必须与第一个URI相匹配。例如： 12xsi:schemaLocation=&quot;http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd&quot; ​ 这里表示Namespace为http://www.springframework.org/schema/context的Schema的位置为[http://www.springframework.org/schema/context/spring-context.xsd](http://www.springframework.org/schema/context/spring-context.xsd?spm=5176.100239.blogcont40353.18.KFHYwA&amp;file=spring-context.xsd)。这里我们可以打开这个Schema的位置，下面是这个文档的开始部分： 12345678&lt;xsd:schema xmlns=&quot;http://www.springframework.org/schema/context&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:beans=&quot;http://www.springframework.org/schema/beans&quot; xmlns:tool=&quot;http://www.springframework.org/schema/tool&quot; &lt;!-- 这里的targetNamespace和上方xsi:schemaLocation中的第一个URI匹配 --&gt; targetNamespace=&quot;http://www.springframework.org/schema/context&quot; elementFormDefault=&quot;qualified&quot; attributeFormDefault=&quot;unqualified&quot;&gt; ​ xmlns=”http://www.w3.org/2001/XMLSchema&quot; ​ 表示当前xml文件是一个schema约束文件（这个属性的值是确定的，不能改变，这个就是一个标志） targetNamespace=”http://www.springframework.org/schema/context&quot; ​ 定义schema地址，被约束文件可以通过这个地址引入使用 xmlns:xsi=”http://www.w3.org/2001/XMLSchema-instance&quot; - 表示这是一个被约束的xml文件（标志） - :xsi 这个是别名，为了区分下面的xmlsn属性 xmlns=”http://www.springframework.org/schema/context&quot; - 这个就是引入schema文件，这个值就是schema的地址（包名） xsi:schemaLocation=”http://www.example.org/1 1.xsd” - schema地址 空格 schema路径 ​ 有了上面的说明后，再去理解开始的Spring XML文档，一定会有不一样的感觉！ ​ 最后再次感谢各位前辈的宝贵经验。]]></content>
       <categories>
-        <category>XML</category>
+        <category>JavaWeb</category>
       </categories>
       <tags>
         <tag>XML</tag>
@@ -95,7 +95,7 @@
   </entry>
   <entry>
     <title><![CDATA[String.split()分割字符串用法]]></title>
-    <url>%2F2018%2F12%2F30%2F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%86%E5%89%B2split%2F</url>
+    <url>%2F2018%2F12%2F30%2FJAVA%2F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%86%E5%89%B2split%2F</url>
     <content type="text"><![CDATA[split方法的参数是一个正则表达式，因此遇到正则表达式中的元字符需要进行转义，而java中的特殊字符也需要转义，因此，分隔的字符既是java特殊字符也是元字符就需要二次转义才能正确分割字符串。 1.public string[] split(string regex)这里的参数的名称是 regex ，也就是 regular expression （正则表达式）。这个参数并不是一个简单的分割用的字符，而是一个正则表达式，它对一些特殊的字符可能会出现你预想不到的结果，比如测试下面的代码： （1） 用竖线 | 分隔字符串，你将得不到预期的结果 ​ String[] aa = “aaa|bbb|ccc”.split(“|”); //String[] aa = “aaa|bbb|ccc”.split(“\\|”); 这样才能得到正确的结果 for (int i = 0 ; i &lt;aa.length ; i++ ) { System.out.println(“–”+aa); } （2）用竖 * 分隔字符串运行将抛出java.util.regex.PatternSyntaxException异常，用加号 + 也是如此。 ​ String[] aa = “aaabbbccc”.split(“*“); //String[] aa = “aaa|bbb|ccc”.split(“\\*”); 这样才能得到正确的结果 for (int i = 0 ; i &lt;aa.length ; i++ ) { System.out.println(“–”+aa);} （3）显然，+ 不是有效的模式匹配规则表达式，用”\\“ “\\+”转义后即可得到正确的结果。 （4） “|” 分隔串时虽然能够执行，但是却不是预期的目的，”\\|”转义后即可得到正确的结果。 （5）还有如果想在串中使用”\“字符，则也需要转义.首先要表达”aaaa\bbbb”这个串就应该用”aaaa\\bbbb”,如果要分隔就应该这样才能得到正确结果： String[] aa = “aaa\\bbb\\bccc”.split(“\\\\“); （6） 还有就是点号”.”，也要首先转义才能得到正确的结果。 2、public String[] split(String regex,int limit)​ 根据匹配给定的正则表达式来拆分此字符串。 此方法返回的数组包含此字符串的每个子字符串，这些子字符串由另一个匹配给定的表达式的子字符串终止或由字符串结束来终止。数组中的子字符串按它们在此字符串中的顺序排列。如果表达式不匹配输入的任何部分，则结果数组只具有一个元素，即此字符串。 3.”|”作为连字符的使用如果在一个字符串中有多个分隔符，可以用”|作为连字符，比如：”acount=? and uu =? or n=?”,把三个都分隔出来，可以用 “acount=? and uu =? or n=?”.split(“and|or”);]]></content>
       <categories>
         <category>Java</category>
@@ -106,48 +106,48 @@
   </entry>
   <entry>
     <title><![CDATA[保存和获取cookie中的中文信息]]></title>
-    <url>%2F2018%2F12%2F29%2F%E5%AF%B9cookie%E4%B8%AD%E7%9A%84%E4%B8%AD%E6%96%87%E5%A4%84%E7%90%86%2F</url>
+    <url>%2F2018%2F12%2F29%2FJava%20Web%2F%E5%AF%B9cookie%E4%B8%AD%E7%9A%84%E4%B8%AD%E6%96%87%E5%A4%84%E7%90%86%2F</url>
     <content type="text"><![CDATA[1.保存cookie问题： 出现500错误 解决：设置字符编码 Cookie cookie=new Cookie(“test”,URLEncoder.encode(“中文”,”utf-8”)); 2.获取cookie 问题：出现乱码 解决：设置字符解码 System.out.println(“cookie:”+cookies[i].getName()+”:”+URLDecoder.decode(cookies[i].getValue()))；]]></content>
       <categories>
-        <category>Web开发</category>
+        <category>JavaWeb</category>
       </categories>
       <tags>
         <tag>乱码</tag>
-        <tag>Web</tag>
+        <tag>JavaWeb</tag>
       </tags>
   </entry>
   <entry>
     <title><![CDATA[请求转发与重定向的理解]]></title>
-    <url>%2F2018%2F12%2F28%2F%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91%2F</url>
+    <url>%2F2018%2F12%2F28%2FJava%20Web%2F%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91%2F</url>
     <content type="text"><![CDATA[1.forward（转发）是服务器请求资源,服务器直接访问目标地址的URL,把那个URL的响应内容读取过来,然后把这些内容再发给浏览器.浏览器根本不知道服务器发送的内容从哪里来的,因为这个跳转过程实在服务器实现的，并不是在客户端实现的所以客户端并不知道这个跳转动作，所以它的地址栏还是原来的地址. 2.redirect（重定向）是服务端根据逻辑,发送一个状态码,告诉浏览器重新去请求那个地址.所以地址栏显示的是新的URL. 区别：转发是服务器行为，重定向是客户端行为。 1 )请求转发只能将请求转发给同一个WEB应用中的组件，而重定向还可以重新定向到同一站点不同应用程序中的资源，甚至可以定向到一绝对的URL。 2)重定向可以看见目标页面的URL，转发只能看见第一次访问的页面URL，以后的工作都是有服 务器来做的。 3) 请求响应调用者和被调用者之间共享相同的request对象和response对象，重定向调用者和被调用者属于两个独立访问请求和响应过程。 4)请求重定向：不加/是相对于本servlet所在请求的目录，加“/”表示端口号后面的根目录 http：//localhost:8080/ 请求转发：不加/是相对于本servlet，加/表示web应用的根目录http：//localhost:8080/Test/ ———path”/“路径——— —–只要是需要通过浏览器发送请求的地方（比如html代码，sendRedirect方法等）“/“一般代表虚拟主机根目录，即相当于端口号之后的“/”，例：http：//localhost:8080/ ——服务器程序内部跳转，“/”一般代表本web应用的根目录，如请求转发。例：http：//localhost:8080/Test/]]></content>
       <categories>
-        <category>Web开发</category>
+        <category>JavaWeb</category>
       </categories>
       <tags>
-        <tag>Web</tag>
+        <tag>JavaWeb</tag>
       </tags>
   </entry>
   <entry>
     <title><![CDATA[servlet的乱码问题]]></title>
-    <url>%2F2018%2F12%2F28%2Fsevlet%E4%B8%AD%E7%9A%84%E4%B9%B1%E7%A0%81%2F</url>
+    <url>%2F2018%2F12%2F28%2FJava%20Web%2Fsevlet%E4%B8%AD%E7%9A%84%E4%B9%B1%E7%A0%81%2F</url>
     <content type="text"><![CDATA[1.post请求1）html、jsp等页面编码格式1pageEncoding=&quot;UTF-8&quot; 2）设置请求信息的的解码格式1req.setCharacterEncoding(&quot;utf-8&quot;); 3）设置响应信息的编码格式1resp.setCharacterEncoding(&quot;utf-8&quot;); 4）设置浏览器的解码格式1resp.setContentType(&quot;text/html;charset=utf-8&quot;); 2.get请求​ 同post请求所有要求再加上 1) 1） 配置tomcat的server.xml​ 在 &lt;Connector connectionTimeout=”20000” port=”8080” ​ protocol=”HTTP/1.1” redirectPort=”8443”/&gt; ​ 中加入 useBodyEncodingForURI=”true” ​ 加入后&lt;Connector connectionTimeout=”20000” port=”8080” ​ protocol=”HTTP/1.1” redirectPort=”8443” ​ useBodyEncodingForURI=”true”/&gt;]]></content>
       <categories>
-        <category>Web开发</category>
+        <category>JavaWeb</category>
       </categories>
       <tags>
         <tag>乱码</tag>
-        <tag>Web</tag>
+        <tag>JavaWeb</tag>
       </tags>
   </entry>
   <entry>
     <title><![CDATA[change themes]]></title>
-    <url>%2F2018%2F10%2F12%2F%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98%2F</url>
+    <url>%2F2018%2F10%2F12%2FTools%2F%E4%BF%AE%E6%94%B9Hexo%E4%B8%BB%E9%A2%98%2F</url>
     <content type="text"><![CDATA[1.获取主题cd themes 再将yilia主题clone至themes文件夹中 git clone https://github.com/litten/hexo-theme-yilia.git yilia 2.配置：修改hexo根目录下的_config.yml theme:yilia 3.更新:12cd themes/yiliagit pull 4.发布12hexo cleanhexo d -g]]></content>
       <categories>
-        <category>Hexo</category>
+        <category>Tools</category>
       </categories>
       <tags>
-        <tag>配置</tag>
+        <tag>theme</tag>
       </tags>
   </entry>
   <entry>
