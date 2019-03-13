@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title><![CDATA[java的Package]]></title>
-    <url>%2F2019%2F03%2F03%2Fjava%E7%9A%84Package%2F</url>
+    <url>%2F2019%2F03%2F03%2FJAVA%2Fjava%E7%9A%84Package%2F</url>
     <content type="text"><![CDATA[Java的Package没有包含关系 例如： com.szxy和com.szxy.test import com.szxy.*，则只能用com.szxy目录下的类 import com.szxy.test.*,则只能用com.szxy.test目录下的类]]></content>
       <categories>
         <category>Java</category>
@@ -24,19 +24,8 @@
   </entry>
   <entry>
     <title><![CDATA[Java 内部类中使用局部变量必须是final]]></title>
-    <url>%2F2019%2F02%2F24%2FJava%20%E5%86%85%E9%83%A8%E7%B1%BB%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E5%BF%85%E9%A1%BB%E6%98%AFfinal(jdk1.8%E4%B9%8B%E5%89%8D)%2F</url>
+    <url>%2F2019%2F02%2F24%2FJAVA%2FJava%20%E5%86%85%E9%83%A8%E7%B1%BB%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E5%BF%85%E9%A1%BB%E6%98%AFfinal(jdk1.8%E4%B9%8B%E5%89%8D)%2F</url>
     <content type="text"><![CDATA[注：jdk1.8新特性，Java 内部类中使用局部变量可以不用final修饰 在java中， 方法的内部类可以访问方法中的局部变量，但必须用final修饰才能访问。原因：1.当方法被调用运行完毕之后，局部变量就已消亡了。但内部类对象可能还存在， 直到没有被引用时才会消亡。此时就会出现一种情况，就是内部类要访问一个不存在的局部变量。 2.解决这一问题的办法就是使用final修饰局部变量，通过将final局部变量”复制”一份,复制品直接作为方法内部类中的数据成员，这事方法内部类访问的其实是这个局部变量的复制品！ 而且，由于被final修饰的变量赋值后不能再修改，所以就保证了复制品与原始变量的一致。 3.原因二的功能能实现的原因是：Java采用了一种copy local variable(复制局部变量)的方式来实现，也就是说把定义为final的局部变量拷贝过来用，而引用的也可以拿过来用，只是不能重新赋值。从而造成了可以access local variable(访问局部变量)的假象，而这个时候由于不能重新赋值，所以一般不会造成不可预料的事情发生。 使用final修饰符不仅会保持对象的引用不会改变, 而且编译器还会持续维护这个对象在回调方法中的生命周期. 所以这才是final变量和final参数的根本意义. 作者：姚瑶大坏蛋2007来源：CSDN原文：https://blog.csdn.net/tongnuxie/article/details/50111485版权声明：本文为博主原创文章，转载请附上博文链接！]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[JavaIO流中InputStream中的read()方法返回int]]></title>
-    <url>%2F2019%2F02%2F17%2FjavaIO%E6%B5%81%E4%B8%AD%E7%9A%84InputStream%E4%B8%AD%E7%9A%84read()%E6%96%B9%E6%B3%95%E8%BF%94%E5%9B%9Eint%2F</url>
-    <content type="text"><![CDATA[public abstract int read()throws IOExceptior从输入流中读取数据的下一个字节。返回0到255范围内的int字节值。如果因为已经到达流末尾而没有可用的字节,则返回值-1,数据可用、检测到流末尾或者抛出异常前,此方法一直阻塞。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859import java.io.*;class MyBufferedInputStream//自定义BuffereedInputStream类&#123; //装饰设计模式 private InputStream in; private byte[] buffer=new byte[1024]; private int count=0; private int pos=0; MyBufferedInputStream(InputStream in)//构造器 &#123; this.in=in; &#125; //模拟read方法 public int Myread()throws IOException &#123; if(count==0) &#123; count=in.read(buffer); //计数器记录通过public int read(byte[] b)方法存 //到数组缓冲区的数据的总字节数 pos=0;//如果计数器为0，则位置指针归零 if(count&lt;0) return -1; &#125; byte b=buffer[pos]; pos++; count--; //return b&amp;255; return b&amp;0xff;//关键在此，为什么要返回b和0xff的与呢？ &#125; //重写close方法 public void Myclose()throws IOException &#123; in.close(); &#125;&#125;class Demo&#123; //为了代码简洁，这里直接抛IO异常了，正确的做法是try，catch。 public static void main(String[] args)throws IOException &#123; long start=System.currentTimeMillis(); Copy(); long end=System.currentTimeMillis(); System.out.println(&quot;runtime:&quot;+(end-start)+&quot;ms&quot;);//获取运行时间 &#125; public static void Copy()throws IOException//拷贝功能封装在Copy方法体里面 &#123; MyBufferedInputStream mb=new MyBufferedInputStream(new FileInputStream(&quot;3.mp3&quot;)); BufferedOutputStream bo=new BufferedOutputStream(new FileOutputStream(&quot;copy_1.mp3&quot;)); int ch=0; while((ch=mb.Myread())!=-1) bo.write(ch); bo.close(); mb.Myclose(); &#125;&#125; 为什么myread方法返回的是b和0xff的与呢？ read方法返回int的原因: 首先我们知道，mp3文件全部为二进制数据组成的。这就有一个问题，如果恰好read方法读取的字节是1111-1111（即byte型的-1）怎么办？这时候返回的是-1.那这样的话Copy方法中的while循环就会停止，也就没有复制。 解决方法： 我们伟大的程序员采取了一个办法.那就是返回int型 1111-1111如果变成int型的话，应该是int型的-1，即11111111-11111111-11111111-11111111， 我们将int型的-1和0xff &amp;一下， 11111111 11111111 -11111111 -11111111 &amp;00000000-00000000-00000000-11111111（int型的255） 00000000-00000000-00000000-11111111 这样返回的就是有效字节了，而且不会出现-1的情况。 read方法做了一个类型提升，其实write方法每次也是强转，将int型的数据再转换为byte，这样获取的还是有效字节。 作者：rowandjj来源：CSDN原文：https://blog.csdn.net/chdjj/article/details/8577861版权声明：本文为博主原创文章，转载请附上博文链接！]]></content>
       <categories>
         <category>Java</category>
       </categories>
@@ -56,8 +45,19 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[JavaIO流中InputStream中的read()方法返回int]]></title>
+    <url>%2F2019%2F02%2F17%2FJAVA%2FjavaIO%E6%B5%81%E4%B8%AD%E7%9A%84InputStream%E4%B8%AD%E7%9A%84read()%E6%96%B9%E6%B3%95%E8%BF%94%E5%9B%9Eint%2F</url>
+    <content type="text"><![CDATA[public abstract int read()throws IOExceptior从输入流中读取数据的下一个字节。返回0到255范围内的int字节值。如果因为已经到达流末尾而没有可用的字节,则返回值-1,数据可用、检测到流末尾或者抛出异常前,此方法一直阻塞。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859import java.io.*;class MyBufferedInputStream//自定义BuffereedInputStream类&#123; //装饰设计模式 private InputStream in; private byte[] buffer=new byte[1024]; private int count=0; private int pos=0; MyBufferedInputStream(InputStream in)//构造器 &#123; this.in=in; &#125; //模拟read方法 public int Myread()throws IOException &#123; if(count==0) &#123; count=in.read(buffer); //计数器记录通过public int read(byte[] b)方法存 //到数组缓冲区的数据的总字节数 pos=0;//如果计数器为0，则位置指针归零 if(count&lt;0) return -1; &#125; byte b=buffer[pos]; pos++; count--; //return b&amp;255; return b&amp;0xff;//关键在此，为什么要返回b和0xff的与呢？ &#125; //重写close方法 public void Myclose()throws IOException &#123; in.close(); &#125;&#125;class Demo&#123; //为了代码简洁，这里直接抛IO异常了，正确的做法是try，catch。 public static void main(String[] args)throws IOException &#123; long start=System.currentTimeMillis(); Copy(); long end=System.currentTimeMillis(); System.out.println(&quot;runtime:&quot;+(end-start)+&quot;ms&quot;);//获取运行时间 &#125; public static void Copy()throws IOException//拷贝功能封装在Copy方法体里面 &#123; MyBufferedInputStream mb=new MyBufferedInputStream(new FileInputStream(&quot;3.mp3&quot;)); BufferedOutputStream bo=new BufferedOutputStream(new FileOutputStream(&quot;copy_1.mp3&quot;)); int ch=0; while((ch=mb.Myread())!=-1) bo.write(ch); bo.close(); mb.Myclose(); &#125;&#125; 为什么myread方法返回的是b和0xff的与呢？ read方法返回int的原因: 首先我们知道，mp3文件全部为二进制数据组成的。这就有一个问题，如果恰好read方法读取的字节是1111-1111（即byte型的-1）怎么办？这时候返回的是-1.那这样的话Copy方法中的while循环就会停止，也就没有复制。 解决方法： 我们伟大的程序员采取了一个办法.那就是返回int型 1111-1111如果变成int型的话，应该是int型的-1，即11111111-11111111-11111111-11111111， 我们将int型的-1和0xff &amp;一下， 11111111 11111111 -11111111 -11111111 &amp;00000000-00000000-00000000-11111111（int型的255） 00000000-00000000-00000000-11111111 这样返回的就是有效字节了，而且不会出现-1的情况。 read方法做了一个类型提升，其实write方法每次也是强转，将int型的数据再转换为byte，这样获取的还是有效字节。 作者：rowandjj来源：CSDN原文：https://blog.csdn.net/chdjj/article/details/8577861版权声明：本文为博主原创文章，转载请附上博文链接！]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[JAVA中类、实例与Class对象]]></title>
-    <url>%2F2019%2F01%2F26%2FJAVA%E4%B8%AD%E7%B1%BB%E3%80%81%E5%AE%9E%E4%BE%8B%E4%B8%8EClass%E5%AF%B9%E8%B1%A1%2F</url>
+    <url>%2F2019%2F01%2F26%2FJAVA%2FJAVA%E4%B8%AD%E7%B1%BB%E3%80%81%E5%AE%9E%E4%BE%8B%E4%B8%8EClass%E5%AF%B9%E8%B1%A1%2F</url>
     <content type="text"><![CDATA[类​ 类是面向对象编程语言的一个重要概念，它是对一项事物的抽象概括，可以包含该事物的一些属性定义，以及操作属性的方法。面向对象编程中，我们都是以类来编码。 实例简单理解，就是new，就是对类的实例化，创建这个类对应的实际对象，类只是对事物的描述，而实例化就相当于为这个描述新开辟了一块内存，可以改变这块区域里的各种属性（成员变量），当然，也可以实例化多块区域，只是不同的对象而已。 Class注意这里C大写了，与类概念区分开，在java里，Class是一个实实在在的类，在包 java.lang 下，有这样一个Class.java文件，它跟我们自己定义的类一样，是一个实实在在的类，Class对象就是这个Class类的实例了。在Java里，所有的类的根源都是Object类，而Class也不例外，它是继承自Object的一个特殊的类，它内部可以记录类的成员、接口等信息，也就是在Java里，Class是一个用来表示类的类。Class是一个实实在在的类，可以为它创建实例，也就是本文后面提到的Class对象，也看叫做Class实例）。 java提供了下面几种获取到类的Class对象的方法： 1) 利用对象实例调用getClass()方法获取该对象的Class实例； ​ Class c=对象.getClass(); ​ 2) 使用Class类的静态方法forName(“包名+类名”)，用类的名字获取一个Class实例 ​ Class c=Class.forName(“包名+类名”); ​ 3)运用 类名.class 的方式来获取Class实例； ​ Class c = 类名.class 我们知道java世界是运行在JVM之上的，我们编写的类代码，在经过编译器编译之后，会为每个类生成对应的.class文件，这个就是JVM可以加载执行的字节码。运行时期间，当我们需要实例化任何一个类时，JVM会首先尝试看看在内存中是否有这个类，如果有，那么会直接创建类实例；如果没有，那么就会根据类名去加载这个类，当加载一个类，或者当加载器(class loader)的defineClass()被JVM调用，便会为这个类产生一个Class对象（一个Class类的实例），用来表达这个类，该类的所有实例都共同拥有着这个Class对象，而且是唯一的。 总结 在java里，类只是信息描述的，写明了有哪些内部属性及接口，你可以理解为是定义了一套规则；而Class对象在java里被用来对类的情况进行表述的一个实例，也就是是类的实际表征，可以理解为是对规则的图表化，这样JVM才能直观的看懂，可以看做是一个模版；而类的实例化对象，就是通过模版，开辟出的一块内存进行实际的使用。]]></content>
       <categories>
         <category>Java</category>
@@ -79,7 +79,7 @@
   </entry>
   <entry>
     <title><![CDATA[Java多线程之this与Thread.currentThread()的区别]]></title>
-    <url>%2F2019%2F01%2F18%2FJava%E5%A4%9A%E7%BA%BF%E7%A8%8Bthis%E4%B8%8EThread.currentThread()%E7%9A%84%E5%8C%BA%E5%88%AB%2F</url>
+    <url>%2F2019%2F01%2F18%2FJAVA%2FJava%E5%A4%9A%E7%BA%BF%E7%A8%8Bthis%E4%B8%8EThread.currentThread()%E7%9A%84%E5%8C%BA%E5%88%AB%2F</url>
     <content type="text"><![CDATA[this是当前代码所处的对象的线程，Thread.currentThread()是运行当前代码的线程。 12345678910111213141516171819202122232425262728293031public class CountOperate extends Thread&#123; public CountOperate() &#123; System.out.println("CountOperate.CountOperate()"); System.out.println("Thread-currentThread.getName()"+Thread.currentThread().getName()); System.out.println("Thread-currentThread.isAlive()"+Thread.currentThread().isAlive()); System.out.println("this.getName()"+this.getName()); System.out.println("this.isAlive()"+this.isAlive()); System.out.println("Thread-currentThread==this"+(Thread.currentThread()==this)); System.out.println("CountOperate.CountOperate()"); &#125; @Override public void run() &#123; System.out.println("CountOperate.run()"+Thread.currentThread().getName()); System.out.println("Thread-currentThread.getName()"+Thread.currentThread().getName()); System.out.println("Thread-currentThread.isAlive()"+Thread.currentThread().isAlive()); System.out.println("this.getName()"+this.getName()); System.out.println("this.isAlive()"+this.isAlive()); System.out.println("Thread-currentThread==this"+(Thread.currentThread()==this)); System.out.println("CountOperate.run()"); &#125; public static void main(String[] args) &#123; CountOperate c=new CountOperate(); c.start(); Thread t1=new Thread(c); System.out.println("main t1.isAlive()"+t1.isAlive()); t1.setName("t1"); t1.start(); System.out.println("main t1.isAlive()"+t1.isAlive()); &#125;&#125; 打印的log 123456789101112131415161718192021222324252627//-----------------------------------------------CountOperate.CountOperate() //new CountOperate()的构造函数Thread-currentThread.getName()main //jvm创建一个进程，默认有一个线程调用mainThread-currentThread.isAlive()true this.getName()Thread-0 //当前new的CountOperate()对象的线程this.isAlive()falseThread-currentThread==thisfalseCountOperate.CountOperate()//------------------------------------------------main t1.isAlive()false //t1没有调用start()方法main t1.isAlive()true //t1调用过start()方法//------------------------------------------------CountOperate.run()Thread-0 //c.start()调用run()Thread-currentThread.getName()Thread-0Thread-currentThread.isAlive()truethis.getName()Thread-0 //this当前线程this.isAlive()trueThread-currentThread==thistrueCountOperate.run()//------------------------------------------------CountOperate.run()t1 Thread-currentThread.getName()t1 //Thread t1=new Thread(参数),Thread-currentThread.isAlive()true //t1是new的Thread，与传递的参数无关this.getName()Thread-0 //传过来的c对象参数，当执行t1.start(),this.isAlive()false //会调用c的run()方法Thread-currentThread==thisfalseCountOperate.run() 根据打印的Log可以知道调用CountOperate构造函数的是main线程，因此打印出 Thread.currentThread().getName()=mainThread.currentThread().isAlive()=true而此时还没有启动CountOperate子线程所以打印出this.getName=Thread-0this.isAlive()=false 此时this代表的是CountOperate对象实例，所以Thread.currentThread()==this :false 这里比较让人疑惑的是“this.getName() = Thread-0”，这个Thread-0是什么东西？？？通过查看Thread源码发现，在Thread类的构造方法中，会自动给name赋值，赋值代码： 123public Thread() &#123; init(null, null, &quot;Thread-&quot; + nextThreadNum(), 0); &#125; 然后执行到:Thread t1 = new Thread(c);System.out.println(“main begin t1 isAlive=” + t1.isAlive());t1.setName(“t1”);t1.start(); 打印：Thread-currentThread.getName()t1Thread-currentThread.isAlive()trueThread.currentThread()==this :falsethis.getName()=Thread-0this.isAlive()=false说明此时的this和Thread.currentThread()指向不是同一个线程实例 也就是说，this指向的还是new CountOperate()创建的那个线程实例，而不是new Thread(thread)创建的那个实例即t1。查看源代码可以知道 123public Thread(Runnable target) &#123; init(null, target, &quot;Thread-&quot; + nextThreadNum(), 0); &#125; 实际上new Thread(thread)会将thread应用的对象绑定到一个pravite变量target上，在t1被执行的时候即t1.run()被调用的时候，它会调用target.run()方法，也就是说它是直接调用thread对象的run方法，再确切的说，在run方法被执行的时候，this.getName()实际上返回的是target.getName()，而Thread.currentThread().getName()实际上是t1.getName()。]]></content>
       <tags>
         <tag>Java</tag>
@@ -87,7 +87,7 @@
   </entry>
   <entry>
     <title><![CDATA[Java理解 子类成员变量与父类成员变量同名 方法的重写]]></title>
-    <url>%2F2019%2F01%2F17%2F%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E7%9A%84%E5%90%8C%E5%90%8D%E5%92%8C%E6%96%B9%E6%B3%95%E7%9A%84%E9%87%8D%E5%86%99%2F</url>
+    <url>%2F2019%2F01%2F17%2FJAVA%2F%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E7%9A%84%E5%90%8C%E5%90%8D%E5%92%8C%E6%96%B9%E6%B3%95%E7%9A%84%E9%87%8D%E5%86%99%2F</url>
     <content type="text"><![CDATA[1.子类父类成员变量同名1.子类的成员变量与父类成员变量同名时,在子类中父类成员变量被”隐藏”2.要想访问与父类的同名的成员变量, 两种方法 ①: 在子类中是用 super ②:将该变量强转成父类的类 3.对象是什么类型的(不是new的那个类型), 成员变量是什么类型. 2.子类对父类方法的重写子类的方法与父类的方法重名时(我们讲得是重写的情况, 方法名一致, 形参一致, 与返回值无关)叫做重写(覆盖), 顾名思义, 把父类的方法重写了. 所以怎么转换, 都是子类的方法.]]></content>
       <tags>
         <tag>Java</tag>

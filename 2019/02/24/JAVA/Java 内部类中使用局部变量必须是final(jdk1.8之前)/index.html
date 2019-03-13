@@ -7,14 +7,13 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>Java理解  子类成员变量与父类成员变量同名     方法的重写 | Momentonly</title>
+    <title>Java 内部类中使用局部变量必须是final | Momentonly</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Moment Only">
     
-    <meta name="description" content="1.子类父类成员变量同名1.子类的成员变量与父类成员变量同名时,在子类中父类成员变量被”隐藏”2.要想访问与父类的同名的成员变量, 两种方法 ①: 在子类中是用 super ②:将该变量强转成父类的类
-3.对象是什么类型的(不是new的那个类型), 成员变量是什么类型. 
-2.子类对父类方法的重写子">
+    <meta name="description" content="注：jdk1.8新特性，Java 内部类中使用局部变量可以不用final修饰
+在java中， 方法的内部类可以访问方法中的局部变量，但必须用final修饰才能访问。原因：1.当方法被调用运行完毕之后，局部变量就已消亡了。但内部类对象可能还存在， 直到没有被引用时才会消亡。此时就会出现一种情况，就是内">
     
     
     
@@ -80,15 +79,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/01/17/成员变量的同名和方法的重写/" title="Java理解  子类成员变量与父类成员变量同名     方法的重写" itemprop="url">Java理解  子类成员变量与父类成员变量同名     方法的重写</a>
+      <a href="/2019/02/24/JAVA/Java 内部类中使用局部变量必须是final(jdk1.8之前)/" title="Java 内部类中使用局部变量必须是final" itemprop="url">Java 内部类中使用局部变量必须是final</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
     </p>
   <p class="article-time">
-    <time datetime="2019-01-17T14:53:34.000Z" itemprop="datePublished">2019-01-17</time>
-    更新日期:<time datetime="2019-01-18T03:11:55.968Z" itemprop="dateModified">2019-01-18</time>
+    <time datetime="2019-02-24T10:22:33.000Z" itemprop="datePublished">2019-02-24</time>
+    更新日期:<time datetime="2019-03-11T05:06:53.693Z" itemprop="dateModified">2019-03-11</time>
     
   </p>
 </header>
@@ -97,12 +96,18 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-子类父类成员变量同名"><span class="toc-number">1.</span> <span class="toc-text">1.子类父类成员变量同名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-子类对父类方法的重写"><span class="toc-number">2.</span> <span class="toc-text">2.子类对父类方法的重写</span></a></li></ol>
+		
 		</div>
 		
-		<h4 id="1-子类父类成员变量同名"><a href="#1-子类父类成员变量同名" class="headerlink" title="1.子类父类成员变量同名"></a>1.子类父类成员变量同名</h4><p>1.子类的成员变量与父类成员变量同名时,在子类中父类成员变量被”隐藏”<br>2.要想访问与父类的同名的成员变量, 两种方法 ①: 在子类中是用 super ②:将该变量强转成父类的类</p>
-<p><strong><em>3.对象是什么类型的(不是new的那个类型), 成员变量是什么类型.</em></strong> </p>
-<h4 id="2-子类对父类方法的重写"><a href="#2-子类对父类方法的重写" class="headerlink" title="2.子类对父类方法的重写"></a>2.子类对父类方法的重写</h4><p>子类的方法与父类的方法重名时(我们讲得是重写的情况, 方法名一致, 形参一致, 与返回值无关)叫做重写(覆盖), 顾名思义, 把父类的方法重写了. 所以怎么转换, 都是子类的方法.</p>
+		<p><strong><em>注：jdk1.8新特性，Java 内部类中使用局部变量可以不用final修饰</em></strong></p>
+<p>在java中， 方法的内部类可以访问方法中的局部变量，但必须用final修饰才能访问。<br>原因：<br>1.当方法被调用运行完毕之后，局部变量就已消亡了。但内部类对象可能还存在， 直到没有被引用时才会消亡。此时就会出现一种情况，就是内部类要访问一个不存在的局部变量。</p>
+<p>2.解决这一问题的办法就是使用final修饰局部变量，通过将final局部变量”复制”一份,复制品直接作为方法内部类中的数据成员，这事方法内部类访问的其实是这个局部变量的复制品！  而且，由于被final修饰的变量赋值后不能再修改，所以就保证了复制品与原始变量的一致。</p>
+<p>3.原因二的功能能实现的原因是：Java采用了一种copy   local   variable(复制局部变量)的方式来实现，也就是说把定义为final的局部变量拷贝过来用，而引用的也可以拿过来用，只是不能重新赋值。从而造成了可以access   local   variable(访问局部变量)的假象，而这个时候由于不能重新赋值，所以一般不会造成不可预料的事情发生。</p>
+<ol start="4">
+<li>使用final修饰符不仅会保持对象的引用不会改变, 而且编译器还会持续维护这个对象在回调方法中的生命周期. 所以这才是final变量和final参数的根本意义.</li>
+</ol>
+<hr>
+<p>作者：姚瑶大坏蛋2007<br>来源：CSDN<br>原文：<a href="https://blog.csdn.net/tongnuxie/article/details/50111485" target="_blank" rel="noopener">https://blog.csdn.net/tongnuxie/article/details/50111485</a><br>版权声明：本文为博主原创文章，转载请附上博文链接！</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -113,11 +118,16 @@
   </div>
 
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Java/">Java</a>
+</div>
+
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2019/01/17/成员变量的同名和方法的重写/" data-title="Java理解  子类成员变量与父类成员变量同名     方法的重写 | Momentonly" data-tsina="" class="share clearfix">
+  <div data-url="http://yoursite.com/2019/02/24/JAVA/Java 内部类中使用局部变量必须是final(jdk1.8之前)/" data-title="Java 内部类中使用局部变量必须是final | Momentonly" data-tsina="" class="share clearfix">
   </div>
 
 </div>
@@ -127,18 +137,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2019/01/18/Java多线程this与Thread.currentThread()的区别/" title="Java多线程之this与Thread.currentThread()的区别">
+ <a href="/2019/03/02/带标签的break和continue/" title="带标签的break和continue">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  Java多线程之this与Thread.currentThread()的区别</span>
+  带标签的break和continue</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2018/12/30/字符串分割split/"  title="String.split()分割字符串用法">
+<a href="/2019/02/17/性能测试工具--locust/"  title="性能测试工具locust">
  <strong>NEXT:</strong><br/> 
- <span>String.split()分割字符串用法
+ <span>性能测试工具locust
 </span>
 </a>
 </div>
@@ -148,7 +158,7 @@
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="Java理解  子类成员变量与父类成员变量同名     方法的重写" data-thread-key="成员变量的同名和方法的重写" data-author-key="Moment Only" data-url="http://yoursite.com/post/成员变量的同名和方法的重写"></div>
+	<div class="ds-thread" data-title="Java 内部类中使用局部变量必须是final" data-thread-key="JAVA/Java 内部类中使用局部变量必须是final(jdk1.8之前)" data-author-key="Moment Only" data-url="http://yoursite.com/post/JAVA/Java 内部类中使用局部变量必须是final(jdk1.8之前)"></div>
 	
 </section>
 
@@ -158,7 +168,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-子类父类成员变量同名"><span class="toc-number">1.</span> <span class="toc-text">1.子类父类成员变量同名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-子类对父类方法的重写"><span class="toc-number">2.</span> <span class="toc-text">2.子类对父类方法的重写</span></a></li></ol>
+  
   </div>
 
 <div id="asidepart">
