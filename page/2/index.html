@@ -52,9 +52,11 @@
 					 
 						<li><a href="/">首页</a></li>
 					
-						<li><a href="/tags/设计模式">设计模式</a></li>
+						<li><a href="/tags/despattern">设计模式</a></li>
 					
 						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/tags/tools">工具</a></li>
 					
 					<li>
 					
@@ -71,6 +73,25 @@
     <div id="container">
       <div id="main">
 
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2018/12/29/对cookie中的中文处理/" title="保存和获取cookie中的中文信息" itemprop="url">
+  
+      <time datetime="2018-12-29T02:46:17.000Z" itemprop="datePublished">2018-12-29</time>
+    <h1 itemprop="name">保存和获取cookie中的中文信息</h1>
+    
+     
+           <p itemprop="description" >1.保存cookie问题： 出现500错误
+解决：设置字符编码
+Cookie cookie=new Cookie(“test”,URLEncoder.encode(“中文”,”utf-8”));
+2.获取cookie   问题：出现乱码
+   解决：设置字符解码
+System.o</p>
+        
+    
+  </a>
+</section>
 
   <section class="post" itemscope itemprop="blogPost">
   
@@ -171,6 +192,8 @@ git clone https://github.com/litten/hexo-theme-yilia.git yilia
 		
 			<li><a href="/categories/XML/" title="XML">XML<sup>1</sup></a></li>
 		
+			<li><a href="/categories/tools/" title="tools">tools<sup>1</sup></a></li>
+		
 		</ul>
 </div>
 
@@ -185,6 +208,8 @@ git clone https://github.com/litten/hexo-theme-yilia.git yilia
 			<li><a href="/tags/Web/" title="Web">Web<sup>3</sup></a></li>
 		
 			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/tools/" title="tools">tools<sup>1</sup></a></li>
 		
 			<li><a href="/tags/乱码/" title="乱码">乱码<sup>2</sup></a></li>
 		
@@ -211,7 +236,7 @@ git clone https://github.com/litten/hexo-theme-yilia.git yilia
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Web/" style="font-size: 16.67px;">Web</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/乱码/" style="font-size: 13.33px;">乱码</a> <a href="/tags/配置/" style="font-size: 10px;">配置</a>
+       <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Web/" style="font-size: 16.67px;">Web</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/乱码/" style="font-size: 13.33px;">乱码</a> <a href="/tags/配置/" style="font-size: 10px;">配置</a>
     </div>
   </div>
 
