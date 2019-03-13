@@ -5,10 +5,10 @@
     <url>%2F2019%2F03%2F13%2FTools%2F%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7locust%2F</url>
     <content type="text"><![CDATA[An open source load testing tool. 一个开源性能测试工具。 define user behaviour with python code, and swarm your system with millions of simultaneous users. 使用Python代码来定义用户行为。用它可以模拟百万计的并发用户访问你的系统。 1.安装Python2.安装Locustpip install locust 3.安装成功，CMD敲入命令验证。​ locust –help 4.创建load_test.py文件，通过Python编写性能测试脚本。123456789101112from locust import HttpLocust, TaskSet, taskclass UserBehavior(TaskSet): @task(1) def indesx(self): self.client.get("/")class WebsiteUser(HttpLocust): task_set = UserBehavior min_wait = 3000 max_wait = 6000 创建UserBehavior()类继承TaskSet类，为用户行为类。 ​ 创建index() 方法表示一个行为。用@task() 装饰该方法为一个任务。1表示一个Locust实例被挑选执行的权重，数值越大，执行频率越高。在当前UserBehavior()行为下只有一个index()任务，所以，这里的权重设置为几，并无影响。 WebsiteUser()类用于设置性能测试。 task_set ：指向一个定义了的用户行为类。 min_wait ：用户执行任务之间等待时间的下界，单位：毫秒。 max_wait ：用户执行任务之间等待时间的上界，单位：毫秒。 5.命令行切换到性能测试脚本所在的目录，启动性能测试：1locust -f load_test.py --host=https://www.baidu.com ​ load_test.py 为测试脚本，https://www.baidu.com 为测试的网站。 ​ 打开浏览器访问：http://127.0.0.1:8089或者http://localhost:8089 ps:在pycharm中运行脚本 123if __name__ == '__main__':import osos.system("locust -f load_test.py --host=https://www.baidu.com")]]></content>
       <categories>
-        <category>Tools</category>
+        <category>tools</category>
       </categories>
       <tags>
-        <tag>Tools</tag>
+        <tag>tools</tag>
       </tags>
   </entry>
   <entry>
@@ -144,7 +144,7 @@
     <url>%2F2018%2F10%2F12%2FTools%2F%E4%BF%AE%E6%94%B9Hexo%E4%B8%BB%E9%A2%98%2F</url>
     <content type="text"><![CDATA[1.获取主题cd themes 再将yilia主题clone至themes文件夹中 git clone https://github.com/litten/hexo-theme-yilia.git yilia 2.配置：修改hexo根目录下的_config.yml theme:yilia 3.更新:12cd themes/yiliagit pull 4.发布12hexo cleanhexo d -g]]></content>
       <categories>
-        <category>Tools</category>
+        <category>tools</category>
       </categories>
       <tags>
         <tag>theme</tag>
