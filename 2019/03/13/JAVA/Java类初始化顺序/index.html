@@ -7,13 +7,13 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>Java 内部类中使用局部变量必须是final | Momentonly</title>
+    <title>java类初始化顺序 | Momentonly</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Moment Only">
     
-    <meta name="description" content="注：jdk1.8新特性，Java 内部类中使用局部变量可以不用final修饰
-在java中， 方法的内部类可以访问方法中的局部变量，但必须用final修饰才能访问。原因：1.当方法被调用运行完毕之后，局部变量就已消亡了。但内部类对象可能还存在， 直到没有被引用时才会消亡。此时就会出现一种情况，就是内">
+    <meta name="description" content="Java的类初始化顺序
+123456789101112131415161718192021222324252627282930313233343536373839404142package com.szxy;/** *  * @author Administrator * */public clas">
     
     
     
@@ -79,15 +79,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/02/24/JAVA/Java 内部类中使用局部变量必须是final(jdk1.8之前)/" title="Java 内部类中使用局部变量必须是final" itemprop="url">Java 内部类中使用局部变量必须是final</a>
+      <a href="/2019/03/13/JAVA/Java类初始化顺序/" title="java类初始化顺序" itemprop="url">java类初始化顺序</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
     </p>
   <p class="article-time">
-    <time datetime="2019-02-24T10:22:33.000Z" itemprop="datePublished">2019-02-24</time>
-    更新日期:<time datetime="2019-03-11T05:06:53.693Z" itemprop="dateModified">2019-03-11</time>
+    <time datetime="2019-03-13T09:20:20.000Z" itemprop="datePublished">2019-03-13</time>
+    更新日期:<time datetime="2019-03-13T09:29:52.938Z" itemprop="dateModified">2019-03-13</time>
     
   </p>
 </header>
@@ -99,15 +99,15 @@
 		
 		</div>
 		
-		<p><strong><em>注：jdk1.8新特性，Java 内部类中使用局部变量可以不用final修饰</em></strong></p>
-<p>在java中， 方法的内部类可以访问方法中的局部变量，但必须用final修饰才能访问。<br>原因：<br>1.当方法被调用运行完毕之后，局部变量就已消亡了。但内部类对象可能还存在， 直到没有被引用时才会消亡。此时就会出现一种情况，就是内部类要访问一个不存在的局部变量。</p>
-<p>2.解决这一问题的办法就是使用final修饰局部变量，通过将final局部变量”复制”一份,复制品直接作为方法内部类中的数据成员，这事方法内部类访问的其实是这个局部变量的复制品！  而且，由于被final修饰的变量赋值后不能再修改，所以就保证了复制品与原始变量的一致。</p>
-<p>3.原因二的功能能实现的原因是：Java采用了一种copy   local   variable(复制局部变量)的方式来实现，也就是说把定义为final的局部变量拷贝过来用，而引用的也可以拿过来用，只是不能重新赋值。从而造成了可以access   local   variable(访问局部变量)的假象，而这个时候由于不能重新赋值，所以一般不会造成不可预料的事情发生。</p>
-<ol start="4">
-<li>使用final修饰符不仅会保持对象的引用不会改变, 而且编译器还会持续维护这个对象在回调方法中的生命周期. 所以这才是final变量和final参数的根本意义.</li>
-</ol>
-<hr>
-<p>作者：姚瑶大坏蛋2007<br>来源：CSDN<br>原文：<a href="https://blog.csdn.net/tongnuxie/article/details/50111485" target="_blank" rel="noopener">https://blog.csdn.net/tongnuxie/article/details/50111485</a><br>版权声明：本文为博主原创文章，转载请附上博文链接！</p>
+		<p> Java的类初始化顺序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.szxy;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InitClassTest</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">new</span> B();    </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">	<span class="keyword">static</span> A a = <span class="keyword">new</span> A();                        <span class="comment">//1)</span></span><br><span class="line">	<span class="keyword">static</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"A:static"</span>);          <span class="comment">//2)</span></span><br><span class="line">	&#125;</span><br><span class="line">	C c = <span class="keyword">new</span> C();                               <span class="comment">//5)</span></span><br><span class="line">	&#123;                                            <span class="comment">//6)</span></span><br><span class="line">		System.out.println(<span class="string">"A:not static"</span>);      </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">A</span><span class="params">()</span> </span>&#123;                                 <span class="comment">//7)</span></span><br><span class="line">		System.out.println(<span class="string">"A:constructor"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">	<span class="keyword">static</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"B:static"</span>);          <span class="comment">//3)</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">static</span> B b = <span class="keyword">new</span> B();                        <span class="comment">//4)</span></span><br><span class="line">	&#123;                                            <span class="comment">//8)</span></span><br><span class="line">		System.out.println(<span class="string">"B:not static"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">B</span><span class="params">()</span> </span>&#123;                                 <span class="comment">//9)</span></span><br><span class="line">		System.out.println(<span class="string">"B:constructor"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">C</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"C"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>console打印</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">C                     //1)</span><br><span class="line">A:not static          //1)</span><br><span class="line">A:constructor         //1)</span><br><span class="line">A:static              //2)</span><br><span class="line">B:static              //3)</span><br><span class="line">C                     //4)</span><br><span class="line">A:not static          //4)</span><br><span class="line">A:constructor         //4)</span><br><span class="line">B:not static          //4)</span><br><span class="line">B:constructor         //4)</span><br><span class="line">C                     //5)</span><br><span class="line">A:not static          //6)</span><br><span class="line">A:constructor         //7)</span><br><span class="line">B:not static          //8)</span><br><span class="line">B:constructor         //9)</span><br></pre></td></tr></table></figure>
+<p><em>根据打印结果：<strong>父类静态变量（静态代码块）-&gt;  子类静态变量（静态代码块）</strong></em></p>
+<p>​        -&gt; 父类成员变量（非静态代码块）-&gt; 父类构造方法 -&gt;子类成员变量（非静态代码块）</p>
+<p>​         <strong><em>-&gt; 子类构造方法</em></strong> </p>
+<p><em>ps：静态变量和静态代码块属于平级，谁在前谁先初始化；</em></p>
+<p>​        <em>非静态代码块和成员变量属于平级，谁在前谁先初始化</em></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -127,7 +127,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2019/02/24/JAVA/Java 内部类中使用局部变量必须是final(jdk1.8之前)/" data-title="Java 内部类中使用局部变量必须是final | Momentonly" data-tsina="" class="share clearfix">
+  <div data-url="http://yoursite.com/2019/03/13/JAVA/Java类初始化顺序/" data-title="java类初始化顺序 | Momentonly" data-tsina="" class="share clearfix">
   </div>
 
 </div>
@@ -136,19 +136,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2019/03/02/JAVA/带标签的break和continue/" title="带标签的break和continue">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  带标签的break和continue</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2019/02/17/JAVA/javaIO流中的InputStream中的read()方法返回int/"  title="JavaIO流中InputStream中的read()方法返回int">
+<a href="/2019/03/13/Tools/性能测试工具locust/"  title="性能测试工具locust">
  <strong>NEXT:</strong><br/> 
- <span>JavaIO流中InputStream中的read()方法返回int
+ <span>性能测试工具locust
 </span>
 </a>
 </div>
@@ -158,7 +150,7 @@
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="Java 内部类中使用局部变量必须是final" data-thread-key="JAVA/Java 内部类中使用局部变量必须是final(jdk1.8之前)" data-author-key="Moment Only" data-url="http://yoursite.com/post/JAVA/Java 内部类中使用局部变量必须是final(jdk1.8之前)"></div>
+	<div class="ds-thread" data-title="java类初始化顺序" data-thread-key="JAVA/Java类初始化顺序" data-author-key="Moment Only" data-url="http://yoursite.com/post/JAVA/Java类初始化顺序"></div>
 	
 </section>
 
