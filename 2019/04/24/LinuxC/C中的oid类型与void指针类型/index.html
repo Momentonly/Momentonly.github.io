@@ -7,13 +7,15 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>JavaIO流中InputStream中的read()方法返回int | Momentonly</title>
+    <title>C中的void与void*类型 | Momentonly</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Moment Only">
     
-    <meta name="description" content="public abstract int read()throws IOExceptior从输入流中读取数据的下一个字节。返回0到255范围内的int字节值。如果因为已经到达流末尾而没有可用的字节,则返回值-1,数据可用、检测到流末尾或者抛出异常前,此方法一直阻塞。
-12345678910111213">
+    <meta name="description" content="c中的void表示不确定类型1.void类型​     int main(void)表示不可传递参数
+​    void类型不能定义变量
+2. void*类型​     void*类型可与任意类型进行强制转换
+1234int* p = NULL;*p = 10;void* v = (void *)p">
     
     
     
@@ -79,15 +81,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/02/17/JAVA/javaIO流中的InputStream中的read()方法返回int/" title="JavaIO流中InputStream中的read()方法返回int" itemprop="url">JavaIO流中InputStream中的read()方法返回int</a>
+      <a href="/2019/04/24/LinuxC/C中的oid类型与void指针类型/" title="C中的void与void*类型" itemprop="url">C中的void与void*类型</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
     </p>
   <p class="article-time">
-    <time datetime="2019-02-17T07:20:20.000Z" itemprop="datePublished">2019-02-17</time>
-    更新日期:<time datetime="2019-02-17T07:13:35.549Z" itemprop="dateModified">2019-02-17</time>
+    <time datetime="2019-04-24T00:38:14.000Z" itemprop="datePublished">2019-04-24</time>
+    更新日期:<time datetime="2019-04-24T00:48:20.093Z" itemprop="dateModified">2019-04-24</time>
     
   </p>
 </header>
@@ -96,40 +98,29 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#c中的void表示不确定类型"><span class="toc-number">1.</span> <span class="toc-text">c中的void表示不确定类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-void类型"><span class="toc-number">1.1.</span> <span class="toc-text">1.void类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-void-类型"><span class="toc-number">1.2.</span> <span class="toc-text">2. void*类型</span></a></li></ol></li></ol>
 		</div>
 		
-		<p>public abstract int read()throws IOExceptior从输入流中读取数据的下一个字节。返回0到255范围内的int字节值。如果因为已经到达流末尾而没有可用的字节,则返回值-1,数据可用、检测到流末尾或者抛出异常前,此方法一直阻塞。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import java.io.*;</span><br><span class="line">class MyBufferedInputStream//自定义BuffereedInputStream类</span><br><span class="line">&#123;</span><br><span class="line">	//装饰设计模式</span><br><span class="line">	private InputStream in;</span><br><span class="line">	private byte[] buffer=new byte[1024];</span><br><span class="line">	private	int count=0;</span><br><span class="line">	private	int pos=0;</span><br><span class="line">	MyBufferedInputStream(InputStream in)//构造器</span><br><span class="line">	&#123;</span><br><span class="line">		this.in=in;</span><br><span class="line">	&#125;</span><br><span class="line">	//模拟read方法</span><br><span class="line">	public int Myread()throws IOException</span><br><span class="line">	&#123;</span><br><span class="line">		if(count==0)</span><br><span class="line">		&#123;</span><br><span class="line">			count=in.read(buffer);</span><br><span class="line">			//计数器记录通过public int read(byte[] b)方法存</span><br><span class="line">			//到数组缓冲区的数据的总字节数</span><br><span class="line">			pos=0;//如果计数器为0，则位置指针归零</span><br><span class="line">			if(count&lt;0)</span><br><span class="line">				return -1;</span><br><span class="line">		&#125;</span><br><span class="line">		byte b=buffer[pos];</span><br><span class="line">		pos++;</span><br><span class="line">		count--;</span><br><span class="line">		</span><br><span class="line">		//return b&amp;255;</span><br><span class="line">		return b&amp;0xff;//关键在此，为什么要返回b和0xff的与呢？</span><br><span class="line">	&#125;</span><br><span class="line">	//重写close方法</span><br><span class="line">	public void Myclose()throws IOException</span><br><span class="line">	&#123;</span><br><span class="line">		in.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">class Demo</span><br><span class="line">&#123;</span><br><span class="line">	//为了代码简洁，这里直接抛IO异常了，正确的做法是try，catch。</span><br><span class="line">	public static void main(String[] args)throws IOException	</span><br><span class="line">	&#123;</span><br><span class="line">		long start=System.currentTimeMillis();</span><br><span class="line">		Copy();</span><br><span class="line">		long end=System.currentTimeMillis();</span><br><span class="line">		System.out.println(&quot;runtime:&quot;+(end-start)+&quot;ms&quot;);//获取运行时间</span><br><span class="line">	&#125;</span><br><span class="line">	public static void Copy()throws IOException//拷贝功能封装在Copy方法体里面</span><br><span class="line">	&#123;</span><br><span class="line">		MyBufferedInputStream mb=new MyBufferedInputStream(new FileInputStream(&quot;3.mp3&quot;));</span><br><span class="line">		BufferedOutputStream bo=new BufferedOutputStream(new FileOutputStream(&quot;copy_1.mp3&quot;));</span><br><span class="line">		int ch=0;</span><br><span class="line">		while((ch=mb.Myread())!=-1)</span><br><span class="line">			bo.write(ch);</span><br><span class="line">		bo.close();</span><br><span class="line">		mb.Myclose();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>为什么myread方法返回的是b和0xff的与呢？</p>
-<p> read方法返回int的原因:<br>        首先我们知道，mp3文件全部为二进制数据组成的。这就有一个问题，如果恰好read方法读取的字节是1111-1111（即byte型的-1）怎么办？这时候返回的是-1.那这样的话Copy方法中的while循环就会停止，也就没有复制。</p>
-<p>解决方法：<br> 我们伟大的程序员采取了一个办法.那就是返回int型<br> 1111-1111如果变成int型的话，应该是int型的-1，即11111111-11111111-11111111-11111111，</p>
-<p> 我们将int型的-1和0xff &amp;一下，<br>      11111111       11111111          -11111111      -11111111</p>
-<p>   &amp;00000000-00000000-00000000-11111111（int型的255）</p>
-<pre><code>00000000-00000000-00000000-11111111
-</code></pre><p> 这样返回的就是有效字节了，而且不会出现-1的情况。</p>
-<p><strong><em>read方法做了一个类型提升，其实write方法每次也是强转，将int型的数据再转换为byte，这样获取的还是有效字节。</em></strong></p>
-<p>作者：rowandjj<br>来源：CSDN<br>原文：<a href="https://blog.csdn.net/chdjj/article/details/8577861" target="_blank" rel="noopener">https://blog.csdn.net/chdjj/article/details/8577861</a><br>版权声明：本文为博主原创文章，转载请附上博文链接！</p>
+		<h3 id="c中的void表示不确定类型"><a href="#c中的void表示不确定类型" class="headerlink" title="c中的void表示不确定类型"></a>c中的void表示不确定类型</h3><h4 id="1-void类型"><a href="#1-void类型" class="headerlink" title="1.void类型"></a>1.void类型</h4><p>​     int main(void)表示不可传递参数</p>
+<p>​    void类型不能定义变量</p>
+<h4 id="2-void-类型"><a href="#2-void-类型" class="headerlink" title="2. void*类型"></a>2. void*类型</h4><p>​     void*类型可与任意类型进行强制转换</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* p = <span class="literal">NULL</span>;</span><br><span class="line">*p = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">void</span>* v = (<span class="keyword">void</span> *)p;	<span class="comment">//将int*类型的p强制转换为void*类型</span></span><br><span class="line"><span class="keyword">int</span> k = *(<span class="keyword">int</span> *)v;		<span class="comment">//将void*类型的v强制转换为int*类型</span></span><br></pre></td></tr></table></figure>
+<p><strong><em>注：void</em>类型强转后的类型需要与原来的类型保持一致*</strong></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Java/">Java</a>
+  <span></span> <a href="/tags/C/">C</a>
   </div>
 
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Java/">Java</a>
-</div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2019/02/17/JAVA/javaIO流中的InputStream中的read()方法返回int/" data-title="JavaIO流中InputStream中的read()方法返回int | Momentonly" data-tsina="" class="share clearfix">
+  <div data-url="http://yoursite.com/2019/04/24/LinuxC/C中的oid类型与void指针类型/" data-title="C中的void与void*类型 | Momentonly" data-tsina="" class="share clearfix">
   </div>
 
 </div>
@@ -138,19 +129,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2019/02/24/JAVA/Java 内部类中使用局部变量必须是final(jdk1.8之前)/" title="Java 内部类中使用局部变量必须是final">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  Java 内部类中使用局部变量必须是final</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2019/01/26/JAVA/JAVA中类、实例与Class对象/"  title="JAVA中类、实例与Class对象">
+<a href="/2019/04/07/JAVA/Java中serialVersionUID的解释及两种生成方式的区别/"  title="Java中serialVersionUID的解释及两种生成方式的区别">
  <strong>NEXT:</strong><br/> 
- <span>JAVA中类、实例与Class对象
+ <span>Java中serialVersionUID的解释及两种生成方式的区别
 </span>
 </a>
 </div>
@@ -160,7 +143,7 @@
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="JavaIO流中InputStream中的read()方法返回int" data-thread-key="JAVA/javaIO流中的InputStream中的read()方法返回int" data-author-key="Moment Only" data-url="http://yoursite.com/post/JAVA/javaIO流中的InputStream中的read()方法返回int"></div>
+	<div class="ds-thread" data-title="C中的void与void*类型" data-thread-key="LinuxC/C中的oid类型与void指针类型" data-author-key="Moment Only" data-url="http://yoursite.com/post/LinuxC/C中的oid类型与void指针类型"></div>
 	
 </section>
 
@@ -170,7 +153,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#c中的void表示不确定类型"><span class="toc-number">1.</span> <span class="toc-text">c中的void表示不确定类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-void类型"><span class="toc-number">1.1.</span> <span class="toc-text">1.void类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-void-类型"><span class="toc-number">1.2.</span> <span class="toc-text">2. void*类型</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
