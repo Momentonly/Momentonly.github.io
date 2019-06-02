@@ -150,8 +150,8 @@
         <category>JavaWeb</category>
       </categories>
       <tags>
-        <tag>JavaWeb</tag>
         <tag>乱码</tag>
+        <tag>JavaWeb</tag>
       </tags>
   </entry>
   <entry>
@@ -173,8 +173,8 @@
         <category>JavaWeb</category>
       </categories>
       <tags>
-        <tag>JavaWeb</tag>
         <tag>乱码</tag>
+        <tag>JavaWeb</tag>
       </tags>
   </entry>
   <entry>
@@ -182,7 +182,7 @@
     <url>%2F2018%2F10%2F12%2FConfig%2F%E4%BF%AE%E6%94%B9Hexo%E4%B8%BB%E9%A2%98%2F</url>
     <content type="text"><![CDATA[1.获取主题cd themes 再将yilia主题clone至themes文件夹中 git clone https://github.com/litten/hexo-theme-yilia.git yilia 2.配置：修改hexo根目录下的_config.yml theme:yilia 3.更新:12cd themes/yiliagit pull 4.发布12hexo cleanhexo d -g]]></content>
       <categories>
-        <category>tools</category>
+        <category>config</category>
       </categories>
       <tags>
         <tag>config</tag>
