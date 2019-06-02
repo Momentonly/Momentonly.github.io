@@ -4,6 +4,9 @@
     <title><![CDATA[重启eclipse color theme失效的解决办法]]></title>
     <url>%2F2019%2F06%2F02%2FConfig%2FEclipse%E4%B8%BB%E9%A2%98%E9%87%8D%E5%90%AF%E5%A4%B1%E6%95%88%2F</url>
     <content type="text"><![CDATA[重启eclipse color theme失效的解决办法** 1、在eclipse菜单栏 选择 windows &gt; Perferences； 2、找到Oomph &gt; Setup Task &gt; Perference Recorder选项； 3、将上方的Record Into勾选上，点恢复默认值(Restore Defaults)再应用(apply)-确定(Ok) 4.重启Eclipse主题生效 注：Perference Recorder可以同步Eclipse的配置参数]]></content>
+      <categories>
+        <category>config</category>
+      </categories>
       <tags>
         <tag>config</tag>
       </tags>
