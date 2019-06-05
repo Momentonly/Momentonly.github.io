@@ -13,7 +13,7 @@
   </entry>
   <entry>
     <title><![CDATA[C中的void与void*类型]]></title>
-    <url>%2F2019%2F04%2F24%2FLinuxC%2FC%E4%B8%AD%E7%9A%84oid%E7%B1%BB%E5%9E%8B%E4%B8%8Evoid%E6%8C%87%E9%92%88%E7%B1%BB%E5%9E%8B%2F</url>
+    <url>%2F2019%2F04%2F24%2FC%2FC%E4%B8%AD%E7%9A%84oid%E7%B1%BB%E5%9E%8B%E4%B8%8Evoid%E6%8C%87%E9%92%88%E7%B1%BB%E5%9E%8B%2F</url>
     <content type="text"><![CDATA[c中的void表示不确定类型1.void类型​ int main(void)表示不可传递参数 ​ void类型不能定义变量 2. void*类型​ void*类型可与任意类型进行强制转换 1234int* p = NULL;*p = 10;void* v = (void *)p; //将int*类型的p强制转换为void*类型int k = *(int *)v; //将void*类型的v强制转换为int*类型 注：void类型强转后的类型需要与原来的类型保持一致*]]></content>
       <tags>
         <tag>C</tag>
