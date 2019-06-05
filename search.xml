@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[test]]></title>
+    <title><![CDATA[IDEA的工作区间]]></title>
     <url>%2F2019%2F06%2F05%2FIDEA%2FIDEA%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8C%BA%E9%97%B4%2F</url>
     <content type="text"><![CDATA[IDEA中的项目概念与eclipse是不同的，IDEA的项目等同于eclipse中的workspace。Idea的module等同于eclipse中的project。所以我们要实现在一个项目倒入多个module。 具体操作如下： File–&gt;Project Structure Import Module，然后选中自己要导入的项目即可 作者：wzz87来源：CSDN原文：https://blog.csdn.net/wzz87/article/details/80234880版权声明：本文为博主原创文章，转载请附上博文链接！]]></content>
       <tags>
