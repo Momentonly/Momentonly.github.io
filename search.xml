@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[c语言二维数组传递一维数组参数]]></title>
+    <url>%2F2019%2F06%2F09%2FC%2Fc%E8%AF%AD%E8%A8%80%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%BC%A0%E9%80%92%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E5%8F%82%E6%95%B0%2F</url>
+    <content type="text"><![CDATA[123456789101112131415161718#include&lt;stdio.h&gt;void test(int a[]);int main()&#123; int a[2][2]; a[0][0] = 0; a[0][1] = 1; a[1][0] = 2; a[1][1] = 3; //printf("%d,%d,%d,%d",a[0][0],a[0][1],a[1][0],a[1][1]); test(a[0]); //传递一维数组 test(a[1]); return 0;&#125;void test(int a[])&#123; printf("%d,%d\n",a[0],a[1]);&#125; 打印 : 0,1 ​ 2,3]]></content>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[IDEA的工作区间]]></title>
     <url>%2F2019%2F06%2F05%2FIDEA%2FIDEA%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8C%BA%E9%97%B4%2F</url>
     <content type="text"><![CDATA[IDEA中的项目概念与eclipse是不同的，IDEA的项目等同于eclipse中的workspace。Idea的module等同于eclipse中的project。所以我们要实现在一个项目倒入多个module。 具体操作如下： File–&gt;Project Structure Import Module，然后选中自己要导入的项目即可 作者：wzz87来源：CSDN原文：https://blog.csdn.net/wzz87/article/details/80234880版权声明：本文为博主原创文章，转载请附上博文链接！]]></content>
