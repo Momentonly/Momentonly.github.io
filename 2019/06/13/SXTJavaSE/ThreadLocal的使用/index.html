@@ -7,13 +7,14 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>Java 内部类中使用局部变量必须是final | Momentonly</title>
+    <title>ThreadLocal的使用 | Momentonly</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Moment Only">
     
-    <meta name="description" content="注：jdk1.8新特性，Java 内部类中使用局部变量可以不用final修饰
-在java中， 方法的内部类可以访问方法中的局部变量，但必须用final修饰才能访问。原因：1.当方法被调用运行完毕之后，局部变量就已消亡了。但内部类对象可能还存在， 直到没有被引用时才会消亡。此时就会出现一种情况，就是内">
+    <meta name="description" content="ThreadLocal的使用1.说明​        ThreadLocal 直译为“本地线程”，其实它就是一容器，用于 存放线程的局部变量 
+​        能够保持每一个线程里面的值是相应的，说明这些值已经达到了线程私有的目的。
+​        当你在一个类中使用 static 成员变量时，">
     
     
     
@@ -79,15 +80,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/02/24/JAVA/Java 内部类中使用局部变量必须是final(jdk1.8之前)/" title="Java 内部类中使用局部变量必须是final" itemprop="url">Java 内部类中使用局部变量必须是final</a>
+      <a href="/2019/06/13/SXTJavaSE/ThreadLocal的使用/" title="ThreadLocal的使用" itemprop="url">ThreadLocal的使用</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
     </p>
   <p class="article-time">
-    <time datetime="2019-02-24T10:22:33.000Z" itemprop="datePublished">2019-02-24</time>
-    更新日期:<time datetime="2019-03-11T05:06:53.693Z" itemprop="dateModified">2019-03-11</time>
+    <time datetime="2019-06-13T09:37:18.000Z" itemprop="datePublished">2019-06-13</time>
+    更新日期:<time datetime="2019-06-13T09:39:16.743Z" itemprop="dateModified">2019-06-13</time>
     
   </p>
 </header>
@@ -96,25 +97,25 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ThreadLocal的使用"><span class="toc-number">1.</span> <span class="toc-text">ThreadLocal的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-说明"><span class="toc-number">1.1.</span> <span class="toc-text">1.说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-实现机制"><span class="toc-number">1.2.</span> <span class="toc-text">2.实现机制</span></a></li></ol></li></ol>
 		</div>
 		
-		<p><strong><em>注：jdk1.8新特性，Java 内部类中使用局部变量可以不用final修饰</em></strong></p>
-<p>在java中， 方法的内部类可以访问方法中的局部变量，但必须用final修饰才能访问。<br>原因：<br>1.当方法被调用运行完毕之后，局部变量就已消亡了。但内部类对象可能还存在， 直到没有被引用时才会消亡。此时就会出现一种情况，就是内部类要访问一个不存在的局部变量。</p>
-<p>2.解决这一问题的办法就是使用final修饰局部变量，通过将final局部变量”复制”一份,复制品直接作为方法内部类中的数据成员，这事方法内部类访问的其实是这个局部变量的复制品！  而且，由于被final修饰的变量赋值后不能再修改，所以就保证了复制品与原始变量的一致。</p>
-<p>3.原因二的功能能实现的原因是：Java采用了一种copy   local   variable(复制局部变量)的方式来实现，也就是说把定义为final的局部变量拷贝过来用，而引用的也可以拿过来用，只是不能重新赋值。从而造成了可以access   local   variable(访问局部变量)的假象，而这个时候由于不能重新赋值，所以一般不会造成不可预料的事情发生。</p>
-<ol start="4">
-<li>使用final修饰符不仅会保持对象的引用不会改变, 而且编译器还会持续维护这个对象在回调方法中的生命周期. 所以这才是final变量和final参数的根本意义.</li>
-</ol>
-<hr>
-<p>作者：姚瑶大坏蛋2007<br>来源：CSDN<br>原文：<a href="https://blog.csdn.net/tongnuxie/article/details/50111485" target="_blank" rel="noopener">https://blog.csdn.net/tongnuxie/article/details/50111485</a><br>版权声明：本文为博主原创文章，转载请附上博文链接！</p>
+		<h1 id="ThreadLocal的使用"><a href="#ThreadLocal的使用" class="headerlink" title="ThreadLocal的使用"></a><strong>ThreadLocal</strong>的使用</h1><h2 id="1-说明"><a href="#1-说明" class="headerlink" title="1.说明"></a>1.说明</h2><p>​        ThreadLocal 直译为“本地线程”，其实它就是一容器，用于 存放线程的局部变量 </p>
+<p>​        能够保持每一个线程里面的值是相应的，说明这些值已经达到了线程私有的目的。</p>
+<p>​        当你在一个类中使用 static 成员变量时，一定要问自己这个 static 成员变量需要考虑“线程安全吗？”</p>
+<p>​       （也就是说 多个线程需要自己独立的 static 成员变量吗？）如果需要那就需要使用 ThreadLocal。</p>
+<p>​        <strong><em>作用:为解决多线程程序的并发问题</em></strong></p>
+<h2 id="2-实现机制"><a href="#2-实现机制" class="headerlink" title="2.实现机制"></a>2.实现机制</h2><p>​        首先获取当前线程，在获取当前线程的ThreadLocalMap</p>
+<p>​        每个Thread对象内部都维护了一个ThreadLocalMap这样一个ThreadLocal的Map，可以存放若干个  ThreadLocal。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* ThreadLocal values pertaining to this thread. This map is maintained</span></span><br><span class="line"><span class="comment"> * by the ThreadLocal class. */</span></span><br><span class="line">ThreadLocal.ThreadLocalMap threadLocals = <span class="keyword">null</span>;</span><br></pre></td></tr></table></figure>
+<p>​        当我们在调用get()方法的时候，先获取当前线程，然后获取到当前线程的ThreadLocalMap对象，如果非空，那么取出ThreadLocal的value，<strong><em>否则进行初始化，初始化就是将initialValue的值set到ThreadLocal中。</em></strong></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Java/">Java</a>
+  <span></span> <a href="/tags/JAVA/">JAVA</a>
   </div>
 
 
@@ -127,7 +128,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2019/02/24/JAVA/Java 内部类中使用局部变量必须是final(jdk1.8之前)/" data-title="Java 内部类中使用局部变量必须是final | Momentonly" data-tsina="" class="share clearfix">
+  <div data-url="http://yoursite.com/2019/06/13/SXTJavaSE/ThreadLocal的使用/" data-title="ThreadLocal的使用 | Momentonly" data-tsina="" class="share clearfix">
   </div>
 
 </div>
@@ -136,19 +137,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2019/03/02/JAVA/带标签的break和continue/" title="带标签的break和continue">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  带标签的break和continue</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2019/02/17/JAVA/javaIO流中的InputStream中的read()方法返回int/"  title="JavaIO流中InputStream中的read()方法返回int">
+<a href="/2019/06/12/Linux/Linux常用命令1/"  title="Linux常用命令1">
  <strong>NEXT:</strong><br/> 
- <span>JavaIO流中InputStream中的read()方法返回int
+ <span>Linux常用命令1
 </span>
 </a>
 </div>
@@ -158,7 +151,7 @@
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="Java 内部类中使用局部变量必须是final" data-thread-key="JAVA/Java 内部类中使用局部变量必须是final(jdk1.8之前)" data-author-key="Moment Only" data-url="http://yoursite.com/post/JAVA/Java 内部类中使用局部变量必须是final(jdk1.8之前)"></div>
+	<div class="ds-thread" data-title="ThreadLocal的使用" data-thread-key="SXTJavaSE/ThreadLocal的使用" data-author-key="Moment Only" data-url="http://yoursite.com/post/SXTJavaSE/ThreadLocal的使用"></div>
 	
 </section>
 
@@ -168,7 +161,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ThreadLocal的使用"><span class="toc-number">1.</span> <span class="toc-text">ThreadLocal的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-说明"><span class="toc-number">1.1.</span> <span class="toc-text">1.说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-实现机制"><span class="toc-number">1.2.</span> <span class="toc-text">2.实现机制</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
