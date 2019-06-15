@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[sublime的package control]]></title>
+    <url>%2F2019%2F06%2F15%2FConfig%2Fsublime%E7%9A%84package%20control%2F</url>
+    <content type="text"><![CDATA[sublime的package control​ preferences-&gt;package control出现There are no packages available for installation错误 据说是IPv6的原因，如果我们的Intent服务提供者（ISP）不支持IPv6就会引发上述错误，原文如下：This error is happened with IPv6 problem. If your Internet Service Provider (ISP) does not support for IPv6 you got this error. 从上面的描述可以知道首先需要获取sublime.wbond.net网站的IPv4地址，然后修改hosts文件就行了。 C:\Windows\System32\drivers\etc 修改hosts 50.116.34.243 sublime.wbond.net 50.116.34.243 packagecontrol.io Package control的install packageSublime包管理package control 打开install package报错 There are no packages available for installation 本地下载一个channel_v3.json文件:https://github.com/SuCicada/channel_v3.json 放入本地任意目录，然后打开sublime中的Preferences-&gt;package settings-&gt;package control-&gt;settings user 配置 “channels”: [ “H:\SoftwarePro\Sublime Text 3\channel_v3.json” ], 保存重启]]></content>
+      <categories>
+        <category>config</category>
+      </categories>
+      <tags>
+        <tag>config</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[ThreadLocal的使用]]></title>
     <url>%2F2019%2F06%2F13%2FSXTJavaSE%2FThreadLocal%E7%9A%84%E4%BD%BF%E7%94%A8%2F</url>
     <content type="text"><![CDATA[ThreadLocal的使用1.说明​ ThreadLocal 直译为“本地线程”，其实它就是一容器，用于 存放线程的局部变量 ​ 能够保持每一个线程里面的值是相应的，说明这些值已经达到了线程私有的目的。 ​ 当你在一个类中使用 static 成员变量时，一定要问自己这个 static 成员变量需要考虑“线程安全吗？” ​ （也就是说 多个线程需要自己独立的 static 成员变量吗？）如果需要那就需要使用 ThreadLocal。 ​ 作用:为解决多线程程序的并发问题 2.实现机制​ 首先获取当前线程，在获取当前线程的ThreadLocalMap ​ 每个Thread对象内部都维护了一个ThreadLocalMap这样一个ThreadLocal的Map，可以存放若干个 ThreadLocal。 123/* ThreadLocal values pertaining to this thread. This map is maintained * by the ThreadLocal class. */ThreadLocal.ThreadLocalMap threadLocals = null; ​ 当我们在调用get()方法的时候，先获取当前线程，然后获取到当前线程的ThreadLocalMap对象，如果非空，那么取出ThreadLocal的value，否则进行初始化，初始化就是将initialValue的值set到ThreadLocal中。]]></content>

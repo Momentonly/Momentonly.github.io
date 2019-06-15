@@ -7,15 +7,13 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>性能测试工具locust | Momentonly</title>
+    <title>sublime的package control | Momentonly</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Moment Only">
     
-    <meta name="description" content="An open source load testing tool.
-一个开源性能测试工具。
-define user behaviour with python code, and swarm your system with millions of simultaneous users.
-使用Pyt">
+    <meta name="description" content="sublime的package control​    preferences-&amp;gt;package control出现There are no packages available for installation错误
+据说是IPv6的原因，如果我们的Intent服务提供者（ISP）不支持IPv">
     
     
     
@@ -81,15 +79,15 @@ define user behaviour with python code, and swarm your system with millions of s
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/03/13/Python/性能测试工具locust/" title="性能测试工具locust" itemprop="url">性能测试工具locust</a>
+      <a href="/2019/06/15/Config/sublime的package control/" title="sublime的package control" itemprop="url">sublime的package control</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
     </p>
   <p class="article-time">
-    <time datetime="2019-03-13T08:20:20.000Z" itemprop="datePublished">2019-03-13</time>
-    更新日期:<time datetime="2019-03-13T08:41:41.235Z" itemprop="dateModified">2019-03-13</time>
+    <time datetime="2019-06-15T07:13:46.000Z" itemprop="datePublished">2019-06-15</time>
+    更新日期:<time datetime="2019-06-15T07:33:57.858Z" itemprop="dateModified">2019-06-15</time>
     
   </p>
 </header>
@@ -98,47 +96,41 @@ define user behaviour with python code, and swarm your system with millions of s
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-安装Python"><span class="toc-number">1.</span> <span class="toc-text">1.安装Python</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-安装Locust"><span class="toc-number">2.</span> <span class="toc-text">2.安装Locust</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-安装成功，CMD敲入命令验证。"><span class="toc-number">3.</span> <span class="toc-text">3.安装成功，CMD敲入命令验证。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-创建load-test-py文件，通过Python编写性能测试脚本。"><span class="toc-number">4.</span> <span class="toc-text">4.创建load_test.py文件，通过Python编写性能测试脚本。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-命令行切换到性能测试脚本所在的目录，启动性能测试："><span class="toc-number">5.</span> <span class="toc-text">5.命令行切换到性能测试脚本所在的目录，启动性能测试：</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sublime的package-control"><span class="toc-number">1.</span> <span class="toc-text">sublime的package control</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Package-control的install-package"><span class="toc-number">2.</span> <span class="toc-text">Package control的install package</span></a></li></ol>
 		</div>
 		
-		<p>An open source load testing tool.</p>
-<p>一个开源性能测试工具。</p>
-<p>define user behaviour with python code, and swarm your system with millions of simultaneous users.</p>
-<p>使用Python代码来定义用户行为。用它可以模拟百万计的并发用户访问你的系统。</p>
-<h4 id="1-安装Python"><a href="#1-安装Python" class="headerlink" title="1.安装Python"></a>1.安装Python</h4><h4 id="2-安装Locust"><a href="#2-安装Locust" class="headerlink" title="2.安装Locust"></a>2.安装Locust</h4><pre><code>pip install locust
-</code></pre><h4 id="3-安装成功，CMD敲入命令验证。"><a href="#3-安装成功，CMD敲入命令验证。" class="headerlink" title="3.安装成功，CMD敲入命令验证。"></a>3.安装成功，CMD敲入命令验证。</h4><p>​      locust –help</p>
-<h4 id="4-创建load-test-py文件，通过Python编写性能测试脚本。"><a href="#4-创建load-test-py文件，通过Python编写性能测试脚本。" class="headerlink" title="4.创建load_test.py文件，通过Python编写性能测试脚本。"></a>4.创建load_test.py文件，通过Python编写性能测试脚本。</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> locust <span class="keyword">import</span> HttpLocust, TaskSet, task</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserBehavior</span><span class="params">(TaskSet)</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @task(1)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">indesx</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.client.get(<span class="string">"/"</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WebsiteUser</span><span class="params">(HttpLocust)</span>:</span></span><br><span class="line">    task_set = UserBehavior</span><br><span class="line">    min_wait = <span class="number">3000</span></span><br><span class="line">    max_wait = <span class="number">6000</span></span><br></pre></td></tr></table></figure>
-<p>创建UserBehavior()类继承TaskSet类，为用户行为类。</p>
-<p>​        创建index() 方法表示一个行为。用@task() 装饰该方法为一个任务。1表示一个Locust实例被挑选执行的权重，数值越大，执行频率越高。在当前UserBehavior()行为下只有一个index()任务，所以，这里的权重设置为几，并无影响。</p>
-<p>WebsiteUser()类用于设置性能测试。</p>
-<p>　　task_set ：指向一个定义了的用户行为类。</p>
-<p>　　min_wait ：用户执行任务之间等待时间的下界，单位：毫秒。</p>
-<p>　　max_wait ：用户执行任务之间等待时间的上界，单位：毫秒。</p>
-<h4 id="5-命令行切换到性能测试脚本所在的目录，启动性能测试："><a href="#5-命令行切换到性能测试脚本所在的目录，启动性能测试：" class="headerlink" title="5.命令行切换到性能测试脚本所在的目录，启动性能测试："></a>5.命令行切换到性能测试脚本所在的目录，启动性能测试：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">locust  -f   load_test.py   --host=https://www.baidu.com</span><br></pre></td></tr></table></figure>
-<p>​     load_test.py 为测试脚本，<a href="https://www.baidu.com" target="_blank" rel="noopener">https://www.baidu.com</a> 为测试的网站。</p>
-<p>​    打开浏览器访问：<a href="http://127.0.0.1:8089或者http://localhost:8089" target="_blank" rel="noopener">http://127.0.0.1:8089或者http://localhost:8089</a></p>
-<p><strong><em>ps:在pycharm中运行脚本</em></strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.system(<span class="string">"locust -f load_test.py --host=https://www.baidu.com"</span>)</span><br></pre></td></tr></table></figure>
+		<h1 id="sublime的package-control"><a href="#sublime的package-control" class="headerlink" title="sublime的package control"></a>sublime的package control</h1><p>​    preferences-&gt;package control出现There are no packages available for installation错误</p>
+<p>据说是IPv6的原因，如果我们的Intent服务提供者（ISP）不支持IPv6就会引发上述错误，原文如下：This error is happened with IPv6 problem. If your Internet Service Provider (ISP) does not support for IPv6 you got this error.</p>
+<p>从上面的描述可以知道首先需要获取sublime.wbond.net网站的IPv4地址，然后修改hosts文件就行了。</p>
+<p>C:\Windows\System32\drivers\etc</p>
+<p>修改hosts</p>
+<p>50.116.34.243 sublime.wbond.net</p>
+<p>50.116.34.243 packagecontrol.io</p>
+<h1 id="Package-control的install-package"><a href="#Package-control的install-package" class="headerlink" title="Package control的install package"></a>Package control的install package</h1><p>Sublime包管理package control 打开install package报错 There are no packages available for installation</p>
+<p>本地下载一个channel_v3.json文件:<a href="https://github.com/SuCicada/channel_v3.json" target="_blank" rel="noopener">https://github.com/SuCicada/channel_v3.json</a></p>
+<p>放入本地任意目录，然后打开sublime中的Preferences-&gt;package settings-&gt;package control-&gt;settings user</p>
+<p>配置   “channels”:<br>    [<br>        “H:\SoftwarePro\Sublime Text 3\channel_v3.json”<br>    ],</p>
+<p>保存重启</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/tools/">tools</a>
+  <span></span> <a href="/tags/config/">config</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/tools/">tools</a>
+  <a class="article-category-link" href="/categories/config/">config</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2019/03/13/Python/性能测试工具locust/" data-title="性能测试工具locust | Momentonly" data-tsina="" class="share clearfix">
+  <div data-url="http://yoursite.com/2019/06/15/Config/sublime的package control/" data-title="sublime的package control | Momentonly" data-tsina="" class="share clearfix">
   </div>
 
 </div>
@@ -147,19 +139,11 @@ define user behaviour with python code, and swarm your system with millions of s
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2019/03/13/JAVA/Java类初始化顺序/" title="java类初始化顺序">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  java类初始化顺序</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2019/03/03/JAVA/java的Package/"  title="java的Package">
+<a href="/2019/06/13/SXTJavaSE/ThreadLocal的使用/"  title="ThreadLocal的使用">
  <strong>NEXT:</strong><br/> 
- <span>java的Package
+ <span>ThreadLocal的使用
 </span>
 </a>
 </div>
@@ -169,7 +153,7 @@ define user behaviour with python code, and swarm your system with millions of s
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="性能测试工具locust" data-thread-key="Python/性能测试工具locust" data-author-key="Moment Only" data-url="http://yoursite.com/post/Python/性能测试工具locust"></div>
+	<div class="ds-thread" data-title="sublime的package control" data-thread-key="Config/sublime的package control" data-author-key="Moment Only" data-url="http://yoursite.com/post/Config/sublime的package control"></div>
 	
 </section>
 
@@ -179,7 +163,7 @@ define user behaviour with python code, and swarm your system with millions of s
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-安装Python"><span class="toc-number">1.</span> <span class="toc-text">1.安装Python</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-安装Locust"><span class="toc-number">2.</span> <span class="toc-text">2.安装Locust</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-安装成功，CMD敲入命令验证。"><span class="toc-number">3.</span> <span class="toc-text">3.安装成功，CMD敲入命令验证。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-创建load-test-py文件，通过Python编写性能测试脚本。"><span class="toc-number">4.</span> <span class="toc-text">4.创建load_test.py文件，通过Python编写性能测试脚本。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-命令行切换到性能测试脚本所在的目录，启动性能测试："><span class="toc-number">5.</span> <span class="toc-text">5.命令行切换到性能测试脚本所在的目录，启动性能测试：</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sublime的package-control"><span class="toc-number">1.</span> <span class="toc-text">sublime的package control</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Package-control的install-package"><span class="toc-number">2.</span> <span class="toc-text">Package control的install package</span></a></li></ol>
   </div>
 
 <div id="asidepart">
