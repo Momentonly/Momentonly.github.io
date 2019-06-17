@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[mysql注释的三种写法]]></title>
     <url>%2F2019%2F06%2F17%2FMysql%2Fmysql%E6%B3%A8%E9%87%8A%E7%9A%84%E4%B8%89%E7%A7%8D%E5%86%99%E6%B3%95%2F</url>
-    <content type="text"><![CDATA[MySql–三种注释写法 需要特别注意 – 这种注释后面要加一个空格 #DELETE FROM SeatInformation /DELETE FROM SeatInformation /– DELETE FROM SeatInformation]]></content>
+    <content type="text"><![CDATA[MySql--三种注释写法 需要特别注意 -- 这种注释后面要加一个空格 #DELETE FROM SeatInformation /DELETE FROM SeatInformation /– DELETE FROM SeatInformation]]></content>
       <categories>
         <category>Linux</category>
       </categories>
