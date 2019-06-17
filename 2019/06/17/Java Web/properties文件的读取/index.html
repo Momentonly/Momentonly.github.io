@@ -7,15 +7,14 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>java的Package | Momentonly</title>
+    <title>properties文件的读取 | Momentonly</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Moment Only">
     
-    <meta name="description" content="Java的Package没有包含关系
-例如： com.szxy和com.szxy.test
-import com.szxy.*，则只能用com.szxy目录下的类
-import com.szxy.test.*,则只能用com.szxy.test目录下的类">
+    <meta name="description" content="Java 开发中，需要将一些易变的配置参数放置再 XML 配置文件或者 properties 配置文件中。然而 XML 配置文件需要通过 DOM 或 SAX 方式解析，而读取 properties 配置文件就比较容易。
+读取方式1、基于ClassLoder读取配置文件
+​        注意：该方式">
     
     
     
@@ -81,15 +80,15 @@ import com.szxy.test.*,则只能用com.szxy.test目录下的类">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/03/03/JAVA/java的Package/" title="java的Package" itemprop="url">java的Package</a>
+      <a href="/2019/06/17/Java Web/properties文件的读取/" title="properties文件的读取" itemprop="url">properties文件的读取</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
     </p>
   <p class="article-time">
-    <time datetime="2019-03-03T04:35:23.000Z" itemprop="datePublished">2019-03-03</time>
-    更新日期:<time datetime="2019-03-03T04:42:43.925Z" itemprop="dateModified">2019-03-03</time>
+    <time datetime="2019-06-17T02:00:38.000Z" itemprop="datePublished">2019-06-17</time>
+    更新日期:<time datetime="2019-06-17T02:06:02.317Z" itemprop="dateModified">2019-06-17</time>
     
   </p>
 </header>
@@ -98,33 +97,37 @@ import com.szxy.test.*,则只能用com.szxy.test目录下的类">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#读取方式"><span class="toc-number">1.</span> <span class="toc-text">读取方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码实现"><span class="toc-number">2.</span> <span class="toc-text">代码实现</span></a></li></ol>
 		</div>
 		
-		<p>Java的Package没有包含关系</p>
-<p>例如： com.szxy和com.szxy.test</p>
-<p>import com.szxy.*，则只能用com.szxy目录下的类</p>
-<p>import com.szxy.test.*,则只能用com.szxy.test目录下的类</p>
+		<p>Java 开发中，需要将一些易变的配置参数放置再 XML 配置文件或者 properties 配置文件中。然而 XML 配置文件需要通过 DOM 或 SAX 方式解析，而读取 properties 配置文件就比较容易。</p>
+<h3 id="读取方式"><a href="#读取方式" class="headerlink" title="读取方式"></a>读取方式</h3><p>1、基于ClassLoder读取配置文件</p>
+<p>​        <strong>注意</strong>：该方式只能读取类路径下的配置文件，有局限但是如果配置文件在类路径下比较方便。</p>
+<p>2、基于 InputStream 读取配置文件</p>
+<p>​        <strong>注意</strong>：该方式的优点在于可以读取任意路径下的配置文件</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>db.properties</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">user=root</span><br><span class="line">pwd=123</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> jdbc.com.szxy.properties;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 读取properties文件测试</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Momentonly</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProPertiesTest</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 基于ClassLoder读取配置文件</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		Properties pro1 = <span class="keyword">new</span> Properties();</span><br><span class="line">		<span class="comment">//获取资源的输入流,类路径下</span></span><br><span class="line">		InputStream is1 = </span><br><span class="line">				ProPertiesTest.class.getClassLoader().getResourceAsStream(<span class="string">"db.properties"</span>);</span><br><span class="line">		<span class="comment">//读取输入流</span></span><br><span class="line">		pro1.load(is1);</span><br><span class="line">		<span class="comment">//</span></span><br><span class="line">		System.out.println(pro1.getProperty(<span class="string">"user"</span>));</span><br><span class="line">		System.out.println(pro1.getProperty(<span class="string">"pwd"</span>));</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 基于 InputStream 读取配置文件</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		Properties pro2 = <span class="keyword">new</span> Properties();</span><br><span class="line">		<span class="comment">//获取资源的输入流，相对路径或者绝对路径</span></span><br><span class="line">		InputStream is2 = <span class="keyword">new</span> FileInputStream(<span class="keyword">new</span> File(<span class="string">"src/db.properties"</span>));</span><br><span class="line">		pro2.load(is2);</span><br><span class="line">		System.out.println(pro2.getProperty(<span class="string">"user"</span>));</span><br><span class="line">		System.out.println(pro2.getProperty(<span class="string">"pwd"</span>));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Java/">Java</a>
+  <span></span> <a href="/tags/JavaWeb/">JavaWeb</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Java/">Java</a>
+  <a class="article-category-link" href="/categories/JavaWeb/">JavaWeb</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2019/03/03/JAVA/java的Package/" data-title="java的Package | Momentonly" data-tsina="" class="share clearfix">
+  <div data-url="http://yoursite.com/2019/06/17/Java Web/properties文件的读取/" data-title="properties文件的读取 | Momentonly" data-tsina="" class="share clearfix">
   </div>
 
 </div>
@@ -134,18 +137,18 @@ import com.szxy.test.*,则只能用com.szxy.test目录下的类">
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2019/03/13/Python/性能测试工具locust/" title="性能测试工具locust">
+ <a href="/2019/06/17/Mysql/mysql注释的三种写法/" title="mysql注释的三种写法">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  性能测试工具locust</span>
+  mysql注释的三种写法</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2019/03/02/JAVA/带标签的break和continue/"  title="带标签的break和continue">
+<a href="/2019/06/16/Linux/Linux常用命令2/"  title="Linux常用命令2">
  <strong>NEXT:</strong><br/> 
- <span>带标签的break和continue
+ <span>Linux常用命令2
 </span>
 </a>
 </div>
@@ -155,7 +158,7 @@ import com.szxy.test.*,则只能用com.szxy.test目录下的类">
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="java的Package" data-thread-key="JAVA/java的Package" data-author-key="Moment Only" data-url="http://yoursite.com/post/JAVA/java的Package"></div>
+	<div class="ds-thread" data-title="properties文件的读取" data-thread-key="Java Web/properties文件的读取" data-author-key="Moment Only" data-url="http://yoursite.com/post/Java Web/properties文件的读取"></div>
 	
 </section>
 
@@ -165,7 +168,7 @@ import com.szxy.test.*,则只能用com.szxy.test目录下的类">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#读取方式"><span class="toc-number">1.</span> <span class="toc-text">读取方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码实现"><span class="toc-number">2.</span> <span class="toc-text">代码实现</span></a></li></ol>
   </div>
 
 <div id="asidepart">

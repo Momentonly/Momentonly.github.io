@@ -87,7 +87,7 @@
     </p>
   <p class="article-time">
     <time datetime="2018-12-28T08:37:58.000Z" itemprop="datePublished">2018-12-28</time>
-    更新日期:<time datetime="2019-03-13T08:20:33.326Z" itemprop="dateModified">2019-03-13</time>
+    更新日期:<time datetime="2019-06-17T02:41:24.294Z" itemprop="dateModified">2019-06-17</time>
     
   </p>
 </header>
@@ -96,18 +96,20 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-forward（转发）"><span class="toc-number">1.</span> <span class="toc-text">1.forward（转发）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-redirect（重定向）"><span class="toc-number">2.</span> <span class="toc-text">2.redirect（重定向）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#区别："><span class="toc-number">3.</span> <span class="toc-text">区别：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#———path”-“路径———"><span class="toc-number">3.1.</span> <span class="toc-text">———path”/“路径———</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-forward（转发）"><span class="toc-number">1.</span> <span class="toc-text">1.forward（转发）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-redirect（重定向）"><span class="toc-number">2.</span> <span class="toc-text">2.redirect（重定向）</span></a></li></ol>
 		</div>
 		
 		<h4 id="1-forward（转发）"><a href="#1-forward（转发）" class="headerlink" title="1.forward（转发）"></a><strong>1.forward（转发）</strong></h4><p>是服务器请求资源,服务器直接访问目标地址的URL,把那个URL的响应内容读取过来,然后把这些内容再发给浏览器.浏览器根本不知道服务器发送的内容从哪里来的,因为这个跳转过程实在服务器实现的，并不是在客户端实现的所以客户端并不知道这个跳转动作，所以它的地址栏还是原来的地址.</p>
 <h4 id="2-redirect（重定向）"><a href="#2-redirect（重定向）" class="headerlink" title="2.redirect（重定向）"></a>2.<strong>redirect（重定向）</strong></h4><p>是服务端根据逻辑,发送一个状态码,告诉浏览器重新去请求那个地址.所以地址栏显示的是新的URL.</p>
-<h4 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h4><p><strong>转发是服务器行为，重定向是客户端行为。</strong></p>
+<p>区别：</p>
+<p><strong>转发是服务器行为，重定向是客户端行为。</strong></p>
 <p>1 )请求转发只能将请求转发给同一个WEB应用中的组件，而重定向还可以重新定向到同一站点不同应用程序中的资源，甚至可以定向到一绝对的URL。   </p>
 <p>2)重定向可以看见目标页面的URL，转发只能看见第一次访问的页面URL，以后的工作都是有服  务器来做的。  </p>
 <p>3) 请求响应调用者和被调用者之间共享相同的request对象和response对象，重定向调用者和被调用者属于两个独立访问请求和响应过程。</p>
 <p>4)请求重定向：不加/是相对于本servlet所在请求的目录，加“/”表示端口号后面的根目录  http：//localhost:8080/</p>
 <p>请求转发：不加/是相对于本servlet，加/表示web应用的根目录http：//localhost:8080/Test/</p>
-<h5 id="———path”-“路径———"><a href="#———path”-“路径———" class="headerlink" title="———path”/“路径———"></a>———path”/“路径———</h5><p> —–只要是需要通过浏览器发送请求的地方（比如html代码，sendRedirect方法等）“/“一般代表虚拟主机根目录，即相当于端口号之后的“/”，例：http：//localhost:8080/</p>
+<p>———path”/“路径———</p>
+<p> —–只要是需要通过浏览器发送请求的地方（比如html代码，sendRedirect方法等）“/“一般代表虚拟主机根目录，即相当于端口号之后的“/”，例：http：//localhost:8080/</p>
 <p>——服务器程序内部跳转，“/”一般代表本web应用的根目录，如请求转发。例：http：//localhost:8080/Test/</p>
   
 	</div>
@@ -169,7 +171,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-forward（转发）"><span class="toc-number">1.</span> <span class="toc-text">1.forward（转发）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-redirect（重定向）"><span class="toc-number">2.</span> <span class="toc-text">2.redirect（重定向）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#区别："><span class="toc-number">3.</span> <span class="toc-text">区别：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#———path”-“路径———"><span class="toc-number">3.1.</span> <span class="toc-text">———path”/“路径———</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-forward（转发）"><span class="toc-number">1.</span> <span class="toc-text">1.forward（转发）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-redirect（重定向）"><span class="toc-number">2.</span> <span class="toc-text">2.redirect（重定向）</span></a></li></ol>
   </div>
 
 <div id="asidepart">
@@ -195,9 +197,9 @@
 		
 			<li><a href="/categories/Java/" title="Java">Java<sup>9</sup></a></li>
 		
-			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>5</sup></a></li>
+			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>6</sup></a></li>
 		
-			<li><a href="/categories/Linux/" title="Linux">Linux<sup>2</sup></a></li>
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>3</sup></a></li>
 		
 			<li><a href="/categories/config/" title="config">config<sup>3</sup></a></li>
 		
@@ -220,9 +222,9 @@
 		
 			<li><a href="/tags/Java/" title="Java">Java<sup>10</sup></a></li>
 		
-			<li><a href="/tags/JavaWeb/" title="JavaWeb">JavaWeb<sup>4</sup></a></li>
+			<li><a href="/tags/JavaWeb/" title="JavaWeb">JavaWeb<sup>5</sup></a></li>
 		
-			<li><a href="/tags/Linux/" title="Linux">Linux<sup>2</sup></a></li>
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>3</sup></a></li>
 		
 			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
 		
@@ -253,7 +255,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/C/" style="font-size: 12.5px;">C</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaWeb/" style="font-size: 17.5px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/config/" style="font-size: 15px;">config</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/乱码/" style="font-size: 12.5px;">乱码</a>
+       <a href="/tags/C/" style="font-size: 12.5px;">C</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaWeb/" style="font-size: 17.5px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/config/" style="font-size: 15px;">config</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/乱码/" style="font-size: 12.5px;">乱码</a>
     </div>
   </div>
 

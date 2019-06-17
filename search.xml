@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[mysql注释的三种写法]]></title>
+    <url>%2F2019%2F06%2F17%2FMysql%2Fmysql%E6%B3%A8%E9%87%8A%E7%9A%84%E4%B8%89%E7%A7%8D%E5%86%99%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[MySql–三种注释写法 需要特别注意 – 这种注释后面要加一个空格 #DELETE FROM SeatInformation /DELETE FROM SeatInformation /– DELETE FROM SeatInformation]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[properties文件的读取]]></title>
+    <url>%2F2019%2F06%2F17%2FJava%20Web%2Fproperties%E6%96%87%E4%BB%B6%E7%9A%84%E8%AF%BB%E5%8F%96%2F</url>
+    <content type="text"><![CDATA[Java 开发中，需要将一些易变的配置参数放置再 XML 配置文件或者 properties 配置文件中。然而 XML 配置文件需要通过 DOM 或 SAX 方式解析，而读取 properties 配置文件就比较容易。 读取方式1、基于ClassLoder读取配置文件 ​ 注意：该方式只能读取类路径下的配置文件，有局限但是如果配置文件在类路径下比较方便。 2、基于 InputStream 读取配置文件 ​ 注意：该方式的优点在于可以读取任意路径下的配置文件 代码实现db.properties 12user=rootpwd=123 123456789101112131415161718192021222324252627282930313233343536package jdbc.com.szxy.properties;import java.io.File;import java.io.FileInputStream;import java.io.InputStream;import java.util.Properties;/** * 读取properties文件测试 * @author Momentonly */public class ProPertiesTest &#123; public static void main(String[] args) throws Exception &#123; /** * 基于ClassLoder读取配置文件 */ Properties pro1 = new Properties(); //获取资源的输入流,类路径下 InputStream is1 = ProPertiesTest.class.getClassLoader().getResourceAsStream("db.properties"); //读取输入流 pro1.load(is1); // System.out.println(pro1.getProperty("user")); System.out.println(pro1.getProperty("pwd")); /** * 基于 InputStream 读取配置文件 */ Properties pro2 = new Properties(); //获取资源的输入流，相对路径或者绝对路径 InputStream is2 = new FileInputStream(new File("src/db.properties")); pro2.load(is2); System.out.println(pro2.getProperty("user")); System.out.println(pro2.getProperty("pwd")); &#125;&#125;]]></content>
+      <categories>
+        <category>JavaWeb</category>
+      </categories>
+      <tags>
+        <tag>JavaWeb</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux常用命令2]]></title>
     <url>%2F2019%2F06%2F16%2FLinux%2FLinux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A42%2F</url>
     <content type="text"><![CDATA[1.scp -r root@39.104.111.122:/usr/local/ /usr/local ​ 将远程39.104.111.122的/usr/local下的文件拷贝到本机/usr/local目录下 ​ -r 复制目录 2.scp -r /usr/local root@39.104.111.122:/usr/local/ ​ 上传本地/usr/local目录到远程39.104.111.122的/usr/local目录 3.du -sh : 查看当前目录总共占的容量。而不单独列出各子项占用的容量 4.du -sh file:查看指定文件的大小 5.userdel -r 用户名 删除一个用户 6.passwd 用户名 修改密码 7.finger 查看登录的终端 8.last 用户名 查看登录记录 9.w -s 查看登录的终端用户 10.ls -lharts 查看文件详细信息]]></content>
@@ -224,14 +246,14 @@
         <category>JavaWeb</category>
       </categories>
       <tags>
-        <tag>乱码</tag>
         <tag>JavaWeb</tag>
+        <tag>乱码</tag>
       </tags>
   </entry>
   <entry>
     <title><![CDATA[请求转发与重定向的理解]]></title>
     <url>%2F2018%2F12%2F28%2FJava%20Web%2F%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91%2F</url>
-    <content type="text"><![CDATA[1.forward（转发）是服务器请求资源,服务器直接访问目标地址的URL,把那个URL的响应内容读取过来,然后把这些内容再发给浏览器.浏览器根本不知道服务器发送的内容从哪里来的,因为这个跳转过程实在服务器实现的，并不是在客户端实现的所以客户端并不知道这个跳转动作，所以它的地址栏还是原来的地址. 2.redirect（重定向）是服务端根据逻辑,发送一个状态码,告诉浏览器重新去请求那个地址.所以地址栏显示的是新的URL. 区别：转发是服务器行为，重定向是客户端行为。 1 )请求转发只能将请求转发给同一个WEB应用中的组件，而重定向还可以重新定向到同一站点不同应用程序中的资源，甚至可以定向到一绝对的URL。 2)重定向可以看见目标页面的URL，转发只能看见第一次访问的页面URL，以后的工作都是有服 务器来做的。 3) 请求响应调用者和被调用者之间共享相同的request对象和response对象，重定向调用者和被调用者属于两个独立访问请求和响应过程。 4)请求重定向：不加/是相对于本servlet所在请求的目录，加“/”表示端口号后面的根目录 http：//localhost:8080/ 请求转发：不加/是相对于本servlet，加/表示web应用的根目录http：//localhost:8080/Test/ ———path”/“路径——— —–只要是需要通过浏览器发送请求的地方（比如html代码，sendRedirect方法等）“/“一般代表虚拟主机根目录，即相当于端口号之后的“/”，例：http：//localhost:8080/ ——服务器程序内部跳转，“/”一般代表本web应用的根目录，如请求转发。例：http：//localhost:8080/Test/]]></content>
+    <content type="text"><![CDATA[1.forward（转发）是服务器请求资源,服务器直接访问目标地址的URL,把那个URL的响应内容读取过来,然后把这些内容再发给浏览器.浏览器根本不知道服务器发送的内容从哪里来的,因为这个跳转过程实在服务器实现的，并不是在客户端实现的所以客户端并不知道这个跳转动作，所以它的地址栏还是原来的地址. 2.redirect（重定向）是服务端根据逻辑,发送一个状态码,告诉浏览器重新去请求那个地址.所以地址栏显示的是新的URL. 区别： 转发是服务器行为，重定向是客户端行为。 1 )请求转发只能将请求转发给同一个WEB应用中的组件，而重定向还可以重新定向到同一站点不同应用程序中的资源，甚至可以定向到一绝对的URL。 2)重定向可以看见目标页面的URL，转发只能看见第一次访问的页面URL，以后的工作都是有服 务器来做的。 3) 请求响应调用者和被调用者之间共享相同的request对象和response对象，重定向调用者和被调用者属于两个独立访问请求和响应过程。 4)请求重定向：不加/是相对于本servlet所在请求的目录，加“/”表示端口号后面的根目录 http：//localhost:8080/ 请求转发：不加/是相对于本servlet，加/表示web应用的根目录http：//localhost:8080/Test/ ———path”/“路径——— —–只要是需要通过浏览器发送请求的地方（比如html代码，sendRedirect方法等）“/“一般代表虚拟主机根目录，即相当于端口号之后的“/”，例：http：//localhost:8080/ ——服务器程序内部跳转，“/”一般代表本web应用的根目录，如请求转发。例：http：//localhost:8080/Test/]]></content>
       <categories>
         <category>JavaWeb</category>
       </categories>
@@ -247,8 +269,8 @@
         <category>JavaWeb</category>
       </categories>
       <tags>
-        <tag>乱码</tag>
         <tag>JavaWeb</tag>
+        <tag>乱码</tag>
       </tags>
   </entry>
   <entry>
