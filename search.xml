@@ -12,17 +12,17 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[centos7配置dhcp和静态Ip]]></title>
-    <url>%2F2019%2F06%2F20%2FLinux%2Fcentos7%E9%85%8D%E7%BD%AEDHCP%E5%92%8C%E9%9D%99%E6%80%81IP%2F</url>
-    <content type="text"><![CDATA[vi ifcfg-eth0 TYPE=Ethernet PROXY_METHOD=none BROWSER_ONLY=no BOOTPROTO=static DEFROUTE=yes IPV4_FAILURE_FATAL=no IPV6INIT=yes IPV6_AUTOCONF=yes IPV6_DEFROUTE=yes IPV6_FAILURE_FATAL=no IPV6_ADDR_GEN_MODE=stable-privacy NAME=eth0 UUID=85a5000d-dbaa-4a2a-8075-0df5562bf331 DEVICE=eth0 ONBOOT=yes IPADDR=192.168.1.166 NETMASK=255.255.255.0 GATEWAY=192.168.1.1 DNS1=8.8.8.8 DNS2=114.114.114.114 DNS3=223.6.6.6 1.静态IPBOOTPROTO=static #设置static IPADDR=192.168.1.166 #静态ip NETMASK=255.255.255.0 #子网掩码 GATEWAY=192.168.1.1 #网关 2.DHCP​ 12345BOOTPROTO=dhcp #设置dhcp#注释掉配置的静态ip部分#IPADDR=192.168.1.166 #NETMASK=255.255.255.0#GATEWAY=192.168.1.1 配置完成后重启网络 systemctl restart network]]></content>
+    <title><![CDATA[centos7安装缺少命令]]></title>
+    <url>%2F2019%2F06%2F20%2FLinux%2F%E5%AE%89%E8%A3%85centos7%E7%BC%BA%E5%B0%91%E5%91%BD%E4%BB%A4%E9%97%AE%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[没有 ifconfig 、netstat命令： 1yum install -y net-tools 没有命令补全，tab补全命令： 1yum install -y bash-completion 没有killall命令： 1yum install -y psmisc]]></content>
       <categories>
         <category>Linux</category>
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[centos7安装缺少命令]]></title>
-    <url>%2F2019%2F06%2F20%2FLinux%2F%E5%AE%89%E8%A3%85centos7%E7%BC%BA%E5%B0%91%E5%91%BD%E4%BB%A4%E9%97%AE%E9%A2%98%2F</url>
-    <content type="text"><![CDATA[没有 ifconfig 、netstat命令： 1yum install -y net-tools 没有命令补全，tab补全命令： 1yum install -y bash-completion 没有killall命令： 1yum install -y psmisc]]></content>
+    <title><![CDATA[centos7配置dhcp和静态Ip]]></title>
+    <url>%2F2019%2F06%2F20%2FLinux%2Fcentos7%E9%85%8D%E7%BD%AEDHCP%E5%92%8C%E9%9D%99%E6%80%81IP%2F</url>
+    <content type="text"><![CDATA[vi ifcfg-eth0 TYPE=Ethernet PROXY_METHOD=none BROWSER_ONLY=no BOOTPROTO=static DEFROUTE=yes IPV4_FAILURE_FATAL=no IPV6INIT=yes IPV6_AUTOCONF=yes IPV6_DEFROUTE=yes IPV6_FAILURE_FATAL=no IPV6_ADDR_GEN_MODE=stable-privacy NAME=eth0 UUID=85a5000d-dbaa-4a2a-8075-0df5562bf331 DEVICE=eth0 ONBOOT=yes IPADDR=192.168.1.166 NETMASK=255.255.255.0 GATEWAY=192.168.1.1 DNS1=8.8.8.8 DNS2=114.114.114.114 DNS3=223.6.6.6 1.静态IPBOOTPROTO=static #设置static IPADDR=192.168.1.166 #静态ip NETMASK=255.255.255.0 #子网掩码 GATEWAY=192.168.1.1 #网关 2.DHCP​ 12345BOOTPROTO=dhcp #设置dhcp#注释掉配置的静态ip部分#IPADDR=192.168.1.166 #NETMASK=255.255.255.0#GATEWAY=192.168.1.1 配置完成后重启网络 systemctl restart network]]></content>
       <categories>
         <category>Linux</category>
       </categories>
