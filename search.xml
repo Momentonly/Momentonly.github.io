@@ -1,14 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[mysql注释的三种写法]]></title>
-    <url>%2F2019%2F06%2F17%2FMysql%2Fmysql%E6%B3%A8%E9%87%8A%E7%9A%84%E4%B8%89%E7%A7%8D%E5%86%99%E6%B3%95%2F</url>
-    <content type="text"><![CDATA[MySql--三种注释写法 需要特别注意 -- 这种注释后面要加一个空格 #DELETE FROM SeatInformation /DELETE FROM SeatInformation /– DELETE FROM SeatInformation]]></content>
+    <title><![CDATA[jdbc中的execute()返回值]]></title>
+    <url>%2F2019%2F06%2F20%2FJDBC%2Fjdbc%E4%B8%AD%E7%9A%84execute()%E8%BF%94%E5%9B%9E%E5%80%BC%2F</url>
+    <content type="text"><![CDATA[jdbc中的execute()返回值表示不同的操作 true表示查询 false表示更新或者删除]]></content>
+      <categories>
+        <category>JavaWeb</category>
+      </categories>
+      <tags>
+        <tag>JDBC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[centos7配置dhcp和静态Ip]]></title>
+    <url>%2F2019%2F06%2F20%2FLinux%2Fcentos7%E9%85%8D%E7%BD%AEDHCP%E5%92%8C%E9%9D%99%E6%80%81IP%2F</url>
+    <content type="text"><![CDATA[vi ifcfg-eth0 TYPE=Ethernet PROXY_METHOD=none BROWSER_ONLY=no BOOTPROTO=static DEFROUTE=yes IPV4_FAILURE_FATAL=no IPV6INIT=yes IPV6_AUTOCONF=yes IPV6_DEFROUTE=yes IPV6_FAILURE_FATAL=no IPV6_ADDR_GEN_MODE=stable-privacy NAME=eth0 UUID=85a5000d-dbaa-4a2a-8075-0df5562bf331 DEVICE=eth0 ONBOOT=yes IPADDR=192.168.1.166 NETMASK=255.255.255.0 GATEWAY=192.168.1.1 DNS1=8.8.8.8 DNS2=114.114.114.114 DNS3=223.6.6.6 1.静态IPBOOTPROTO=static #设置static IPADDR=192.168.1.166 #静态ip NETMASK=255.255.255.0 #子网掩码 GATEWAY=192.168.1.1 #网关 2.DHCP​ 12345BOOTPROTO=dhcp #设置dhcp#注释掉配置的静态ip部分#IPADDR=192.168.1.166 #NETMASK=255.255.255.0#GATEWAY=192.168.1.1 配置完成后重启网络 systemctl restart network]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[centos7安装缺少命令]]></title>
+    <url>%2F2019%2F06%2F20%2FLinux%2F%E5%AE%89%E8%A3%85centos7%E7%BC%BA%E5%B0%91%E5%91%BD%E4%BB%A4%E9%97%AE%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[没有 ifconfig 、netstat命令： 1yum install -y net-tools 没有命令补全，tab补全命令： 1yum install -y bash-completion 没有killall命令： 1yum install -y psmisc]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[centos7修改网卡名]]></title>
+    <url>%2F2019%2F06%2F20%2FLinux%2Fcentos7%E4%BF%AE%E6%94%B9%E7%BD%91%E5%8D%A1%E5%90%8D%2F</url>
+    <content type="text"><![CDATA[用ifconfig查看网卡名称为ens33，现在要将它修改成eth0 1)编辑配置文件/etc/sysconfig/network-scripts/ifcfg-ens33 将DEVICE=ens33修改成DEVICE=eth0 将NAME=ens33修改成NAME=eth0 保存并退出 2)重命名该配置文件。 [root@remote network-scripts]# cd /etc/sysconfig/network-scripts/ [root@remote network-scripts]# mv ifcfg-ens33 ifcfg-eth0 3)编辑/etc/default/grub并加入“net.ifnames=0 biosdevname=0 ” 示例:GRUB_CMDLINE_LINUX=”crashkernel=auto net.ifnames=0 biosdevname=0 rhgb quiet” 保存并退出 4)运行命令grub2-mkconfig -o /boot/grub2/grub.cfg 来重新生成GRUB配置并更新内核参数 5)使用reboot命令重启操作系统 注意:重启后查看ifcfg-eth0,dhcp可能被修改为static,如果没有配置静态ip网络会出错]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[数据库元数据MetaData]]></title>
+    <url>%2F2019%2F06%2F19%2FJDBC%2F%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%83%E6%95%B0%E6%8D%AEMetaDate%2F</url>
+    <content type="text"><![CDATA[本篇介绍数据库方面的元数据（MetaData）的有关知识。元数据在建立框架和架构方面是特别重要的知识，再下一篇我们仿造开源数据库工具类DbUtils就要使用数据库的元数据来创建自定义JDBC框架。 在我们前面使用JDBC来处理数据库的接口主要有三个，即Connection，PreparedStatement和ResultSet这三个，而对于这三个接口，还可以获取不同类型的元数据，通过这些元数据类获得一些数据库的信息。 元数据(MetaData)，即定义数据的数据。打个比方，就好像我们要想搜索一首歌(歌本身是数据)，而我们可以通过歌名，作者，专辑等信息来搜索，那么这些歌名，作者，专辑等等就是这首歌的元数据。因此数据库的元数据就是一些注明数据库信息的数据。 ① 由Connection对象的getMetaData()方法获取的是DatabaseMetaData对象。 ② 由PreparedStatement对象的getParameterMetaData ()方法获取的是ParameterMetaData对象。 ③由ResultSet对象的getMetaData()方法获取的是ResultSetMetaData对象。 一、DatabaseMetaDataDatabaseMetaData是由Connection对象通过getMetaData方法获取而来，主要封装了是对数据库本身的一些整体综合信息，例如数据库的产品名称，数据库的版本号，数据库的URL，是否支持事务等等，能获取的信息比较多，具体可以参考DatabaseMetaData的API文档。 以下有一些关于DatabaseMetaData的常用方法： ·getDatabaseProductName：获取数据库的产品名称 ·getDatabaseProductName：获取数据库的版本号 ·getUserName：获取数据库的用户名 ·getURL：获取数据库连接的URL ·getDriverName：获取数据库的驱动名称 ·driverVersion：获取数据库的驱动版本号 ·isReadOnly：查看数据库是否只允许读操作 ·supportsTransactions：查看数据库是否支持事务 例1： 简单地获取一些常用的数据库综合信息。 二、ParameterMetaData ParameterMetaData是由PreparedStatement对象通过getParameterMetaData方法获取而来，主要是针对PreparedStatement对象和其预编译的SQL命令语句提供一些信息，比如像”insert into account(id,name,money) values(?,?,?)”这样的预编译SQL语句，ParameterMetaData能提供占位符参数的个数，获取指定位置占位符的SQL类型等等，功能也比较多，这里不列举完，详细请看有关ParameterMetaData的API文档。 以下有一些关于ParameterMetaData的常用方法： ·getParameterCount：获取预编译SQL语句中占位符参数的个数 在我看来，ParameterMetaData对象能用的只有获取参数个数的getParameterCount()方法。 注意：ParameterMetaData许多方法MySQL并不友好支持，比如像获取指定参数的SQL类型的getParameterType方法，如果数据库驱动连接URL只是简单的“jdbc:mysql://localhost:3306/jdbcdemo”那么MyEclipse会抛出SQLException异常，必须要将URL修改为“jdbc:mysql://localhost:3306/jdbcdemo?generateSimpleParameterMetadata=true”才行。但是像getParameterType等等与其他的方法也没多好用，因为如下面的例子，这些方法好像只会将所有的参数认为是字符串(VARCHAR)类型。 因为我们的SQL语句为”insert into user(id,name,age) values(?,?,?)”，而我们所有利用ParameterMetaData查询的信息除了参数个数以外，都是查询第一个参数的信息，也就是“id”列，而这个“id”列我们创建时是int整型的，但是利用ParameterMetaData的查询结果都是显示为字符串类型，因此我对ParameterMetaData的功能产生了怀疑。 因此在以后使用参数元数据ParameterMetaData尽量只要使用其getParamterCount()方法获取参数个数，对于该对象其他方法请慎用。 三、ResultSetMetaData ResultSetMetaData是由ResultSet对象通过getMetaData方法获取而来，主要是针对由数据库执行的SQL脚本命令获取的结果集对象ResultSet中提供的一些信息，比如结果集中的列数、指定列的名称、指定列的SQL类型等等，可以说这个是对于框架来说非常重要的一个对象。关于该结果集元数据对象的其他具体功能和方法请查阅有关ResultSetMetaData的API文档。 以下有一些关于ResultSetMetaData的常用方法： ·getColumnCount：获取结果集中列项目的个数 ·getColumnType：获取指定列的SQL类型对应于Java中Types类的字段 ·getColumnTypeName：获取指定列的SQL类型 ·getClassName：获取指定列SQL类型对应于Java中的类型(包名加类名)]]></content>
+      <categories>
+        <category>JavaWeb</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[JDBC操作数据库]]></title>
+    <url>%2F2019%2F06%2F17%2FJDBC%2FJDBC%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>JavaWeb</category>
+      </categories>
+      <tags>
+        <tag>JDBC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>%2F2019%2F06%2F17%2FJDBC%2Fjdbc%E4%B8%AD%E7%9A%84execute()%E8%BF%94%E5%9B%9E%E5%80%BC%E8%A1%A8%E7%A4%BA%E4%B8%8D%E5%90%8C%E7%9A%84%2F</url>
+    <content type="text"><![CDATA[jdbc中的execute()返回值表示不同的操作 true表示查询 false表示更新或者删除]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[mysql注释的三种写法]]></title>
+    <url>%2F2019%2F06%2F17%2FJDBC%2Fmysql%E6%B3%A8%E9%87%8A%E7%9A%84%E4%B8%89%E7%A7%8D%E5%86%99%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[MySql--三种注释写法 需要特别注意 -- 这种注释后面要加一个空格 #DELETE FROM SeatInformation /DELETE FROM SeatInformation /– DELETE FROM SeatInformation]]></content>
+      <categories>
+        <category>JavaWeb</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -25,7 +90,7 @@
   <entry>
     <title><![CDATA[Linux常用命令2]]></title>
     <url>%2F2019%2F06%2F16%2FLinux%2FLinux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A42%2F</url>
-    <content type="text"><![CDATA[1.scp -r root@39.104.111.122:/usr/local/ /usr/local ​ 将远程39.104.111.122的/usr/local下的文件拷贝到本机/usr/local目录下 ​ -r 复制目录 2.scp -r /usr/local root@39.104.111.122:/usr/local/ ​ 上传本地/usr/local目录到远程39.104.111.122的/usr/local目录 3.du -sh : 查看当前目录总共占的容量。而不单独列出各子项占用的容量 4.du -sh file:查看指定文件的大小 5.userdel -r 用户名 删除一个用户 6.passwd 用户名 修改密码 7.finger 查看登录的终端 8.last 用户名 查看登录记录 9.w -s 查看登录的终端用户 10.ls -lharts 查看文件详细信息]]></content>
+    <content type="text"><![CDATA[1.scp -r root@39.104.111.122:/usr/local/ /usr/local ​ 将远程39.104.111.122的/usr/local下的文件拷贝到本机/usr/local目录下 ​ -r 复制目录 2.scp -r /usr/local root@39.104.111.122:/usr/local/ ​ 上传本地/usr/local目录到远程39.104.111.122的/usr/local目录 3.du -sh : 查看当前目录总共占的容量。而不单独列出各子项占用的容量 4.du -sh file:查看指定文件的大小 5.userdel -r 用户名 删除一个用户 6.passwd 用户名 修改密码 7.finger 查看登录的终端 8.last 用户名 查看登录记录 9.w -s 查看登录的终端用户 10.ls -lharts 查看文件详细信息 11.pwd 查看当前的路径 12.pgrep 进程名 查看进程的pid 13.ps -ef|grep 进程名 查看进程的pid 14.killall -9 bash 杀掉所有登录的bash 注:killall [参数][进程名] 用来杀掉同名的所有进程]]></content>
       <categories>
         <category>Linux</category>
       </categories>

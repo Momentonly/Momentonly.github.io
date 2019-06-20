@@ -1,8 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://yoursite.com/2019/06/17/Mysql/mysql%E6%B3%A8%E9%87%8A%E7%9A%84%E4%B8%89%E7%A7%8D%E5%86%99%E6%B3%95/</loc>
-    <lastmod>2019-06-17T08:19:54.272Z</lastmod>
+    <loc>http://yoursite.com/2019/06/20/JDBC/jdbc%E4%B8%AD%E7%9A%84execute()%E8%BF%94%E5%9B%9E%E5%80%BC/</loc>
+    <lastmod>2019-06-20T05:54:22.223Z</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/06/16/Linux/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A42/</loc>
+    <lastmod>2019-06-20T05:52:21.887Z</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/06/20/Linux/%E5%AE%89%E8%A3%85centos7%E7%BC%BA%E5%B0%91%E5%91%BD%E4%BB%A4%E9%97%AE%E9%A2%98/</loc>
+    <lastmod>2019-06-20T05:51:58.626Z</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/06/20/Linux/centos7%E9%85%8D%E7%BD%AEDHCP%E5%92%8C%E9%9D%99%E6%80%81IP/</loc>
+    <lastmod>2019-06-20T05:47:21.258Z</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/06/20/Linux/centos7%E4%BF%AE%E6%94%B9%E7%BD%91%E5%8D%A1%E5%90%8D/</loc>
+    <lastmod>2019-06-20T05:14:57.104Z</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/06/19/JDBC/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%83%E6%95%B0%E6%8D%AEMetaDate/</loc>
+    <lastmod>2019-06-19T01:10:08.727Z</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/06/17/JDBC/JDBC%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
+    <lastmod>2019-06-17T14:36:07.517Z</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/06/17/JDBC/mysql%E6%B3%A8%E9%87%8A%E7%9A%84%E4%B8%89%E7%A7%8D%E5%86%99%E6%B3%95/</loc>
+    <lastmod>2019-06-17T13:47:18.166Z</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/06/17/JDBC/jdbc%E4%B8%AD%E7%9A%84execute()%E8%BF%94%E5%9B%9E%E5%80%BC%E8%A1%A8%E7%A4%BA%E4%B8%8D%E5%90%8C%E7%9A%84/</loc>
+    <lastmod>2019-06-17T12:07:04.718Z</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2018/12/28/Java%20Web/%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91/</loc>
     <lastmod>2019-06-17T02:41:24.294Z</lastmod>
@@ -12,9 +36,6 @@
   </url>  <url>
     <loc>http://yoursite.com/2019/06/16/Java%20Web/%E6%89%8B%E5%86%99%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%80%BB%E7%BB%93/</loc>
     <lastmod>2019-06-16T14:16:50.731Z</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/2019/06/16/Linux/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A42/</loc>
-    <lastmod>2019-06-16T14:10:38.598Z</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/06/15/Config/sublime%E7%9A%84package%20control/</loc>
     <lastmod>2019-06-15T07:33:57.858Z</lastmod>
