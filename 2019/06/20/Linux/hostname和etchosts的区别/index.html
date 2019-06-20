@@ -7,14 +7,12 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>Java理解  子类成员变量与父类成员变量同名     方法的重写 | Momentonly</title>
+    <title>hostname和etchosts的区别 | Momentonly</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Moment Only">
     
-    <meta name="description" content="1.子类父类成员变量同名1.子类的成员变量与父类成员变量同名时,在子类中父类成员变量被”隐藏”2.要想访问与父类的同名的成员变量, 两种方法 ①: 在子类中是用 super ②:将该变量强转成父类的类
-3.对象是什么类型的(不是new的那个类型), 成员变量是什么类型. 
-2.子类对父类方法的重写子">
+    <meta name="description" content="很多人一提到更改hostname首先就想到修改/etc/hosts文件，认为hostname的配置文件就是/etc/hosts。其实不是的。hosts文件的作用相当于DNS，提供IP地址hostname的对应。早期的互联网计算机少，单机hosts文件里足够存放所有联网计算机。不过随着互联网的发展，这">
     
     
     
@@ -80,15 +78,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/01/17/JAVA/成员变量的同名和方法的重写/" title="Java理解  子类成员变量与父类成员变量同名     方法的重写" itemprop="url">Java理解  子类成员变量与父类成员变量同名     方法的重写</a>
+      <a href="/2019/06/20/Linux/hostname和etchosts的区别/" title="hostname和etchosts的区别" itemprop="url">hostname和etchosts的区别</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
     </p>
   <p class="article-time">
-    <time datetime="2019-01-17T14:53:34.000Z" itemprop="datePublished">2019-01-17</time>
-    更新日期:<time datetime="2019-01-18T03:11:55.968Z" itemprop="dateModified">2019-01-18</time>
+    <time datetime="2019-06-20T06:43:59.000Z" itemprop="datePublished">2019-06-20</time>
+    更新日期:<time datetime="2019-06-20T06:46:59.622Z" itemprop="dateModified">2019-06-20</time>
     
   </p>
 </header>
@@ -97,27 +95,46 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-子类父类成员变量同名"><span class="toc-number">1.</span> <span class="toc-text">1.子类父类成员变量同名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-子类对父类方法的重写"><span class="toc-number">2.</span> <span class="toc-text">2.子类对父类方法的重写</span></a></li></ol>
+		
 		</div>
 		
-		<h4 id="1-子类父类成员变量同名"><a href="#1-子类父类成员变量同名" class="headerlink" title="1.子类父类成员变量同名"></a>1.子类父类成员变量同名</h4><p>1.子类的成员变量与父类成员变量同名时,在子类中父类成员变量被”隐藏”<br>2.要想访问与父类的同名的成员变量, 两种方法 ①: 在子类中是用 super ②:将该变量强转成父类的类</p>
-<p><strong><em>3.对象是什么类型的(不是new的那个类型), 成员变量是什么类型.</em></strong> </p>
-<h4 id="2-子类对父类方法的重写"><a href="#2-子类对父类方法的重写" class="headerlink" title="2.子类对父类方法的重写"></a>2.子类对父类方法的重写</h4><p>子类的方法与父类的方法重名时(我们讲得是重写的情况, 方法名一致, 形参一致, 与返回值无关)叫做重写(覆盖), 顾名思义, 把父类的方法重写了. 所以怎么转换, 都是子类的方法.</p>
+		<p>   很多人一提到更改hostname首先就想到修改/etc/hosts文件，认为hostname的配置文件就是/etc/hosts。其实不是的。hosts文件的作用相当于DNS，提供IP地址hostname的对应。早期的互联网计算机少，单机hosts文件里足够存放所有联网计算机。不过随着互联网的发展，这就远远不够了。于是就出现了分布式的DNS系统。由DNS服务器来提供类似的IP地址到域名的对应。Linux系统在向DNS服务器发出域名解析请求之前会查询/etc/hosts文件，如果里面有相应的记录，就会使用hosts里面的记录。由此，/etc/hosts于设置hostname是没直接关系的，仅仅当你要在本机上用新的hostname来映射自己的IP时候才会用到/etc/hosts文件。两者没有必然的联系。redhat的hostname的配置文件是/etc/sysconfig/network.</p>
+<p>/etc/hosts内容摘录如下：</p>
+<p>#Do not remove the following line, or various programs</p>
+<p>#that require network functionality will fail.</p>
+<p>192.168.1.102 localhost.localdomain localhost<br>127.0.0.1 localhost.localdomain localhost<br>::1 localhost6.localdomain6 localhost6<br>对以上内容的解释<br>作用：hosts 文件是用来把主机名字映射到IP地址的方法，这种方法比较简单。但这种映射只是本地映射，也就是说每台机器都是独立的，所有的计算机都不能相互通过hostname来访问。<br>格式：<br>　　一般情况下hosts的内容关于主机名(hostname)的定义，每行为一个主机，每行由三部份组成，每个部份由空格隔开。其中#号开头的行做说明，不被系统解释。</p>
+<p>　　第一部份：网络IP地址；</p>
+<p>　　第二部份：主机名.域名，注意主机名和域名之间有个半角的点，比如 localhost.localdomain</p>
+<p>　　第二部份：主机名(主机名别名） ，其实就是主机名；<br>注释：<br>1）127.0.0.1 是回环地址，比如我们不想让局域网的其它机器看到我们测试的网络程序，就可以用回环地址来测试。<br>2）为什么需要定义域名呢？其实理解也简单，比如我们有三台主机，每台做不同的事，一台做MAIL服务器，一台做FTP服务器，一台做SMB服务器，所以我们就可以这样来设计hostname；</p>
+<p>　　127.0.0.1 localhost.localdomain localhost</p>
+<p>　　192.168.1.2 ftp</p>
+<p>　　192.168.1.3 mail.localdomain mail</p>
+<p>　　192.168.1.4 smb.localdomin smb<br>把这上面这个配置文件的内容分别写入每台机器的/etc/hosts内容中，这样这三台局域网的机器就可以通过hostname来访问了。也就是，在局域网中，主机名也是可以解析到IP上的，相当于DNS域名解析。<br>对于主机名的修改有两种方式:hostname和/etc/sysconfig/network</p>
+<p>[sql] view plaincopyprint?<br>[root@think ~]# hostname<br>thin<br>[root@think ~]# hostname think<br>[root@think ~]# hostname<br>think</p>
+<p>通过hostname 这个kernel变量来设置主机名只是临时的，下次重启系统时，此主机名将不会存在.hostname也可用于显示:hostname -i。如果要永久修改RedHat hostname，就修改/etc/sysconfig/network文件，将里面的HOSTNAME这一行修改成HOSTNAME=NEWNAME，其中NEWNAME就是你要设置的hostname。</p>
+<p>2./hosts文件可以帮助解决哪些问题<br>2.1 远程登录linux主机过慢问题</p>
+<p>有时客户端想远程登录一台linux主机，但每次登录输入密码后都会等很长一段时间才会进入，这是因为linux主机在返回信息时需要解析ip，如果在linux主机的hosts文件事先加入客户端的ip地址，这时再从客户端远程登录linux就会变很快。</p>
+<p>注：这里所说的远程登录不仅仅是ssh，还可能是mysql远程登录，或是文件共享的查询等。</p>
+<p>2.2 双机互连</p>
+<p>当两台主机只是双机互连时，这时两台主机都需要设置自己的ip，同时在对方的hosts文件里加入自己的ip和主机名。</p>
+<p>注：不同发行版的主机名称对应文件可以通过man host那么进行查阅</p>
+<p>3.关于FQDN</p>
+<p>FQDN：(Fully Qualified Domain Name)完全合格域名/全称域名，是指主机名加上全路径，全路径中列出了序列中所有域成员。全域名可以从逻辑上准确地表示出主机在什么地方，也可以说全域名是主机名的一种完全表示形式。从全域名中包含的信息可以看出主机在域名树中的位置。DNS解析流程：首先查找本机HOSTS表，有的直接使用表中定义，没有查找网络连接中设置的DNS 服务器由他来解析。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Java/">Java</a>
-  </div>
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Linux/">Linux</a>
+</div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2019/01/17/JAVA/成员变量的同名和方法的重写/" data-title="Java理解  子类成员变量与父类成员变量同名     方法的重写 | Momentonly" data-tsina="" class="share clearfix">
+  <div data-url="http://yoursite.com/2019/06/20/Linux/hostname和etchosts的区别/" data-title="hostname和etchosts的区别 | Momentonly" data-tsina="" class="share clearfix">
   </div>
 
 </div>
@@ -127,18 +144,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2019/01/18/JAVA/Java多线程this与Thread.currentThread()的区别/" title="Java多线程之this与Thread.currentThread()的区别">
+ <a href="/2019/06/20/Linux/mysql配置远程登录/" title="mysql配置远程登录">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  Java多线程之this与Thread.currentThread()的区别</span>
+  mysql配置远程登录</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2018/12/30/JAVA/字符串分割split/"  title="String.split()分割字符串用法">
+<a href="/2019/06/20/JDBC/jdbc中的execute()返回值/"  title="jdbc中的execute()返回值">
  <strong>NEXT:</strong><br/> 
- <span>String.split()分割字符串用法
+ <span>jdbc中的execute()返回值
 </span>
 </a>
 </div>
@@ -148,7 +165,7 @@
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="Java理解  子类成员变量与父类成员变量同名     方法的重写" data-thread-key="JAVA/成员变量的同名和方法的重写" data-author-key="Moment Only" data-url="http://yoursite.com/post/JAVA/成员变量的同名和方法的重写"></div>
+	<div class="ds-thread" data-title="hostname和etchosts的区别" data-thread-key="Linux/hostname和etchosts的区别" data-author-key="Moment Only" data-url="http://yoursite.com/post/Linux/hostname和etchosts的区别"></div>
 	
 </section>
 
@@ -158,7 +175,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-子类父类成员变量同名"><span class="toc-number">1.</span> <span class="toc-text">1.子类父类成员变量同名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-子类对父类方法的重写"><span class="toc-number">2.</span> <span class="toc-text">2.子类对父类方法的重写</span></a></li></ol>
+  
   </div>
 
 <div id="asidepart">

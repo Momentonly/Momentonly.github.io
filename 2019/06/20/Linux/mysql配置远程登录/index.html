@@ -7,14 +7,16 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>Java理解  子类成员变量与父类成员变量同名     方法的重写 | Momentonly</title>
+    <title>mysql配置远程登录 | Momentonly</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Moment Only">
     
-    <meta name="description" content="1.子类父类成员变量同名1.子类的成员变量与父类成员变量同名时,在子类中父类成员变量被”隐藏”2.要想访问与父类的同名的成员变量, 两种方法 ①: 在子类中是用 super ②:将该变量强转成父类的类
-3.对象是什么类型的(不是new的那个类型), 成员变量是什么类型. 
-2.子类对父类方法的重写子">
+    <meta name="description" content="mysql配置远程登录
+1.查看表
+use mysql;
+select host,user from user;
+ host      | user      |+———–+———–+| %         | root      || localhost | mysql.sys || localh">
     
     
     
@@ -80,15 +82,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/01/17/JAVA/成员变量的同名和方法的重写/" title="Java理解  子类成员变量与父类成员变量同名     方法的重写" itemprop="url">Java理解  子类成员变量与父类成员变量同名     方法的重写</a>
+      <a href="/2019/06/20/Linux/mysql配置远程登录/" title="mysql配置远程登录" itemprop="url">mysql配置远程登录</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
     </p>
   <p class="article-time">
-    <time datetime="2019-01-17T14:53:34.000Z" itemprop="datePublished">2019-01-17</time>
-    更新日期:<time datetime="2019-01-18T03:11:55.968Z" itemprop="dateModified">2019-01-18</time>
+    <time datetime="2019-06-20T14:35:59.000Z" itemprop="datePublished">2019-06-20</time>
+    更新日期:<time datetime="2019-06-20T14:36:00.180Z" itemprop="dateModified">2019-06-20</time>
     
   </p>
 </header>
@@ -97,27 +99,36 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-子类父类成员变量同名"><span class="toc-number">1.</span> <span class="toc-text">1.子类父类成员变量同名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-子类对父类方法的重写"><span class="toc-number">2.</span> <span class="toc-text">2.子类对父类方法的重写</span></a></li></ol>
+		
 		</div>
 		
-		<h4 id="1-子类父类成员变量同名"><a href="#1-子类父类成员变量同名" class="headerlink" title="1.子类父类成员变量同名"></a>1.子类父类成员变量同名</h4><p>1.子类的成员变量与父类成员变量同名时,在子类中父类成员变量被”隐藏”<br>2.要想访问与父类的同名的成员变量, 两种方法 ①: 在子类中是用 super ②:将该变量强转成父类的类</p>
-<p><strong><em>3.对象是什么类型的(不是new的那个类型), 成员变量是什么类型.</em></strong> </p>
-<h4 id="2-子类对父类方法的重写"><a href="#2-子类对父类方法的重写" class="headerlink" title="2.子类对父类方法的重写"></a>2.子类对父类方法的重写</h4><p>子类的方法与父类的方法重名时(我们讲得是重写的情况, 方法名一致, 形参一致, 与返回值无关)叫做重写(覆盖), 顾名思义, 把父类的方法重写了. 所以怎么转换, 都是子类的方法.</p>
+		<p>mysql配置远程登录</p>
+<p>1.查看表</p>
+<p>use mysql;</p>
+<p>select host,user from user;</p>
+<p> host      | user      |<br>+———–+———–+<br>| %         | root      |<br>| localhost | mysql.sys |<br>| localhost | root     |</p>
+<p>host是主机，root表示主机可以登录的用户，%表示所有主机，但不包括localhost</p>
+<p>2.如果没有%,root</p>
+<p>grant all privileges on 库名.表名 to ‘用户名‘@’IP地址’ identified by ‘密码’ with grant option;<br>flush privileges;</p>
+<p>库名:要远程访问的数据库名称,所有的数据库使用“*”<br>表名:要远程访问的数据库下的表的名称，所有的表使用“*”<br>用户名:要赋给远程访问权限的用户名称<br>IP地址:可以远程访问的电脑的IP地址，所有的地址使用“%” </p>
+<p>3.如果配置所有ip可以远程登录root</p>
+<p>GRANT ALL PRIVILEGES ON *.* TO ‘root‘@’%’ IDENTIFIED BY ‘123456’ WITH GRANT OPTION; </p>
+<p>所有的地址都可以使用root用户，密码为123456远程访问所有的数据库和表</p>
+<p>GRANT ALL PRIVILEGES ON testdb.* TO ‘lxh‘@’172.16.52.225’  IDENTIFIED BY ‘lxh’ WITH GRANT OPTION;</p>
+<p>IP为172.16.52.225的电脑可以使用lxh用户，密码为lxh远程访问数据库testdb的所有表</p>
+<p><strong><em>注意</em></strong><br><strong><em>需要注意mysql的配置文件中的bindaddress 的参数和skip-networking 配置</em></strong></p>
+<p><strong><em>bindaddress : 设定哪些ip地址被配置，使得mysql服务器只回应哪些ip地址的请求),最好注释掉该参数或设置成为127.0.0.1以外的值</em></strong></p>
+<p><strong><em>skip-networking : 如果设置了该参数项，将导致所有TCP/IP端口没有被监听,也就是说出了本机，其他客户端都无法用网络连接到本mysql服务器，所以应该注释掉该参数</em></strong></p>
   
 	</div>
 		<footer class="article-footer clearfix">
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Java/">Java</a>
-  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2019/01/17/JAVA/成员变量的同名和方法的重写/" data-title="Java理解  子类成员变量与父类成员变量同名     方法的重写 | Momentonly" data-tsina="" class="share clearfix">
+  <div data-url="http://yoursite.com/2019/06/20/Linux/mysql配置远程登录/" data-title="mysql配置远程登录 | Momentonly" data-tsina="" class="share clearfix">
   </div>
 
 </div>
@@ -126,19 +137,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2019/01/18/JAVA/Java多线程this与Thread.currentThread()的区别/" title="Java多线程之this与Thread.currentThread()的区别">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  Java多线程之this与Thread.currentThread()的区别</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2018/12/30/JAVA/字符串分割split/"  title="String.split()分割字符串用法">
+<a href="/2019/06/20/Linux/hostname和etchosts的区别/"  title="hostname和etchosts的区别">
  <strong>NEXT:</strong><br/> 
- <span>String.split()分割字符串用法
+ <span>hostname和etchosts的区别
 </span>
 </a>
 </div>
@@ -148,7 +151,7 @@
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="Java理解  子类成员变量与父类成员变量同名     方法的重写" data-thread-key="JAVA/成员变量的同名和方法的重写" data-author-key="Moment Only" data-url="http://yoursite.com/post/JAVA/成员变量的同名和方法的重写"></div>
+	<div class="ds-thread" data-title="mysql配置远程登录" data-thread-key="Linux/mysql配置远程登录" data-author-key="Moment Only" data-url="http://yoursite.com/post/Linux/mysql配置远程登录"></div>
 	
 </section>
 
@@ -158,7 +161,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-子类父类成员变量同名"><span class="toc-number">1.</span> <span class="toc-text">1.子类父类成员变量同名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-子类对父类方法的重写"><span class="toc-number">2.</span> <span class="toc-text">2.子类对父类方法的重写</span></a></li></ol>
+  
   </div>
 
 <div id="asidepart">
