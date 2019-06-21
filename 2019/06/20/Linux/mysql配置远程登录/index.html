@@ -90,7 +90,7 @@ select host,user from user;
     </p>
   <p class="article-time">
     <time datetime="2019-06-20T14:35:59.000Z" itemprop="datePublished">2019-06-20</time>
-    更新日期:<time datetime="2019-06-20T14:36:00.180Z" itemprop="dateModified">2019-06-20</time>
+    更新日期:<time datetime="2019-06-21T04:26:13.474Z" itemprop="dateModified">2019-06-21</time>
     
   </p>
 </header>
@@ -112,7 +112,7 @@ select host,user from user;
 <p>grant all privileges on 库名.表名 to ‘用户名‘@’IP地址’ identified by ‘密码’ with grant option;<br>flush privileges;</p>
 <p>库名:要远程访问的数据库名称,所有的数据库使用“*”<br>表名:要远程访问的数据库下的表的名称，所有的表使用“*”<br>用户名:要赋给远程访问权限的用户名称<br>IP地址:可以远程访问的电脑的IP地址，所有的地址使用“%” </p>
 <p>3.如果配置所有ip可以远程登录root</p>
-<p>GRANT ALL PRIVILEGES ON *.* TO ‘root‘@’%’ IDENTIFIED BY ‘123456’ WITH GRANT OPTION; </p>
+<p>GRANT ALL PRIVILEGES ON *.* TO \’root\‘@\’%\’ IDENTIFIED BY \’123456\’ WITH GRANT OPTION; </p>
 <p>所有的地址都可以使用root用户，密码为123456远程访问所有的数据库和表</p>
 <p>GRANT ALL PRIVILEGES ON testdb.* TO ‘lxh‘@’172.16.52.225’  IDENTIFIED BY ‘lxh’ WITH GRANT OPTION;</p>
 <p>IP为172.16.52.225的电脑可以使用lxh用户，密码为lxh远程访问数据库testdb的所有表</p>
