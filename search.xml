@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title></title>
+    <url>%2F2019%2F06%2F21%2Ftemp%2F%E6%95%B0%E6%8D%AE%E6%BA%90%E5%92%8C%E8%BF%9E%E6%8E%A5%E6%B1%A0%2F</url>
+    <content type="text"><![CDATA[数据源（1）数据源是一种数据库对编程提供的一个接口，每个数据源对应一个数据库。（2）连接池只是存放数据库连接对象的一个缓冲池，需要数据连接的时候从缓冲池中取就行了。（3）连接池可以管理数据源。 ​ 用TCP来连接你的应用程序与数据库是一件昂贵的事情（很费时的事情），开发者可以通过用连接池来反复的使用数据库的连接。比起每次请求都用TCP来连一次数据库，连接池只有在不存在有效的连接时才新建一个TCP连接。当关闭一个连接的时候，它会被放到池中，它仍然会保持与数据库的连接，这样就可以减少与数据库的TCP连接次数。​ 数据源是指数据的来源，比如数据库。连接池是指这样一个“池子”，池子中的每个东西都是连接数据源的一个“连接”，这样别人想连接数据源的时候可以从这个“池子”里取，用完以后再放回来供以后其他想使用的人使用。我们一般说的数据源指的就是数据库～ 数据源是指数据的来源的概括，包含了数据库位置 和 数据库类型等信息，实际上是一种数据连接的抽象。 也可以说，你要得到的信息存放的地方的概括（包括 存放信息的数据库类型、数据库的地址等等信息的概括） c3p0,dbcp,druid配置数据源也可以说是对整个数据库连接参数的配置（包括各种配置，以及连接池的管理）]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[mysql配置远程登录]]></title>
     <url>%2F2019%2F06%2F20%2FLinux%2Fmysql%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95%2F</url>
     <content type="text"><![CDATA[mysql配置远程登录 1.查看表 use mysql; select host,user from user; host | user |+———–+———–+| % | root || localhost | mysql.sys || localhost | root | host是主机，root表示主机可以登录的用户，%表示所有主机，但不包括localhost 2.如果没有%,root grant all privileges on 库名.表名 to ‘用户名‘@’IP地址’ identified by ‘密码’ with grant option;flush privileges; 库名:要远程访问的数据库名称,所有的数据库使用“*”表名:要远程访问的数据库下的表的名称，所有的表使用“*”用户名:要赋给远程访问权限的用户名称IP地址:可以远程访问的电脑的IP地址，所有的地址使用“%” 3.如果配置所有ip可以远程登录root GRANT ALL PRIVILEGES ON *.* TO ‘root‘@’%’ IDENTIFIED BY ‘123456’ WITH GRANT OPTION; 所有的地址都可以使用root用户，密码为123456远程访问所有的数据库和表 GRANT ALL PRIVILEGES ON testdb.* TO ‘lxh‘@’172.16.52.225’ IDENTIFIED BY ‘lxh’ WITH GRANT OPTION; IP为172.16.52.225的电脑可以使用lxh用户，密码为lxh远程访问数据库testdb的所有表 注意需要注意mysql的配置文件中的bindaddress 的参数和skip-networking 配置 bindaddress : 设定哪些ip地址被配置，使得mysql服务器只回应哪些ip地址的请求),最好注释掉该参数或设置成为127.0.0.1以外的值 skip-networking : 如果设置了该参数项，将导致所有TCP/IP端口没有被监听,也就是说出了本机，其他客户端都无法用网络连接到本mysql服务器，所以应该注释掉该参数]]></content>

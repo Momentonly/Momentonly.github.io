@@ -12,6 +12,9 @@
     
     <meta name="author" content="Moment Only">
     
+    <meta name="description" content="数据源（1）数据源是一种数据库对编程提供的一个接口，每个数据源对应一个数据库。（2）连接池只是存放数据库连接对象的一个缓冲池，需要数据连接的时候从缓冲池中取就行了。（3）连接池可以管理数据源。 
+​     用TCP来连接你的应用程序与数据库是一件昂贵的事情（很费时的事情），开发者可以通过用连接池来">
+    
     
     
     
@@ -71,183 +74,79 @@
 
     </header>
     <div id="container">
-      <div id="main">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/06/21/temp/数据源和连接池/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2019-06-21T07:19:43.556Z" itemprop="datePublished">2019-06-21</time>
+    更新日期:<time datetime="2019-06-21T14:29:17.529Z" itemprop="dateModified">2019-06-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据源"><span class="toc-number">1.</span> <span class="toc-text">数据源</span></a></li></ol>
+		</div>
+		
+		<h3 id="数据源"><a href="#数据源" class="headerlink" title="数据源"></a>数据源</h3><p>（1）数据源是一种数据库对编程提供的一个接口，每个数据源对应一个数据库。<br>（2）连接池只是存放数据库连接对象的一个缓冲池，需要数据连接的时候从缓冲池中取就行了。<br>（3）连接池可以管理数据源。 </p>
+<p>​     用TCP来连接你的应用程序与数据库是一件昂贵的事情（很费时的事情），开发者可以通过用连接池来反复的使用数据库的连接。比起每次请求都用TCP来连一次数据库，连接池只有在不存在有效的连接时才新建一个TCP连接。当关闭一个连接的时候，它会被放到池中，它仍然会保持与数据库的连接，这样就可以减少与数据库的TCP连接次数。<br>​     数据源是指数据的来源，比如数据库。连接池是指这样一个“池子”，池子中的每个东西都是连接数据源的一个“连接”，这样别人想连接数据源的时候可以从这个“池子”里取，用完以后再放回来供以后其他想使用的人使用。<br>我们一般说的数据源指的就是数据库～  </p>
+<p>数据源是指数据的来源的概括，包含了数据库位置 和 数据库类型等信息，实际上是一种数据连接的抽象。 也可以说，你要得到的信息存放的地方的概括（包括 存放信息的数据库类型、数据库的地址等等信息的概括）</p>
+<p>c3p0,dbcp,druid配置数据源也可以说是对整个数据库连接参数的配置（包括各种配置，以及连接池的管理）</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
 
 
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2019/06/17/JDBC/mysql注释的三种写法/" title="mysql注释的三种写法" itemprop="url">
-  
-      <time datetime="2019-06-17T08:07:47.000Z" itemprop="datePublished">2019-06-17</time>
-    <h1 itemprop="name">mysql注释的三种写法</h1>
-    
-     
-           <p itemprop="description" >MySql--三种注释写法
-需要特别注意  --   这种注释后面要加一个空格
-#DELETE FROM SeatInformation  
-/DELETE FROM SeatInformation /– DELETE FROM SeatInformation</p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2019/06/17/Java Web/properties文件的读取/" title="properties文件的读取" itemprop="url">
-  
-      <time datetime="2019-06-17T02:00:38.000Z" itemprop="datePublished">2019-06-17</time>
-    <h1 itemprop="name">properties文件的读取</h1>
-    
-     
-           <p itemprop="description" >Java 开发中，需要将一些易变的配置参数放置再 XML 配置文件或者 properties 配置文件中。然而 XML 配置文件需要通过 DOM 或 SAX 方式解析，而读取 properties 配置文件就比较容易。
-读取方式1、基于ClassLoder读取配置文件
-​    </p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2019/06/16/Linux/Linux常用命令2/" title="Linux常用命令2" itemprop="url">
-  
-      <time datetime="2019-06-16T08:56:55.000Z" itemprop="datePublished">2019-06-16</time>
-    <h1 itemprop="name">Linux常用命令2</h1>
-    
-     
-           <p itemprop="description" >1.scp -r root@39.104.111.122:/usr/local/      /usr/local
-​        将远程39.104.111.122的/usr/local下的文件拷贝到本机/usr/local目录下
-​        -r   复制目录
-2.sc</p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2019/06/16/Java Web/手写服务器总结/" title="手写服务器总结" itemprop="url">
-  
-      <time datetime="2019-06-16T07:23:02.000Z" itemprop="datePublished">2019-06-16</time>
-    <h1 itemprop="name">手写服务器总结</h1>
-    
-     
-           <p itemprop="description" >手写服务器总结搭建框架​                        …………………
-实现编写web.xml123456789101112&amp;lt;!--servlet处理请求--&amp;gt;&amp;lt;servlet&amp;gt;	&amp;lt;!--LoginServlet别名:login --</p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2019/06/15/Config/sublime的package control/" title="sublime的package control" itemprop="url">
-  
-      <time datetime="2019-06-15T07:13:46.000Z" itemprop="datePublished">2019-06-15</time>
-    <h1 itemprop="name">sublime的package control</h1>
-    
-     
-           <p itemprop="description" >sublime的package control​    preferences-&amp;gt;package control出现There are no packages available for installation错误
-据说是IPv6的原因，如果我们的Intent服务提供者（</p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2019/06/13/SXTJavaSE/ThreadLocal的使用/" title="ThreadLocal的使用" itemprop="url">
-  
-      <time datetime="2019-06-13T09:37:18.000Z" itemprop="datePublished">2019-06-13</time>
-    <h1 itemprop="name">ThreadLocal的使用</h1>
-    
-     
-           <p itemprop="description" >ThreadLocal的使用1.说明​        ThreadLocal 直译为“本地线程”，其实它就是一容器，用于 存放线程的局部变量 
-​        能够保持每一个线程里面的值是相应的，说明这些值已经达到了线程私有的目的。
-​        当你在一个类中使用 sta</p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2019/06/12/Linux/Linux常用命令1/" title="Linux常用命令1" itemprop="url">
-  
-      <time datetime="2019-06-12T05:51:55.000Z" itemprop="datePublished">2019-06-12</time>
-    <h1 itemprop="name">Linux常用命令1</h1>
-    
-     
-           <p itemprop="description" >文件 &amp;amp; 目录操作（16 个）
-ls
-●　ls -a 查看所有文件，包含隐藏文件
-●　ls -l 简写 ll，查看详细信息
-●　ls -h 文件大小以易读的方式显示
-cd
-●　cd ../ 返回上级目录
-●　cd ~ 前往家目录
-●　cd - 返回上一次所在目录
-cp
-●</p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2019/06/09/C/c语言二维数组传递一维数组参数/" title="c语言二维数组传递一维数组参数" itemprop="url">
-  
-      <time datetime="2019-06-09T07:46:09.000Z" itemprop="datePublished">2019-06-09</time>
-    <h1 itemprop="name">c语言二维数组传递一维数组参数</h1>
-    
-     
-           <p itemprop="description" >123456789101112131415161718#include&amp;lt;stdio.h&amp;gt;void test(int a[]);int main()&amp;#123;		int a[2][2];	a[0][0] = 0;	a[0][1] = 1;	a[1][0] = 2;	a</p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2019/06/05/IDEA/IDEA的工作区间/" title="IDEA的工作区间" itemprop="url">
-  
-      <time datetime="2019-06-05T15:09:08.000Z" itemprop="datePublished">2019-06-05</time>
-    <h1 itemprop="name">IDEA的工作区间</h1>
-    
-     
-           <p itemprop="description" >IDEA中的项目概念与eclipse是不同的，IDEA的项目等同于eclipse中的workspace。Idea的module等同于eclipse中的project。所以我们要实现在一个项目倒入多个module。
-具体操作如下：
-File–&amp;gt;Project Structur</p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2019/06/02/Config/Eclipse主题重启失效/" title="重启eclipse color theme失效的解决办法" itemprop="url">
-  
-      <time datetime="2019-06-02T09:22:09.000Z" itemprop="datePublished">2019-06-02</time>
-    <h1 itemprop="name">重启eclipse color theme失效的解决办法</h1>
-    
-     
-           <p itemprop="description" >重启eclipse color theme失效的解决办法**
-1、在eclipse菜单栏 选择 windows &amp;gt; Perferences；
-2、找到Oomph &amp;gt; Setup Task &amp;gt; Perference Recorder选项；
-3、将上方的Record</p>
-        
-    
-  </a>
-</section>
 
 
-  <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
-  </nav>
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2019/06/21/temp/数据源和连接池/" data-title="Momentonly" data-tsina="" class="share clearfix">
+  </div>
 
 </div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2019/06/20/Linux/mysql配置远程登录/"  title="mysql配置远程登录">
+ <strong>NEXT:</strong><br/> 
+ <span>mysql配置远程登录
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="" data-thread-key="temp/数据源和连接池" data-author-key="Moment Only" data-url="http://yoursite.com/post/temp/数据源和连接池"></div>
+	
+</section>
+
+
+</div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据源"><span class="toc-number">1.</span> <span class="toc-text">数据源</span></a></li></ol>
+  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -341,8 +240,8 @@ File–&amp;gt;Project Structur</p>
 
 </aside>
 </div>
-  </div>
-  <footer><div id="footer" >
+    </div>
+    <footer><div id="footer" >
     
             <p class="copyright"> © 2019 
 		
@@ -378,6 +277,8 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
@@ -397,7 +298,79 @@ $(document).ready(function(){
 });
 </script>
 
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
 
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:""};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
 
 
 
@@ -486,5 +459,5 @@ ga('send', 'pageview');
 
 
   </body>
- </html>
+</html>
 
