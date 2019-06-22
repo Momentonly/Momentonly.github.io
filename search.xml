@@ -4,6 +4,9 @@
     <title><![CDATA[数据源和连接池]]></title>
     <url>%2F2019%2F06%2F22%2FMyBatis%2F%E6%95%B0%E6%8D%AE%E6%BA%90%E5%92%8C%E8%BF%9E%E6%8E%A5%E6%B1%A0%2F</url>
     <content type="text"><![CDATA[数据源（1）数据源是一种数据库对编程提供的一个接口，每个数据源对应一个数据库。（2）连接池只是存放数据库连接对象的一个缓冲池，需要数据连接的时候从缓冲池中取就行了。（3）连接池可以管理数据源。 ​ 用TCP来连接你的应用程序与数据库是一件昂贵的事情（很费时的事情），开发者可以通过用连接池来反复的使用数据库的连接。比起每次请求都用TCP来连一次数据库，连接池只有在不存在有效的连接时才新建一个TCP连接。当关闭一个连接的时候，它会被放到池中，它仍然会保持与数据库的连接，这样就可以减少与数据库的TCP连接次数。​ 数据源是指数据的来源，比如数据库。连接池是指这样一个“池子”，池子中的每个东西都是连接数据源的一个“连接”，这样别人想连接数据源的时候可以从这个“池子”里取，用完以后再放回来供以后其他想使用的人使用。我们一般说的数据源指的就是数据库～ 数据源是指数据的来源的概括，包含了数据库位置 和 数据库类型等信息，实际上是一种数据连接的抽象。 也可以说，你要得到的信息存放的地方的概括（包括 存放信息的数据库类型、数据库的地址等等信息的概括） c3p0,dbcp,druid配置数据源也可以说是对整个数据库连接参数的配置（包括各种配置，以及连接池的管理）]]></content>
+      <categories>
+        <category>database</category>
+      </categories>
       <tags>
         <tag>mybatis</tag>
       </tags>
@@ -12,6 +15,9 @@
     <title><![CDATA[mytabis的学习]]></title>
     <url>%2F2019%2F06%2F22%2FMyBatis%2Fmytabis%E7%9A%84%E5%AD%A6%E4%B9%A0%2F</url>
     <content type="text"><![CDATA[1.log4j​ Eclipse的log4j.properties配置,rootCategory以前的配置，不推荐使用 123456789101112131415161718192021# Set root category priority to INFO and its only appender to CONSOLE. #只打印到控制台，并设置日志级别# log4j.rootCategory=DEBUG, CONSOLE #打印到控制台，日志文件，并设置日志级别为DEBUGlog4j.rootCategory=DEBUG, CONSOLE, LOGFILE # CONSOLE is set to be a ConsoleAppender using a PatternLayout. #控制台的输出格式log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender log4j.appender.CONSOLE.layout=org.apache.log4j.PatternLayout #指定输出的信息格式 %m:message,%n:换行,%c:class,追踪产生日志的类#%l,包名类名方法名，第几行出现问题,log4j.appender.CONSOLE.layout.ConversionPattern=- %m %c %l%d&#123;yyyy-MM-dd HH:mm:ss&#125;%n # LOGFILE is set to be a File appender using a PatternLayout. #日志文件的输出格式log4j.appender.LOGFILE=org.apache.log4j.FileAppender log4j.appender.LOGFILE.File=d:/test.log log4j.appender.LOGFILE.Append=true log4j.appender.LOGFILE.layout=org.apache.log4j.PatternLayout log4j.appender.LOGFILE.layout.ConversionPattern=- %m %l%n 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156#配置根日志优先级，及输出位置#语法：log4j.rootLogger = [debug],apppenderName1,appenderName2...log4j.rootLogger = debug,stdout,D #上面定义了两个输出位置名：stdout与D，现分别配置：#配置stdout为调试窗口输出:log4j.appender.stdout = org.apache.log4j.ConsoleAppenderlog4j.appender.stdout.Target=System.out#指定了一个模式表达式的布局log4j.appender.stdout.layout=org.apache.log4j.PatternLayout#设置该模式表达式log4j.appender.stdout.layout.ConversionPattern=[%-5p] %d&#123;yyyy-MM-dd HH:mm:ss,SSS&#125; method:%l%n%m%n#说明：#[%-5p]:%p设置输出日志优先级，&apos;-&apos;表示左对齐，5表示日志优先级所占字符个数的宽度，取5是为了保持一致。如：[DEBUG]#%d&#123;yyyy-MM-dd HH:mm:ss,SSS&#125;,指定了打印日志时间与时间格式，SSS表示？#%l: 输出日志事件的发生位置，见第四部分。%n，输出换行符。%m，输出日志事件发生的方法名。#配置D为输出日志到文件：log4j.appender.D=org.apache.log4j.FileAppenderlog4j.appender.D.File=D:\\Program_software\\Apache7_0_75\\webapps\\testLog.loglog4j.appender.D.layout=org.apache.log4j.PatternLayoutlog4j.appender.D.layout.ConversionPattern=[%-5p] %d&#123;yyyy-MM-dd HH:mm:ss,SSS&#125; method:%l%n%m%n####################################################################———————————配置详细说明，共四部分——————————##一、配置log4j.rootLogger#语法：log4j.rootLogger = [debug],apppenderName1,appenderName2...#如：log4j.rootLogger = debug,stdout#二、配置Appeder——输出位置#语法：log4j.appender.appenderName = fully.qualified.name.of.appender.class#完全合法的appenderName 有几类选择#1、控制台：org.apache.log4j.ConsoleAppender#对应选项：#Threshold=WARN:指定日志消息的输出最低层次#ImmediateFlush=true:默认日志立即打印#Target=System.err:默认情况下使用System.out 输出控制台#2、文件：org.apache.log4j.FileAppender#对应选项：#Threshold=WARN:指定日志消息输出最低层次#ImmediateFlush=true:默认日志立即打印#File=mylog.txt:指定输出路径，可以是任何路径#Append=false：默认值是true，为false则覆盖#3、周期产生日志文件：org.apache.log4j.DailyRollingFileAppender#对应选项：#Threshold=WARN:指定日志消息输出最低层次#ImmediateFlush=true:默认日志立即打印#File=a.log:指定消息输出到a.log文件，默认是从web服务器的根路径开始#Append=false：默认为true#DatePattern=&apos;.&apos;yyyy-ww:每周滚动一次文件，即每周产生一个新的文件。#也可指定周期：#&apos;.&apos;yyyy-MM:每月#&apos;.&apos;yyyy-ww:每周#&apos;.&apos;yyyy-MM-dd:每天#&apos;.&apos;yyyy-MM-dd-a：每天两次#&apos;.&apos;yyyy-MM-dd-HH：每小时#&apos;.&apos;yyyy-MM-dd-HH-mm：每分钟#4、指定文件尺寸大小产生日志文件：org.apache.log4j.RollingFileAppender#对应选项：#Threshold=WARN:指定日志消息输出最低层次#ImmediateFlush=true:默认日志立即打印#File=a.log：指定日志文件#Append=false：默认为true#MaxFileSize=100KB：单位可以是KB|MB|GB，日志文件达到最大时，将会自动滚动，即将原来的内容移到mylog.log.1文件#MaxBackupIndex=2：指定可以产生滚动文件的最大数#5、将日志以流格式发送到任意指定的地方：org.apache.log4j.WriterAppender#例如：#log4j.appender.R=org.apache.log4j.DailyRollingFileAppender #log4j.appender.R.File=D:\\eclipsespace\\testSSH\\WebContent\\WEB-INF\\testlog.log #三、配置日志信息的格式布局(layout)#layout负责格式化Appender 的输出#语法：#log4j.appender.appenderName.layout=fully.qualified.name.of.layout.class#有效的layout类名字有以下几种：#1、org.apache.log4j.HTMLLayout（以HTML表格形式布局） #该选项有以下几种： #LocationInfo=true:默认值是false,输出java文件名称和行号 #Title=my app file: 默认值是 Log4J Log Messages. #2、org.apache.log4j.PatternLayout（可以灵活地指定布局模式） #该选项有以下几种： #ConversionPattern=%m%n :指定怎样格式化指定的消息 #其中%m%n等符号所代表的含义如下： (有问题，暂不管)#－X号: X信息输出时左对齐； #%p: 输出日志信息优先级，即DEBUG，INFO，WARN，ERROR，FATAL, #%d: 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d&#123;yyy MMM dd HH:mm:ss,SSS&#125;，输出类似：2002年10月18日 22：10：28，921 #%r: 输出自应用启动到输出该log信息耗费的毫秒数 #%c: 输出日志信息所属的类目，通常就是所在类的全名 #%t: 输出产生该日志事件的线程名 #%l: 输出日志事件的发生位置，相当于%C.%M(%F:%L)的组合,包括类目名、发生的线程，以及在代码中的行数。举例：Testlog4.main(TestLog4.java:10) #%x: 输出和当前线程相关联的NDC(嵌套诊断环境),尤其用到像java servlets这样的多客户多线程的应用中。 #%%: 输出一个&quot;%&quot;字符 #%F: 输出日志消息产生时所在的文件名称 #%L: 输出代码中的行号 #%m: 输出代码中指定的消息,产生的日志具体信息 #%n: 输出一个回车换行符，Windows平台为&quot;\r\n&quot;，Unix平台为&quot;\n&quot;输出日志信息换行 #可以在%与模式字符之间加上修饰符来控制其最小宽度、最大宽度、和文本的对齐方式。如： #%20c：指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，默认的情况下右对齐。 #%-20c:指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，&quot;-&quot;号指定左对齐。 #%.30c:指定输出category的名称，最大的宽度是30，如果category的名称大于30的话，就会将左边多出的字符截掉，但小于30的话也不会有空格。 #%20.30c:如果category的名称小于20就补空格，并且右对齐，如果其名称长于30字符，就从左边交远销出的字符截掉。 # 如：%-4r %-5p %d&#123;yyyy-MM-dd HH:mm:ssS&#125; %c %m%n [TEST] %p [%t] %C.%M(%L) | %m%n #3、org.apache.log4j.SimpleLayout（包含日志信息的级别和信息字符串） #4、org.apache.log4j.TTCCLayout（包含日志产生的时间、线程、类别等等信息） #四、其他#指定包名下的日志级别#语法：log4j.logger.包名=日志级别#如：#log4j.logger.com.neusoft =DEBUG #指定com.neusoft包下的所有类的等级为DEBUG。 #log4j.logger.com.opensymphony.oscache=ERROR #log4j.logger.net.sf.navigator=ERROR #这两句是把这两个包下出现的错误的等级设为ERROR，如果项目中没有配置EHCache，则不需要这两句。 #log4j.logger.org.apache.commons=ERROR #log4j.logger.org.apache.struts=WARN ## #这两句是struts的包。作者：Liekkas_BX 来源：CSDN 原文：https://blog.csdn.net/qq_19865749/article/details/70306971 版权声明：本文为博主原创文章，转载请附上博文链接！]]></content>
+      <categories>
+        <category>database</category>
+      </categories>
       <tags>
         <tag>mybatis</tag>
       </tags>
@@ -22,7 +28,7 @@
     <content type="text"><![CDATA[mysql配置远程登录 1.查看表 use mysql; select host,user from user; host | user |+———–+———–+| % | root || localhost | mysql.sys || localhost | root | host是主机，root表示主机可以登录的用户，%表示所有主机，但不包括localhost 2.如果没有%,root grant all privileges on 库名.表名 to ‘用户名‘@’IP地址’ identified by ‘密码’ with grant option;flush privileges; 库名:要远程访问的数据库名称,所有的数据库使用“*”表名:要远程访问的数据库下的表的名称，所有的表使用“*”用户名:要赋给远程访问权限的用户名称IP地址:可以远程访问的电脑的IP地址，所有的地址使用“%” 3.如果配置所有ip可以远程登录root GRANT ALL PRIVILEGES ON *.* TO ‘root‘@’%’ IDENTIFIED BY ‘123456’ WITH GRANT OPTION; 所有的地址都可以使用root用户，密码为123456远程访问所有的数据库和表 GRANT ALL PRIVILEGES ON testdb.* TO ‘lxh‘@’172.16.52.225’ IDENTIFIED BY ‘lxh’ WITH GRANT OPTION; IP为172.16.52.225的电脑可以使用lxh用户，密码为lxh远程访问数据库testdb的所有表 注意需要注意mysql的配置文件中的bindaddress 的参数和skip-networking 配置 bindaddress : 设定哪些ip地址被配置，使得mysql服务器只回应哪些ip地址的请求),最好注释掉该参数或设置成为127.0.0.1以外的值 skip-networking : 如果设置了该参数项，将导致所有TCP/IP端口没有被监听,也就是说出了本机，其他客户端都无法用网络连接到本mysql服务器，所以应该注释掉该参数]]></content>
   </entry>
   <entry>
-    <title><![CDATA[hostname和etchosts的区别]]></title>
+    <title><![CDATA[hostname和hosts的区别]]></title>
     <url>%2F2019%2F06%2F20%2FLinux%2Fhostname%E5%92%8Cetchosts%E7%9A%84%E5%8C%BA%E5%88%AB%2F</url>
     <content type="text"><![CDATA[很多人一提到更改hostname首先就想到修改/etc/hosts文件，认为hostname的配置文件就是/etc/hosts。其实不是的。hosts文件的作用相当于DNS，提供IP地址hostname的对应。早期的互联网计算机少，单机hosts文件里足够存放所有联网计算机。不过随着互联网的发展，这就远远不够了。于是就出现了分布式的DNS系统。由DNS服务器来提供类似的IP地址到域名的对应。Linux系统在向DNS服务器发出域名解析请求之前会查询/etc/hosts文件，如果里面有相应的记录，就会使用hosts里面的记录。由此，/etc/hosts于设置hostname是没直接关系的，仅仅当你要在本机上用新的hostname来映射自己的IP时候才会用到/etc/hosts文件。两者没有必然的联系。redhat的hostname的配置文件是/etc/sysconfig/network. /etc/hosts内容摘录如下： #Do not remove the following line, or various programs #that require network functionality will fail. 192.168.1.102 localhost.localdomain localhost127.0.0.1 localhost.localdomain localhost::1 localhost6.localdomain6 localhost6对以上内容的解释作用：hosts 文件是用来把主机名字映射到IP地址的方法，这种方法比较简单。但这种映射只是本地映射，也就是说每台机器都是独立的，所有的计算机都不能相互通过hostname来访问。格式： 一般情况下hosts的内容关于主机名(hostname)的定义，每行为一个主机，每行由三部份组成，每个部份由空格隔开。其中#号开头的行做说明，不被系统解释。 第一部份：网络IP地址； 第二部份：主机名.域名，注意主机名和域名之间有个半角的点，比如 localhost.localdomain 第二部份：主机名(主机名别名） ，其实就是主机名；注释：1）127.0.0.1 是回环地址，比如我们不想让局域网的其它机器看到我们测试的网络程序，就可以用回环地址来测试。2）为什么需要定义域名呢？其实理解也简单，比如我们有三台主机，每台做不同的事，一台做MAIL服务器，一台做FTP服务器，一台做SMB服务器，所以我们就可以这样来设计hostname； 127.0.0.1 localhost.localdomain localhost 192.168.1.2 ftp 192.168.1.3 mail.localdomain mail 192.168.1.4 smb.localdomin smb把这上面这个配置文件的内容分别写入每台机器的/etc/hosts内容中，这样这三台局域网的机器就可以通过hostname来访问了。也就是，在局域网中，主机名也是可以解析到IP上的，相当于DNS域名解析。对于主机名的修改有两种方式:hostname和/etc/sysconfig/network [sql] view plaincopyprint?[root@think ~]# hostnamethin[root@think ~]# hostname think[root@think ~]# hostnamethink 通过hostname 这个kernel变量来设置主机名只是临时的，下次重启系统时，此主机名将不会存在.hostname也可用于显示:hostname -i。如果要永久修改RedHat hostname，就修改/etc/sysconfig/network文件，将里面的HOSTNAME这一行修改成HOSTNAME=NEWNAME，其中NEWNAME就是你要设置的hostname。 2./hosts文件可以帮助解决哪些问题2.1 远程登录linux主机过慢问题 有时客户端想远程登录一台linux主机，但每次登录输入密码后都会等很长一段时间才会进入，这是因为linux主机在返回信息时需要解析ip，如果在linux主机的hosts文件事先加入客户端的ip地址，这时再从客户端远程登录linux就会变很快。 注：这里所说的远程登录不仅仅是ssh，还可能是mysql远程登录，或是文件共享的查询等。 2.2 双机互连 当两台主机只是双机互连时，这时两台主机都需要设置自己的ip，同时在对方的hosts文件里加入自己的ip和主机名。 注：不同发行版的主机名称对应文件可以通过man host那么进行查阅 3.关于FQDN FQDN：(Fully Qualified Domain Name)完全合格域名/全称域名，是指主机名加上全路径，全路径中列出了序列中所有域成员。全域名可以从逻辑上准确地表示出主机在什么地方，也可以说全域名是主机名的一种完全表示形式。从全域名中包含的信息可以看出主机在域名树中的位置。DNS解析流程：首先查找本机HOSTS表，有的直接使用表中定义，没有查找网络连接中设置的DNS 服务器由他来解析。]]></content>
       <categories>
@@ -34,7 +40,7 @@
     <url>%2F2019%2F06%2F20%2FJDBC%2Fjdbc%E4%B8%AD%E7%9A%84execute()%E8%BF%94%E5%9B%9E%E5%80%BC%2F</url>
     <content type="text"><![CDATA[jdbc中的execute()返回值表示不同的操作 true表示查询 false表示更新或者删除]]></content>
       <categories>
-        <category>JavaWeb</category>
+        <category>database</category>
       </categories>
       <tags>
         <tag>JDBC</tag>
@@ -72,7 +78,7 @@
     <url>%2F2019%2F06%2F19%2FJDBC%2F%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%83%E6%95%B0%E6%8D%AEMetaDate%2F</url>
     <content type="text"><![CDATA[本篇介绍数据库方面的元数据（MetaData）的有关知识。元数据在建立框架和架构方面是特别重要的知识，再下一篇我们仿造开源数据库工具类DbUtils就要使用数据库的元数据来创建自定义JDBC框架。 在我们前面使用JDBC来处理数据库的接口主要有三个，即Connection，PreparedStatement和ResultSet这三个，而对于这三个接口，还可以获取不同类型的元数据，通过这些元数据类获得一些数据库的信息。 元数据(MetaData)，即定义数据的数据。打个比方，就好像我们要想搜索一首歌(歌本身是数据)，而我们可以通过歌名，作者，专辑等信息来搜索，那么这些歌名，作者，专辑等等就是这首歌的元数据。因此数据库的元数据就是一些注明数据库信息的数据。 ① 由Connection对象的getMetaData()方法获取的是DatabaseMetaData对象。 ② 由PreparedStatement对象的getParameterMetaData ()方法获取的是ParameterMetaData对象。 ③由ResultSet对象的getMetaData()方法获取的是ResultSetMetaData对象。 一、DatabaseMetaDataDatabaseMetaData是由Connection对象通过getMetaData方法获取而来，主要封装了是对数据库本身的一些整体综合信息，例如数据库的产品名称，数据库的版本号，数据库的URL，是否支持事务等等，能获取的信息比较多，具体可以参考DatabaseMetaData的API文档。 以下有一些关于DatabaseMetaData的常用方法： ·getDatabaseProductName：获取数据库的产品名称 ·getDatabaseProductName：获取数据库的版本号 ·getUserName：获取数据库的用户名 ·getURL：获取数据库连接的URL ·getDriverName：获取数据库的驱动名称 ·driverVersion：获取数据库的驱动版本号 ·isReadOnly：查看数据库是否只允许读操作 ·supportsTransactions：查看数据库是否支持事务 例1： 简单地获取一些常用的数据库综合信息。 二、ParameterMetaData ParameterMetaData是由PreparedStatement对象通过getParameterMetaData方法获取而来，主要是针对PreparedStatement对象和其预编译的SQL命令语句提供一些信息，比如像”insert into account(id,name,money) values(?,?,?)”这样的预编译SQL语句，ParameterMetaData能提供占位符参数的个数，获取指定位置占位符的SQL类型等等，功能也比较多，这里不列举完，详细请看有关ParameterMetaData的API文档。 以下有一些关于ParameterMetaData的常用方法： ·getParameterCount：获取预编译SQL语句中占位符参数的个数 在我看来，ParameterMetaData对象能用的只有获取参数个数的getParameterCount()方法。 注意：ParameterMetaData许多方法MySQL并不友好支持，比如像获取指定参数的SQL类型的getParameterType方法，如果数据库驱动连接URL只是简单的“jdbc:mysql://localhost:3306/jdbcdemo”那么MyEclipse会抛出SQLException异常，必须要将URL修改为“jdbc:mysql://localhost:3306/jdbcdemo?generateSimpleParameterMetadata=true”才行。但是像getParameterType等等与其他的方法也没多好用，因为如下面的例子，这些方法好像只会将所有的参数认为是字符串(VARCHAR)类型。 因为我们的SQL语句为”insert into user(id,name,age) values(?,?,?)”，而我们所有利用ParameterMetaData查询的信息除了参数个数以外，都是查询第一个参数的信息，也就是“id”列，而这个“id”列我们创建时是int整型的，但是利用ParameterMetaData的查询结果都是显示为字符串类型，因此我对ParameterMetaData的功能产生了怀疑。 因此在以后使用参数元数据ParameterMetaData尽量只要使用其getParamterCount()方法获取参数个数，对于该对象其他方法请慎用。 三、ResultSetMetaData ResultSetMetaData是由ResultSet对象通过getMetaData方法获取而来，主要是针对由数据库执行的SQL脚本命令获取的结果集对象ResultSet中提供的一些信息，比如结果集中的列数、指定列的名称、指定列的SQL类型等等，可以说这个是对于框架来说非常重要的一个对象。关于该结果集元数据对象的其他具体功能和方法请查阅有关ResultSetMetaData的API文档。 以下有一些关于ResultSetMetaData的常用方法： ·getColumnCount：获取结果集中列项目的个数 ·getColumnType：获取指定列的SQL类型对应于Java中Types类的字段 ·getColumnTypeName：获取指定列的SQL类型 ·getClassName：获取指定列SQL类型对应于Java中的类型(包名加类名)]]></content>
       <categories>
-        <category>JavaWeb</category>
+        <category>database</category>
       </categories>
       <tags>
         <tag>mysql</tag>
@@ -83,23 +89,18 @@
     <url>%2F2019%2F06%2F17%2FJDBC%2FJDBC%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%2F</url>
     <content type="text"></content>
       <categories>
-        <category>JavaWeb</category>
+        <category>database</category>
       </categories>
       <tags>
         <tag>JDBC</tag>
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>%2F2019%2F06%2F17%2FJDBC%2Fjdbc%E4%B8%AD%E7%9A%84execute()%E8%BF%94%E5%9B%9E%E5%80%BC%E8%A1%A8%E7%A4%BA%E4%B8%8D%E5%90%8C%E7%9A%84%2F</url>
-    <content type="text"><![CDATA[jdbc中的execute()返回值表示不同的操作 true表示查询 false表示更新或者删除]]></content>
-  </entry>
-  <entry>
     <title><![CDATA[mysql注释的三种写法]]></title>
     <url>%2F2019%2F06%2F17%2FJDBC%2Fmysql%E6%B3%A8%E9%87%8A%E7%9A%84%E4%B8%89%E7%A7%8D%E5%86%99%E6%B3%95%2F</url>
     <content type="text"><![CDATA[MySql--三种注释写法 需要特别注意 -- 这种注释后面要加一个空格 #DELETE FROM SeatInformation /DELETE FROM SeatInformation /– DELETE FROM SeatInformation]]></content>
       <categories>
-        <category>JavaWeb</category>
+        <category>database</category>
       </categories>
       <tags>
         <tag>mysql</tag>
@@ -232,9 +233,6 @@
     <title><![CDATA[性能测试工具locust]]></title>
     <url>%2F2019%2F03%2F13%2FPython%2F%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7locust%2F</url>
     <content type="text"><![CDATA[An open source load testing tool. 一个开源性能测试工具。 define user behaviour with python code, and swarm your system with millions of simultaneous users. 使用Python代码来定义用户行为。用它可以模拟百万计的并发用户访问你的系统。 1.安装Python2.安装Locustpip install locust 3.安装成功，CMD敲入命令验证。​ locust –help 4.创建load_test.py文件，通过Python编写性能测试脚本。123456789101112from locust import HttpLocust, TaskSet, taskclass UserBehavior(TaskSet): @task(1) def indesx(self): self.client.get("/")class WebsiteUser(HttpLocust): task_set = UserBehavior min_wait = 3000 max_wait = 6000 创建UserBehavior()类继承TaskSet类，为用户行为类。 ​ 创建index() 方法表示一个行为。用@task() 装饰该方法为一个任务。1表示一个Locust实例被挑选执行的权重，数值越大，执行频率越高。在当前UserBehavior()行为下只有一个index()任务，所以，这里的权重设置为几，并无影响。 WebsiteUser()类用于设置性能测试。 task_set ：指向一个定义了的用户行为类。 min_wait ：用户执行任务之间等待时间的下界，单位：毫秒。 max_wait ：用户执行任务之间等待时间的上界，单位：毫秒。 5.命令行切换到性能测试脚本所在的目录，启动性能测试：1locust -f load_test.py --host=https://www.baidu.com ​ load_test.py 为测试脚本，https://www.baidu.com 为测试的网站。 ​ 打开浏览器访问：http://127.0.0.1:8089或者http://localhost:8089 ps:在pycharm中运行脚本 123if __name__ == '__main__':import osos.system("locust -f load_test.py --host=https://www.baidu.com")]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
       <tags>
         <tag>python</tag>
       </tags>
@@ -340,8 +338,8 @@
         <category>JavaWeb</category>
       </categories>
       <tags>
-        <tag>乱码</tag>
         <tag>JavaWeb</tag>
+        <tag>乱码</tag>
       </tags>
   </entry>
   <entry>
@@ -363,8 +361,8 @@
         <category>JavaWeb</category>
       </categories>
       <tags>
-        <tag>乱码</tag>
         <tag>JavaWeb</tag>
+        <tag>乱码</tag>
       </tags>
   </entry>
   <entry>
