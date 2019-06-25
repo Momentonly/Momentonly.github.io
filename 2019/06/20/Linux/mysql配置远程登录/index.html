@@ -14,9 +14,7 @@
     
     <meta name="description" content="mysql配置远程登录
 1.查看表
-use mysql;
-select host,user from user;
- host      | user      |+———–+———–+| %         | root      || localhost | mysql.sys || localh">
+12345678use mysql;select host,user from user; host      | user      |+-----------+-----------+| %         | root      || localhost |">
     
     
     
@@ -92,7 +90,7 @@ select host,user from user;
     </p>
   <p class="article-time">
     <time datetime="2019-06-20T14:35:59.000Z" itemprop="datePublished">2019-06-20</time>
-    更新日期:<time datetime="2019-06-21T04:28:51.029Z" itemprop="dateModified">2019-06-21</time>
+    更新日期:<time datetime="2019-06-25T01:00:37.639Z" itemprop="dateModified">2019-06-25</time>
     
   </p>
 </header>
@@ -106,18 +104,13 @@ select host,user from user;
 		
 		<p>mysql配置远程登录</p>
 <p>1.查看表</p>
-<p>use mysql;</p>
-<p>select host,user from user;</p>
-<p> host      | user      |<br>+———–+———–+<br>| %         | root      |<br>| localhost | mysql.sys |<br>| localhost | root     |</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br><span class="line">select host,user from user;</span><br><span class="line"></span><br><span class="line"> host      | user      |</span><br><span class="line">+-----------+-----------+</span><br><span class="line">| %         | root      |</span><br><span class="line">| localhost | mysql.sys |</span><br><span class="line">| localhost | root     |</span><br></pre></td></tr></table></figure>
 <p>host是主机，root表示主机可以登录的用户，%表示所有主机，但不包括localhost</p>
 <p>2.如果没有%,root</p>
-<p>grant all privileges on 库名.表名 to ‘用户名‘@’IP地址’ identified by ‘密码’ with grant option;<br>flush privileges;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grant all privileges on 库名.表名 to &apos;用户名&apos;@&apos;IP地址&apos; identified by &apos;密码&apos; with grant option;</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
 <p>库名:要远程访问的数据库名称,所有的数据库使用“*”<br>表名:要远程访问的数据库下的表的名称，所有的表使用“*”<br>用户名:要赋给远程访问权限的用户名称<br>IP地址:可以远程访问的电脑的IP地址，所有的地址使用“%” </p>
 <p>3.如果配置所有ip可以远程登录root</p>
-<p>GRANT ALL PRIVILEGES ON *.* TO ‘root‘@’%’ IDENTIFIED BY ‘123456’ WITH GRANT OPTION; </p>
-<p>所有的地址都可以使用root用户，密码为123456远程访问所有的数据库和表</p>
-<p>GRANT ALL PRIVILEGES ON testdb.* TO ‘lxh‘@’172.16.52.225’  IDENTIFIED BY ‘lxh’ WITH GRANT OPTION;</p>
-<p>IP为172.16.52.225的电脑可以使用lxh用户，密码为lxh远程访问数据库testdb的所有表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO &apos;root&apos;@&apos;%&apos; IDENTIFIED BY &apos;123456&apos; WITH GRANT OPTION; </span><br><span class="line"></span><br><span class="line">所有的地址都可以使用root用户，密码为123456远程访问所有的数据库和表</span><br><span class="line"></span><br><span class="line">GRANT ALL PRIVILEGES ON testdb.* TO &apos;lxh&apos;@&apos;172.16.52.225&apos;  IDENTIFIED BY &apos;lxh&apos; WITH GRANT OPTION;</span><br><span class="line"></span><br><span class="line">IP为172.16.52.225的电脑可以使用lxh用户，密码为lxh远程访问数据库testdb的所有表</span><br></pre></td></tr></table></figure>
 <p><strong><em>注意</em></strong><br><strong><em>需要注意mysql的配置文件中的bindaddress 的参数和skip-networking 配置</em></strong></p>
 <p><strong><em>bindaddress : 设定哪些ip地址被配置，使得mysql服务器只回应哪些ip地址的请求),最好注释掉该参数或设置成为127.0.0.1以外的值</em></strong></p>
 <p><strong><em>skip-networking : 如果设置了该参数项，将导致所有TCP/IP端口没有被监听,也就是说出了本机，其他客户端都无法用网络连接到本mysql服务器，所以应该注释掉该参数</em></strong></p>

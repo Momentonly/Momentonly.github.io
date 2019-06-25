@@ -91,7 +91,7 @@ MyBatis会自动将接口和xml文件进行绑定，实际上就是MyBatis会根
     </p>
   <p class="article-time">
     <time datetime="2019-06-22T03:07:30.000Z" itemprop="datePublished">2019-06-22</time>
-    更新日期:<time datetime="2019-06-25T00:53:25.763Z" itemprop="dateModified">2019-06-25</time>
+    更新日期:<time datetime="2019-06-25T00:59:10.652Z" itemprop="dateModified">2019-06-25</time>
     
   </p>
 </header>
@@ -108,10 +108,11 @@ MyBatis会自动将接口和xml文件进行绑定，实际上就是MyBatis会根
 <p>可以得到实现类的对象。</p>
 <h3 id="通过接口绑定解决多参数的传递"><a href="#通过接口绑定解决多参数的传递" class="headerlink" title="通过接口绑定解决多参数的传递"></a>通过接口绑定解决多参数的传递</h3><p>映射文件的命名和接口的命名一致</p>
 <p>映射文件的namespace写接口的全限定路径</p>
-<h3 id="mybatis如何通过接口查找对应的mapper-xml及方法执行详解"><a href="#mybatis如何通过接口查找对应的mapper-xml及方法执行详解" class="headerlink" title="mybatis如何通过接口查找对应的mapper.xml及方法执行详解"></a>mybatis如何通过接口查找对应的mapper.xml及方法执行详解</h3><p><a href="https://www.jb51.net/article/116402.htm" target="_blank" rel="noopener"></a></p>
+<h3 id="mybatis如何通过接口查找对应的mapper-xml及方法执行详解"><a href="#mybatis如何通过接口查找对应的mapper-xml及方法执行详解" class="headerlink" title="mybatis如何通过接口查找对应的mapper.xml及方法执行详解"></a>mybatis如何通过接口查找对应的mapper.xml及方法执行详解</h3><p><a href="https://www.jb51.net/article/116402.htm" target="_blank" rel="noopener">链接</a></p>
 <h3 id="mybatis中接口文件Mapper和接口配置文件Mapper-xml不在同一个目录下"><a href="#mybatis中接口文件Mapper和接口配置文件Mapper-xml不在同一个目录下" class="headerlink" title="mybatis中接口文件Mapper和接口配置文件Mapper.xml不在同一个目录下"></a>mybatis中接口文件<em>Mapper和接口配置文件</em>Mapper.xml不在同一个目录下</h3><p>1：只有单独的Mybatis没有Spring的情况下</p>
 <p>a:首先修改*Mapper.xml中的namespace</p>
-<p><mapper namespace="cn.gsm.mkm.dao.UserMapper"><br>指定到你的*Mapper接口</mapper></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;mapper namespace=&quot;cn.gsm.mkm.dao.UserMapper&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>指定到你的*Mapper接口</p>
 <p>b:在mybatis总配置文件中指定扫描目标</p>
 <pre><code>&lt;mappers&gt;
     &lt;mapper resource=&quot;cn/gsm/mkm/mapper/UserMapper.xml&quot;&gt;&lt;/mapper&gt;
