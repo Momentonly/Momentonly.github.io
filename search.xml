@@ -25,7 +25,7 @@
   <entry>
     <title><![CDATA[mytabis的学习]]></title>
     <url>%2F2019%2F06%2F22%2FMyBatis%2Fmytabis%E7%9A%84%E5%AD%A6%E4%B9%A0%2F</url>
-    <content type="text"><![CDATA[接口绑定方案MyBatis中，提供了一套接口绑定方案，程序员可以提供一个接口，然后提供对应接口的一个mapper.xml文件。 MyBatis会自动将接口和xml文件进行绑定，实际上就是MyBatis会根据接口和对应的xml文件创建接口的实现类。 可以得到实现类的对象。 通过接口绑定解决多参数的传递映射文件的命名和接口的命名一致 映射文件的namespace写接口的全限定路径 mybatis如何通过接口查找对应的mapper.xml及方法执行详解链接 mybatis中接口文件Mapper和接口配置文件Mapper.xml不在同一个目录下1：只有单独的Mybatis没有Spring的情况下 a:首先修改*Mapper.xml中的namespace 1&lt;mapper namespace=&quot;cn.gsm.mkm.dao.UserMapper&quot;&gt; 指定到你的*Mapper接口 b:在mybatis总配置文件中指定扫描目标 &lt;mappers&gt; &lt;mapper resource=&quot;cn/gsm/mkm/mapper/UserMapper.xml&quot;&gt;&lt;/mapper&gt; &lt;package name=&quot;cn.gsm.mkm.dao.UserMapper&quot;&gt;&lt;/package&gt;&lt;!-- 指定具体文件--&gt; &lt;/mappers&gt; 需要注意，这样配置必须指定具体的文件。否则dom4j解析会报错SAXParseException。]]></content>
+    <content type="text"><![CDATA[接口绑定方案MyBatis中，提供了一套接口绑定方案，程序员可以提供一个接口，然后提供对应接口的一个mapper.xml文件。 MyBatis会自动将接口和xml文件进行绑定，实际上就是MyBatis会根据接口和对应的xml文件创建接口的实现类。 可以得到实现类的对象。 通过接口绑定解决多参数的传递映射文件的命名和接口的命名一致 映射文件的namespace写接口的全限定路径 mybatis如何通过接口查找对应的mapper.xml及方法执行详解链接:https://www.jb51.net/article/116402.htm mybatis中接口文件Mapper和接口配置文件Mapper.xml不在同一个目录下1：只有单独的Mybatis没有Spring的情况下 a:首先修改*Mapper.xml中的namespace 1&lt;mapper namespace=&quot;cn.gsm.mkm.dao.UserMapper&quot;&gt; 指定到你的*Mapper接口 b:在mybatis总配置文件中指定扫描目标 &lt;mappers&gt; &lt;mapper resource=&quot;cn/gsm/mkm/mapper/UserMapper.xml&quot;&gt;&lt;/mapper&gt; &lt;package name=&quot;cn.gsm.mkm.dao.UserMapper&quot;&gt;&lt;/package&gt;&lt;!-- 指定具体文件--&gt; &lt;/mappers&gt; 需要注意，这样配置必须指定具体的文件。否则dom4j解析会报错SAXParseException。]]></content>
       <categories>
         <category>database</category>
       </categories>

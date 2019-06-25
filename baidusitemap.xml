@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/2019/06/22/MyBatis/mytabis%E7%9A%84%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2019-06-25T01:02:52.294Z</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/2019/06/20/Linux/mysql%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95/</loc>
     <lastmod>2019-06-25T01:00:37.639Z</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/2019/06/22/MyBatis/mytabis%E7%9A%84%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2019-06-25T00:59:10.652Z</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/06/25/MyBatis/Log4j%E7%9A%84%E9%85%8D%E7%BD%AE/</loc>
     <lastmod>2019-06-25T00:53:37.718Z</lastmod>
