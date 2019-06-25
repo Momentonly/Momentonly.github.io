@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/2019/06/25/MyBatis/Log4j%E7%9A%84%E9%85%8D%E7%BD%AE/</loc>
+    <lastmod>2019-06-25T00:53:37.718Z</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/2019/06/22/MyBatis/mytabis%E7%9A%84%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2019-06-25T00:41:42.011Z</lastmod>
+    <lastmod>2019-06-25T00:53:25.763Z</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2018/12/30/JavaSE/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%86%E5%89%B2split/</loc>
     <lastmod>2019-06-22T07:10:51.566Z</lastmod>
