@@ -7,13 +7,16 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>sublime的package control | Momentonly</title>
+    <title>git提交github仓库 | Momentonly</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Moment Only">
     
-    <meta name="description" content="sublime的package control​    preferences-&amp;gt;package control出现There are no packages available for installation错误
-据说是IPv6的原因，如果我们的Intent服务提供者（ISP）不支持IPv">
+    <meta name="description" content="git提交github仓库1) 本地新建一个文件夹res
+2) 打开git,进入res,
+3) git init         初始化文件夹
+4)建立远程仓库连接:git remote add origin git@github.com:Momentonly/Java.git    
+​     ">
     
     
     
@@ -81,15 +84,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/06/15/Config/sublime的package control/" title="sublime的package control" itemprop="url">sublime的package control</a>
+      <a href="/2019/06/28/Config/git提交github仓库/" title="git提交github仓库" itemprop="url">git提交github仓库</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
     </p>
   <p class="article-time">
-    <time datetime="2019-06-15T07:13:46.000Z" itemprop="datePublished">2019-06-15</time>
-    更新日期:<time datetime="2019-06-15T07:33:57.858Z" itemprop="dateModified">2019-06-15</time>
+    <time datetime="2019-06-28T15:12:26.000Z" itemprop="datePublished">2019-06-28</time>
+    更新日期:<time datetime="2019-06-28T15:15:35.517Z" itemprop="dateModified">2019-06-28</time>
     
   </p>
 </header>
@@ -98,28 +101,27 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sublime的package-control"><span class="toc-number">1.</span> <span class="toc-text">sublime的package control</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Package-control的install-package"><span class="toc-number">2.</span> <span class="toc-text">Package control的install package</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#git提交github仓库"><span class="toc-number">1.</span> <span class="toc-text">git提交github仓库</span></a></li></ol>
 		</div>
 		
-		<h1 id="sublime的package-control"><a href="#sublime的package-control" class="headerlink" title="sublime的package control"></a>sublime的package control</h1><p>​    preferences-&gt;package control出现There are no packages available for installation错误</p>
-<p>据说是IPv6的原因，如果我们的Intent服务提供者（ISP）不支持IPv6就会引发上述错误，原文如下：This error is happened with IPv6 problem. If your Internet Service Provider (ISP) does not support for IPv6 you got this error.</p>
-<p>从上面的描述可以知道首先需要获取sublime.wbond.net网站的IPv4地址，然后修改hosts文件就行了。</p>
-<p>C:\Windows\System32\drivers\etc</p>
-<p>修改hosts</p>
-<p>50.116.34.243 sublime.wbond.net</p>
-<p>50.116.34.243 packagecontrol.io</p>
-<h1 id="Package-control的install-package"><a href="#Package-control的install-package" class="headerlink" title="Package control的install package"></a>Package control的install package</h1><p>Sublime包管理package control 打开install package报错 There are no packages available for installation</p>
-<p>本地下载一个channel_v3.json文件:<a href="https://github.com/SuCicada/channel_v3.json" target="_blank" rel="noopener">https://github.com/SuCicada/channel_v3.json</a></p>
-<p>放入本地任意目录，然后打开sublime中的Preferences-&gt;package settings-&gt;package control-&gt;settings user</p>
-<p>配置   “channels”:<br>    [<br>        “H:\SoftwarePro\Sublime Text 3\channel_v3.json”<br>    ],</p>
-<p>保存重启</p>
+		<h2 id="git提交github仓库"><a href="#git提交github仓库" class="headerlink" title="git提交github仓库"></a>git提交github仓库</h2><p>1) 本地新建一个文件夹res</p>
+<p>2) 打开git,进入res,</p>
+<p>3) git init         初始化文件夹</p>
+<p>4)建立远程仓库连接:git remote add origin <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:Momentonly/Java.git    </p>
+<p>​                git remote add origin <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:账号名/仓库名.git                `</p>
+<p>5)查看git状态: git status</p>
+<p>6)git add .    将文件添加到工作区间</p>
+<p>7)git commit,再将需要提交的文件注释去掉(git commit ‘注释’)</p>
+<p>8) git push -u origin master        提交到github仓库</p>
+<p>pull仓库</p>
+<p>1)git pull          pull远程仓库</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/config/">config</a>
+  <span></span> <a href="/tags/git/">git</a>
   </div>
 
 
@@ -132,7 +134,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2019/06/15/Config/sublime的package control/" data-title="sublime的package control | Momentonly" data-tsina="" class="share clearfix">
+  <div data-url="http://yoursite.com/2019/06/28/Config/git提交github仓库/" data-title="git提交github仓库 | Momentonly" data-tsina="" class="share clearfix">
   </div>
 
 </div>
@@ -141,19 +143,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2019/06/16/Java Web/手写服务器总结/" title="手写服务器总结">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  手写服务器总结</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2019/06/13/JavaSE/ThreadLocal的使用/"  title="ThreadLocal的使用">
+<a href="/2019/06/25/MyBatis/Log4j的配置/"  title="log4j的配置">
  <strong>NEXT:</strong><br/> 
- <span>ThreadLocal的使用
+ <span>log4j的配置
 </span>
 </a>
 </div>
@@ -163,7 +157,7 @@
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="sublime的package control" data-thread-key="Config/sublime的package control" data-author-key="Moment Only" data-url="http://yoursite.com/post/Config/sublime的package control"></div>
+	<div class="ds-thread" data-title="git提交github仓库" data-thread-key="Config/git提交github仓库" data-author-key="Moment Only" data-url="http://yoursite.com/post/Config/git提交github仓库"></div>
 	
 </section>
 
@@ -173,7 +167,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sublime的package-control"><span class="toc-number">1.</span> <span class="toc-text">sublime的package control</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Package-control的install-package"><span class="toc-number">2.</span> <span class="toc-text">Package control的install package</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#git提交github仓库"><span class="toc-number">1.</span> <span class="toc-text">git提交github仓库</span></a></li></ol>
   </div>
 
 <div id="asidepart">
