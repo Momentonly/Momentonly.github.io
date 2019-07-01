@@ -7,13 +7,12 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>Java多线程之this与Thread.currentThread()的区别 | Momentonly</title>
+    <title>Oracle | Momentonly</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Moment Only">
     
-    <meta name="description" content="this是当前代码所处的对象的线程，Thread.currentThread()是运行当前代码的线程。
-12345678910111213141516171819202122232425262728293031public class CountOperate extends Thread&amp;#123">
+    <meta name="description" content="Oracle用户和登录sys和system1)【sys】所有 oracle 的数据字典的基表和视图都存放在 sys 用户中，这些基表和视图对于 oracle 的运行是至关重要的，由数据库自己维护，任何用户都不能手动更改。 sys 用户拥有 dba ， sysdba ， sysoper 等角色或权限，">
     
     
     
@@ -81,15 +80,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/01/18/JavaSE/Java多线程this与Thread.currentThread()的区别/" title="Java多线程之this与Thread.currentThread()的区别" itemprop="url">Java多线程之this与Thread.currentThread()的区别</a>
+      <a href="/2019/07/01/Oracle/oracle的用户/" title="Oracle" itemprop="url">Oracle</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
     </p>
   <p class="article-time">
-    <time datetime="2019-01-18T12:11:44.000Z" itemprop="datePublished">2019-01-18</time>
-    更新日期:<time datetime="2019-06-22T07:02:06.556Z" itemprop="dateModified">2019-06-22</time>
+    <time datetime="2019-07-01T04:55:01.000Z" itemprop="datePublished">2019-07-01</time>
+    更新日期:<time datetime="2019-07-01T05:01:12.267Z" itemprop="dateModified">2019-07-01</time>
     
   </p>
 </header>
@@ -98,43 +97,34 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Oracle"><span class="toc-number">1.</span> <span class="toc-text">Oracle</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#用户和登录"><span class="toc-number">1.1.</span> <span class="toc-text">用户和登录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sys和system"><span class="toc-number">1.1.1.</span> <span class="toc-text">sys和system</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#以normal-sysdba-sysopra身份登录"><span class="toc-number">1.1.2.</span> <span class="toc-text">以normal,sysdba,sysopra身份登录</span></a></li></ol></li></ol></li></ol>
 		</div>
 		
-		<p>this是当前代码所处的对象的线程，Thread.currentThread()是运行当前代码的线程。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CountOperate</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="title">CountOperate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	 System.out.println(<span class="string">"CountOperate.CountOperate()"</span>);</span><br><span class="line">    	 System.out.println(<span class="string">"Thread-currentThread.getName()"</span>+Thread.currentThread().getName());</span><br><span class="line">         System.out.println(<span class="string">"Thread-currentThread.isAlive()"</span>+Thread.currentThread().isAlive());</span><br><span class="line">         System.out.println(<span class="string">"this.getName()"</span>+<span class="keyword">this</span>.getName());</span><br><span class="line">         System.out.println(<span class="string">"this.isAlive()"</span>+<span class="keyword">this</span>.isAlive());</span><br><span class="line">         System.out.println(<span class="string">"Thread-currentThread==this"</span>+(Thread.currentThread()==<span class="keyword">this</span>));</span><br><span class="line">         System.out.println(<span class="string">"CountOperate.CountOperate()"</span>);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="meta">@Override</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	 System.out.println(<span class="string">"CountOperate.run()"</span>+Thread.currentThread().getName());</span><br><span class="line">    	 System.out.println(<span class="string">"Thread-currentThread.getName()"</span>+Thread.currentThread().getName());</span><br><span class="line">         System.out.println(<span class="string">"Thread-currentThread.isAlive()"</span>+Thread.currentThread().isAlive());</span><br><span class="line">         System.out.println(<span class="string">"this.getName()"</span>+<span class="keyword">this</span>.getName());</span><br><span class="line">         System.out.println(<span class="string">"this.isAlive()"</span>+<span class="keyword">this</span>.isAlive());</span><br><span class="line">         System.out.println(<span class="string">"Thread-currentThread==this"</span>+(Thread.currentThread()==<span class="keyword">this</span>));</span><br><span class="line">    	 System.out.println(<span class="string">"CountOperate.run()"</span>);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    	 CountOperate c=<span class="keyword">new</span> CountOperate();</span><br><span class="line">         c.start();</span><br><span class="line">         Thread t1=<span class="keyword">new</span> Thread(c);</span><br><span class="line">         System.out.println(<span class="string">"main t1.isAlive()"</span>+t1.isAlive());</span><br><span class="line">         t1.setName(<span class="string">"t1"</span>);</span><br><span class="line">         t1.start();</span><br><span class="line">         System.out.println(<span class="string">"main t1.isAlive()"</span>+t1.isAlive());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>打印的log</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">//-----------------------------------------------</span><br><span class="line">CountOperate.CountOperate()    //new CountOperate()的构造函数</span><br><span class="line">Thread-currentThread.getName()main  //jvm创建一个进程，默认有一个线程调用main</span><br><span class="line">Thread-currentThread.isAlive()true  </span><br><span class="line">this.getName()Thread-0             //当前new的CountOperate()对象的线程</span><br><span class="line">this.isAlive()false</span><br><span class="line">Thread-currentThread==thisfalse</span><br><span class="line">CountOperate.CountOperate()</span><br><span class="line">//------------------------------------------------</span><br><span class="line">main t1.isAlive()false                  //t1没有调用start()方法</span><br><span class="line">main t1.isAlive()true                   //t1调用过start()方法</span><br><span class="line">//------------------------------------------------</span><br><span class="line">CountOperate.run()Thread-0               //c.start()调用run()</span><br><span class="line">Thread-currentThread.getName()Thread-0</span><br><span class="line">Thread-currentThread.isAlive()true</span><br><span class="line">this.getName()Thread-0                 //this当前线程</span><br><span class="line">this.isAlive()true</span><br><span class="line">Thread-currentThread==thistrue</span><br><span class="line">CountOperate.run()</span><br><span class="line">//------------------------------------------------</span><br><span class="line">CountOperate.run()t1               </span><br><span class="line">Thread-currentThread.getName()t1     //Thread t1=new Thread(参数),</span><br><span class="line">Thread-currentThread.isAlive()true   //t1是new的Thread，与传递的参数无关</span><br><span class="line">this.getName()Thread-0              //传过来的c对象参数，当执行t1.start(),</span><br><span class="line">this.isAlive()false                  //会调用c的run()方法</span><br><span class="line">Thread-currentThread==thisfalse</span><br><span class="line">CountOperate.run()</span><br></pre></td></tr></table></figure>
-<p>根据打印的Log可以知道调用CountOperate构造函数的是main线程，因此打印出</p>
-<p>Thread.currentThread().getName()=main<br>Thread.currentThread().isAlive()=true<br>而此时还没有启动CountOperate子线程所以打印出<br>this.getName=Thread-0<br>this.isAlive()=false</p>
-<p>此时this代表的是CountOperate对象实例，所以<br>Thread.currentThread()==this :false</p>
-<p>这里比较让人疑惑的是“this.getName() = Thread-0”，这个Thread-0是什么东西？？？<br>通过查看Thread源码发现，在Thread类的构造方法中，会自动给name赋值，赋值代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public Thread() &#123;</span><br><span class="line">        init(null, null, &quot;Thread-&quot; + nextThreadNum(), 0);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>然后执行到:<br>Thread t1 = new Thread(c);<br>System.out.println(“main begin t1 isAlive=” + t1.isAlive());<br>t1.setName(“t1”);<br>t1.start();</p>
-<p>打印：<br>Thread-currentThread.getName()t1<br>Thread-currentThread.isAlive()true<br>Thread.currentThread()==this :false<br>this.getName()=Thread-0<br>this.isAlive()=false<br>说明此时的this和Thread.currentThread()指向不是同一个线程实例</p>
-<p>也就是说，this指向的还是new CountOperate()创建的那个线程实例，而不是new Thread(thread)创建的那个实例即t1。<br>查看源代码可以知道</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public Thread(Runnable target) &#123;</span><br><span class="line">        init(null, target, &quot;Thread-&quot; + nextThreadNum(), 0);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p><strong>实际上new Thread(thread)会将thread应用的对象绑定到一个pravite变量target上，</strong><br><strong>在t1被执行的时候即t1.run()被调用的时候，它会调用target.run()方法，也就是说它是直接调用thread对象的run方法，</strong><br><strong>再确切的说，在run方法被执行的时候，this.getName()实际上返回的是target.getName()，而Thread.currentThread().getName()实际上是t1.getName()。</strong></p>
+		<h1 id="Oracle"><a href="#Oracle" class="headerlink" title="Oracle"></a>Oracle</h1><h2 id="用户和登录"><a href="#用户和登录" class="headerlink" title="用户和登录"></a>用户和登录</h2><h3 id="sys和system"><a href="#sys和system" class="headerlink" title="sys和system"></a>sys和system</h3><p>1)【sys】所有 oracle 的数据字典的基表和视图都存放在 sys 用户中，这些基表和视图对于 oracle 的运行是至关重要的，由数据库自己维护，任何用户都不能手动更改。 sys 用户拥有 dba ， sysdba ， sysoper 等角色或权限，是 oracle 权限最高的用户。</p>
+<p>2)【 system 】 用户用于存放次一级的内部数据，如 oracle 的一些特性或工具的管理信息。 system 用户拥有普通 dba 角色权限。</p>
+<h3 id="以normal-sysdba-sysopra身份登录"><a href="#以normal-sysdba-sysopra身份登录" class="headerlink" title="以normal,sysdba,sysopra身份登录"></a>以normal,sysdba,sysopra身份登录</h3><p>normal 是普通用户</p>
+<p>sysdba 拥有最高的系统权限，登陆后是 sys<br>sysoper 主要用来启动、关闭数据库， sysoper 登陆后用户是 public</p>
+<p><strong><em>注意:sys只能以sysdba身份登录</em></strong></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Java/">Java</a>
+  <span></span> <a href="/tags/Oracle/">Oracle</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/JavaSE/">JavaSE</a>
+  <a class="article-category-link" href="/categories/database/">database</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2019/01/18/JavaSE/Java多线程this与Thread.currentThread()的区别/" data-title="Java多线程之this与Thread.currentThread()的区别 | Momentonly" data-tsina="" class="share clearfix">
+  <div data-url="http://yoursite.com/2019/07/01/Oracle/oracle的用户/" data-title="Oracle | Momentonly" data-tsina="" class="share clearfix">
   </div>
 
 </div>
@@ -143,19 +133,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2019/01/22/Java Web/关于XML文档的xmlns、xmlnsxsi和xsischemaLocation/" title="关于XML文档的xmlns、xmlns:xsi和xsi:schemaLocation">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  关于XML文档的xmlns、xmlns:xsi和xsi:schemaLocation</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2019/01/17/JavaSE/成员变量的同名和方法的重写/"  title="Java理解  子类成员变量与父类成员变量同名   方法的重写">
+<a href="/2019/06/28/Config/git提交github仓库/"  title="git提交github仓库">
  <strong>NEXT:</strong><br/> 
- <span>Java理解  子类成员变量与父类成员变量同名   方法的重写
+ <span>git提交github仓库
 </span>
 </a>
 </div>
@@ -165,7 +147,7 @@
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="Java多线程之this与Thread.currentThread()的区别" data-thread-key="JavaSE/Java多线程this与Thread.currentThread()的区别" data-author-key="Moment Only" data-url="http://yoursite.com/post/JavaSE/Java多线程this与Thread.currentThread()的区别"></div>
+	<div class="ds-thread" data-title="Oracle" data-thread-key="Oracle/oracle的用户" data-author-key="Moment Only" data-url="http://yoursite.com/post/Oracle/oracle的用户"></div>
 	
 </section>
 
@@ -175,7 +157,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Oracle"><span class="toc-number">1.</span> <span class="toc-text">Oracle</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#用户和登录"><span class="toc-number">1.1.</span> <span class="toc-text">用户和登录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sys和system"><span class="toc-number">1.1.1.</span> <span class="toc-text">sys和system</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#以normal-sysdba-sysopra身份登录"><span class="toc-number">1.1.2.</span> <span class="toc-text">以normal,sysdba,sysopra身份登录</span></a></li></ol></li></ol></li></ol>
   </div>
 
 <div id="asidepart">

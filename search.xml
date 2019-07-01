@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Oracle]]></title>
+    <url>%2F2019%2F07%2F01%2FOracle%2Foracle%E7%9A%84%E7%94%A8%E6%88%B7%2F</url>
+    <content type="text"><![CDATA[Oracle用户和登录sys和system1)【sys】所有 oracle 的数据字典的基表和视图都存放在 sys 用户中，这些基表和视图对于 oracle 的运行是至关重要的，由数据库自己维护，任何用户都不能手动更改。 sys 用户拥有 dba ， sysdba ， sysoper 等角色或权限，是 oracle 权限最高的用户。 2)【 system 】 用户用于存放次一级的内部数据，如 oracle 的一些特性或工具的管理信息。 system 用户拥有普通 dba 角色权限。 以normal,sysdba,sysopra身份登录normal 是普通用户 sysdba 拥有最高的系统权限，登陆后是 syssysoper 主要用来启动、关闭数据库， sysoper 登陆后用户是 public 注意:sys只能以sysdba身份登录]]></content>
+      <categories>
+        <category>database</category>
+      </categories>
+      <tags>
+        <tag>Oracle</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[git提交github仓库]]></title>
     <url>%2F2019%2F06%2F28%2FConfig%2Fgit%E6%8F%90%E4%BA%A4github%E4%BB%93%E5%BA%93%2F</url>
     <content type="text"><![CDATA[git提交github仓库提交1) 本地新建一个文件夹res,作为项目根目录 2) 打开git,进入res, 3) git init 在项目根目录执行git init命令 4)建立远程仓库连接: (use ssh) ​ git remote add origin git@github.com:Momentonly/Java.git ​ git remote add origin git@github.com:账号名/仓库名.git ` 5)查看git状态: git status 6)git add -A 自动添加全部要上传到仓库的文件 7)git commit -m ‘注释’ 8) git push -u origin master 从远程分支拉取master分支并与本地master分支合并。 拉取1)git pull origin master:master 从远程分支拉取master分支并与本地master分支合并。 注意：当发现远程仓库已经有内容并提示先执行git pull，将内容进行合并后再上传，在执行git pull的时候，或者会出现 123456789There is no tracking information for the current branch.Please specify which branch you want to merge with.See git-pull(1) for details git pull &lt;remote&gt; &lt;branch&gt;If you wish to set tracking information for this branch you can do so with: git branch --set-upstream-to=origin/&lt;branch&gt; master 也就是指定当前工作目录工作分支，跟远程的仓库，分支之间的链接关系。然后按照提示输入git branch --set-upstream-to=origin/master master与master分支关联，完成后再执行 git pull 和 git push,]]></content>
