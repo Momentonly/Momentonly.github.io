@@ -12,11 +12,11 @@
     
     <meta name="author" content="Moment Only">
     
-    <meta name="description" content="git提交github仓库1) 本地新建一个文件夹res
+    <meta name="description" content="git提交github仓库提交1) 本地新建一个文件夹res,作为项目根目录
 2) 打开git,进入res,
-3) git init         初始化文件夹
-4)建立远程仓库连接:git remote add origin git@github.com:Momentonly/Java.git    
-​     ">
+3) git init       在项目根目录执行git init命令
+4)建立远程仓库连接: (use ssh)
+​                git remote add orig">
     
     
     
@@ -92,7 +92,7 @@
     </p>
   <p class="article-time">
     <time datetime="2019-06-28T15:12:26.000Z" itemprop="datePublished">2019-06-28</time>
-    更新日期:<time datetime="2019-06-28T15:15:35.517Z" itemprop="dateModified">2019-06-28</time>
+    更新日期:<time datetime="2019-06-29T08:14:14.120Z" itemprop="dateModified">2019-06-29</time>
     
   </p>
 </header>
@@ -101,20 +101,23 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#git提交github仓库"><span class="toc-number">1.</span> <span class="toc-text">git提交github仓库</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#git提交github仓库"><span class="toc-number">1.</span> <span class="toc-text">git提交github仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提交"><span class="toc-number">2.</span> <span class="toc-text">提交</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉取"><span class="toc-number">3.</span> <span class="toc-text">拉取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意："><span class="toc-number">4.</span> <span class="toc-text">注意：</span></a></li></ol>
 		</div>
 		
-		<h2 id="git提交github仓库"><a href="#git提交github仓库" class="headerlink" title="git提交github仓库"></a>git提交github仓库</h2><p>1) 本地新建一个文件夹res</p>
+		<h2 id="git提交github仓库"><a href="#git提交github仓库" class="headerlink" title="git提交github仓库"></a>git提交github仓库</h2><h2 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h2><p>1) 本地新建一个文件夹res,作为项目根目录</p>
 <p>2) 打开git,进入res,</p>
-<p>3) git init         初始化文件夹</p>
-<p>4)建立远程仓库连接:git remote add origin <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:Momentonly/Java.git    </p>
+<p>3) git init       在项目根目录执行git init命令</p>
+<p>4)建立远程仓库连接: (use ssh)</p>
+<p>​                git remote add origin <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:Momentonly/Java.git    </p>
 <p>​                git remote add origin <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:账号名/仓库名.git                `</p>
 <p>5)查看git状态: git status</p>
-<p>6)git add .    将文件添加到工作区间</p>
-<p>7)git commit,再将需要提交的文件注释去掉(git commit ‘注释’)</p>
-<p>8) git push -u origin master        提交到github仓库</p>
-<p>pull仓库</p>
-<p>1)git pull          pull远程仓库</p>
+<p>6)git add -A    自动添加全部要上传到仓库的文件</p>
+<p>7)git commit -m ‘注释’</p>
+<p>8) git push -u origin master       从远程分支拉取master分支并与本地master分支合并。</p>
+<h2 id="拉取"><a href="#拉取" class="headerlink" title="拉取"></a>拉取</h2><p>1)git pull origin master:master          从远程分支拉取master分支并与本地master分支合并。</p>
+<h2 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h2><p>当发现远程仓库已经有内容并提示先执行<code>git pull</code>，将内容进行合并后再上传，在执行<code>git pull</code>的时候，或者会出现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">There is no tracking information for the current branch.</span><br><span class="line">Please specify which branch you want to merge with.</span><br><span class="line">See git-pull(1) for details</span><br><span class="line"></span><br><span class="line">    git pull &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"></span><br><span class="line">If you wish to set tracking information for this branch you can do so with:</span><br><span class="line"></span><br><span class="line">    git branch --set-upstream-to=origin/&lt;branch&gt; master</span><br></pre></td></tr></table></figure>
+<p>也就是指定当前工作目录工作分支，跟远程的仓库，分支之间的链接关系。然后按照提示输入<code>git branch --set-upstream-to=origin/master master</code>与master分支关联，完成后再执行 <code>git pull</code> 和 <code>git push</code>,</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -167,7 +170,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#git提交github仓库"><span class="toc-number">1.</span> <span class="toc-text">git提交github仓库</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#git提交github仓库"><span class="toc-number">1.</span> <span class="toc-text">git提交github仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提交"><span class="toc-number">2.</span> <span class="toc-text">提交</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉取"><span class="toc-number">3.</span> <span class="toc-text">拉取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意："><span class="toc-number">4.</span> <span class="toc-text">注意：</span></a></li></ol>
   </div>
 
 <div id="asidepart">
