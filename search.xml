@@ -16,7 +16,7 @@
     <url>%2F2019%2F06%2F28%2FConfig%2Fgit%E6%8F%90%E4%BA%A4github%E4%BB%93%E5%BA%93%2F</url>
     <content type="text"><![CDATA[git提交github仓库提交1) 本地新建一个文件夹res,作为项目根目录 2) 打开git,进入res, 3) git init 在项目根目录执行git init命令 4)建立远程仓库连接: (use ssh) ​ git remote add origin git@github.com:Momentonly/Java.git ​ git remote add origin git@github.com:账号名/仓库名.git ` 5)查看git状态: git status 6)git add -A 自动添加全部要上传到仓库的文件 7)git commit -m ‘注释’ 8) git push -u origin master 从远程分支拉取master分支并与本地master分支合并。 拉取1)git pull origin master:master 从远程分支拉取master分支并与本地master分支合并。 注意：当发现远程仓库已经有内容并提示先执行git pull，将内容进行合并后再上传，在执行git pull的时候，或者会出现 123456789There is no tracking information for the current branch.Please specify which branch you want to merge with.See git-pull(1) for details git pull &lt;remote&gt; &lt;branch&gt;If you wish to set tracking information for this branch you can do so with: git branch --set-upstream-to=origin/&lt;branch&gt; master 也就是指定当前工作目录工作分支，跟远程的仓库，分支之间的链接关系。然后按照提示输入git branch --set-upstream-to=origin/master master与master分支关联，完成后再执行 git pull 和 git push,]]></content>
       <categories>
-        <category>config</category>
+        <category>tools</category>
       </categories>
       <tags>
         <tag>git</tag>
@@ -177,10 +177,10 @@
     <url>%2F2019%2F06%2F15%2FConfig%2Fsublime%E7%9A%84package%20control%2F</url>
     <content type="text"><![CDATA[sublime的package control​ preferences-&gt;package control出现There are no packages available for installation错误 据说是IPv6的原因，如果我们的Intent服务提供者（ISP）不支持IPv6就会引发上述错误，原文如下：This error is happened with IPv6 problem. If your Internet Service Provider (ISP) does not support for IPv6 you got this error. 从上面的描述可以知道首先需要获取sublime.wbond.net网站的IPv4地址，然后修改hosts文件就行了。 C:\Windows\System32\drivers\etc 修改hosts 50.116.34.243 sublime.wbond.net 50.116.34.243 packagecontrol.io Package control的install packageSublime包管理package control 打开install package报错 There are no packages available for installation 本地下载一个channel_v3.json文件:https://github.com/SuCicada/channel_v3.json 放入本地任意目录，然后打开sublime中的Preferences-&gt;package settings-&gt;package control-&gt;settings user 配置 “channels”: [ “H:\SoftwarePro\Sublime Text 3\channel_v3.json” ], 保存重启]]></content>
       <categories>
-        <category>config</category>
+        <category>tools</category>
       </categories>
       <tags>
-        <tag>config</tag>
+        <tag>sublime</tag>
       </tags>
   </entry>
   <entry>
@@ -217,8 +217,11 @@
     <title><![CDATA[IDEA的工作区间]]></title>
     <url>%2F2019%2F06%2F05%2FTools%2FIDEA%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8C%BA%E9%97%B4%2F</url>
     <content type="text"><![CDATA[IDEA中的项目概念与eclipse是不同的，IDEA的项目等同于eclipse中的workspace。Idea的module等同于eclipse中的project。所以我们要实现在一个项目倒入多个module。 具体操作如下： File–&gt;Project Structure Import Module，然后选中自己要导入的项目即可 作者：wzz87来源：CSDN原文：https://blog.csdn.net/wzz87/article/details/80234880版权声明：本文为博主原创文章，转载请附上博文链接！]]></content>
+      <categories>
+        <category>tools</category>
+      </categories>
       <tags>
-        <tag>IDEA</tag>
+        <tag>tools</tag>
       </tags>
   </entry>
   <entry>
@@ -226,10 +229,10 @@
     <url>%2F2019%2F06%2F02%2FConfig%2FEclipse%E4%B8%BB%E9%A2%98%E9%87%8D%E5%90%AF%E5%A4%B1%E6%95%88%2F</url>
     <content type="text"><![CDATA[重启eclipse color theme失效的解决办法** 1、在eclipse菜单栏 选择 windows &gt; Perferences； 2、找到Oomph &gt; Setup Task &gt; Perference Recorder选项； 3、将上方的Record Into勾选上，点恢复默认值(Restore Defaults)再应用(apply)-确定(Ok) 4.重启Eclipse主题生效 注：Perference Recorder可以同步Eclipse的配置参数]]></content>
       <categories>
-        <category>config</category>
+        <category>tools</category>
       </categories>
       <tags>
-        <tag>config</tag>
+        <tag>eclipse</tag>
       </tags>
   </entry>
   <entry>
@@ -405,14 +408,14 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[change themes]]></title>
+    <title><![CDATA[修改Hexo主题]]></title>
     <url>%2F2018%2F10%2F12%2FConfig%2F%E4%BF%AE%E6%94%B9Hexo%E4%B8%BB%E9%A2%98%2F</url>
     <content type="text"><![CDATA[1.获取主题cd themes 再将yilia主题clone至themes文件夹中 git clone https://github.com/litten/hexo-theme-yilia.git yilia 2.配置：修改hexo根目录下的_config.yml theme:yilia 3.更新:12cd themes/yiliagit pull 4.发布12hexo cleanhexo d -g]]></content>
       <categories>
-        <category>config</category>
+        <category>tools</category>
       </categories>
       <tags>
-        <tag>config</tag>
+        <tag>tools</tag>
       </tags>
   </entry>
   <entry>
