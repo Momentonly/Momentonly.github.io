@@ -78,6 +78,52 @@
 
   <section class="post" itemscope itemprop="blogPost">
   
+    <a href="/2019/06/20/Linux/安装centos7缺少命令问题/" title="centos7安装缺少命令" itemprop="url">
+  
+      <time datetime="2019-06-20T05:19:59.000Z" itemprop="datePublished">2019-06-20</time>
+    <h1 itemprop="name">centos7安装缺少命令</h1>
+    
+     
+           <p itemprop="description" >没有 ifconfig 、netstat命令：
+
+1yum install -y net-tools
+
+没有命令补全，tab补全命令：
+
+1yum install -y bash-completion
+
+没有killall命令：
+
+1yum install  -y psmisc</p>
+        
+    
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2019/06/20/Linux/centos7配置DHCP和静态IP/" title="centos7配置dhcp和静态Ip" itemprop="url">
+  
+      <time datetime="2019-06-20T05:19:59.000Z" itemprop="datePublished">2019-06-20</time>
+    <h1 itemprop="name">centos7配置dhcp和静态Ip</h1>
+    
+     
+           <p itemprop="description" >vi ifcfg-eth0
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=static
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF</p>
+        
+    
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
     <a href="/2019/06/20/Linux/centos7修改网卡名/" title="centos7修改网卡名" itemprop="url">
   
       <time datetime="2019-06-20T03:26:31.000Z" itemprop="datePublished">2019-06-20</time>
@@ -198,46 +244,6 @@
      
            <p itemprop="description" >sublime的package control​    preferences-&amp;gt;package control出现There are no packages available for installation错误
 据说是IPv6的原因，如果我们的Intent服务提供者（</p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2019/06/13/JavaSE/ThreadLocal的使用/" title="ThreadLocal的使用" itemprop="url">
-  
-      <time datetime="2019-06-13T09:37:18.000Z" itemprop="datePublished">2019-06-13</time>
-    <h1 itemprop="name">ThreadLocal的使用</h1>
-    
-     
-           <p itemprop="description" >ThreadLocal的使用1.说明​        ThreadLocal 直译为“本地线程”，其实它就是一容器，用于 存放线程的局部变量 
-​        能够保持每一个线程里面的值是相应的，说明这些值已经达到了线程私有的目的。
-​        当你在一个类中使用 sta</p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2019/06/12/Linux/Linux常用命令1/" title="Linux常用命令1" itemprop="url">
-  
-      <time datetime="2019-06-12T05:51:55.000Z" itemprop="datePublished">2019-06-12</time>
-    <h1 itemprop="name">Linux常用命令1</h1>
-    
-     
-           <p itemprop="description" >文件 &amp;amp; 目录操作（16 个）
-ls
-●　ls -a 查看所有文件，包含隐藏文件
-●　ls -l 简写 ll，查看详细信息
-●　ls -h 文件大小以易读的方式显示
-cd
-●　cd ../ 返回上级目录
-●　cd ~ 前往家目录
-●　cd - 返回上一次所在目录
-cp
-●</p>
         
     
   </a>
