@@ -7,14 +7,13 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>mysql配置远程登录 | Momentonly</title>
+    <title>mysql配置 | Momentonly</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Moment Only">
     
-    <meta name="description" content="mysql配置远程登录
-1.查看表
-12345678use mysql;select host,user from user; host      | user      |+-----------+-----------+| %         | root      || localhost |">
+    <meta name="description" content="mysql配置配置远程1.查看表
+12345678use mysql;select host,user from user; host      | user      |+-----------+-----------+| %         | root      || localhost | ">
     
     
     
@@ -82,7 +81,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/06/20/Linux/mysql配置远程登录/" title="mysql配置远程登录" itemprop="url">mysql配置远程登录</a>
+      <a href="/2019/06/20/Linux/mysql配置/" title="mysql配置" itemprop="url">mysql配置</a>
   </h1>
   <p class="article-author">By
     
@@ -90,7 +89,7 @@
     </p>
   <p class="article-time">
     <time datetime="2019-06-20T14:35:59.000Z" itemprop="datePublished">2019-06-20</time>
-    更新日期:<time datetime="2019-06-25T01:00:37.639Z" itemprop="dateModified">2019-06-25</time>
+    更新日期:<time datetime="2019-07-11T06:34:42.827Z" itemprop="dateModified">2019-07-11</time>
     
   </p>
 </header>
@@ -99,11 +98,10 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#mysql配置"><span class="toc-number">1.</span> <span class="toc-text">mysql配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置远程"><span class="toc-number">1.1.</span> <span class="toc-text">配置远程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改密码遇到的坑"><span class="toc-number">1.2.</span> <span class="toc-text">修改密码遇到的坑</span></a></li></ol></li></ol>
 		</div>
 		
-		<p>mysql配置远程登录</p>
-<p>1.查看表</p>
+		<h1 id="mysql配置"><a href="#mysql配置" class="headerlink" title="mysql配置"></a>mysql配置</h1><h2 id="配置远程"><a href="#配置远程" class="headerlink" title="配置远程"></a>配置远程</h2><p>1.查看表</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br><span class="line">select host,user from user;</span><br><span class="line"></span><br><span class="line"> host      | user      |</span><br><span class="line">+-----------+-----------+</span><br><span class="line">| %         | root      |</span><br><span class="line">| localhost | mysql.sys |</span><br><span class="line">| localhost | root     |</span><br></pre></td></tr></table></figure>
 <p>host是主机，root表示主机可以登录的用户，%表示所有主机，但不包括localhost</p>
 <p>2.如果没有%,root</p>
@@ -114,6 +112,20 @@
 <p><strong><em>注意</em></strong><br><strong><em>需要注意mysql的配置文件中的bindaddress 的参数和skip-networking 配置</em></strong></p>
 <p><strong><em>bindaddress : 设定哪些ip地址被配置，使得mysql服务器只回应哪些ip地址的请求),最好注释掉该参数或设置成为127.0.0.1以外的值</em></strong></p>
 <p><strong><em>skip-networking : 如果设置了该参数项，将导致所有TCP/IP端口没有被监听,也就是说出了本机，其他客户端都无法用网络连接到本mysql服务器，所以应该注释掉该参数</em></strong></p>
+<h2 id="修改密码遇到的坑"><a href="#修改密码遇到的坑" class="headerlink" title="修改密码遇到的坑"></a>修改密码遇到的坑</h2><p>如果MySQL数据库用户的密码设置过于简单，数据库在用户登录后会提示重置密码，并且不接受简单的密码。</p>
+<p>提示需要重置密码：</p>
+<p>ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER USER USER() IDENTIFIED BY &apos;123456&apos;;</span><br></pre></td></tr></table></figure>
+<p>以上操作后又遇到新问题：<br>ERROR 1819 (HY000): Your password does NOT satisfy the CURRENT policy requirements。</p>
+<p>先设置复杂密码</p>
+<p>alter user user() identified by “Aa123456”;</p>
+<p>flush privileges;</p>
+<p>使用以下两个设置简单密码</p>
+<p>set global validate_password_policy=0;</p>
+<p> set global validate_password_length=1;</p>
+<p>再设置简单密码</p>
+<p>alter user user() identified by “123456”;</p>
+<p>flush privileges;</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -123,7 +135,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2019/06/20/Linux/mysql配置远程登录/" data-title="mysql配置远程登录 | Momentonly" data-tsina="" class="share clearfix">
+  <div data-url="http://yoursite.com/2019/06/20/Linux/mysql配置/" data-title="mysql配置 | Momentonly" data-tsina="" class="share clearfix">
   </div>
 
 </div>
@@ -154,7 +166,7 @@
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="mysql配置远程登录" data-thread-key="Linux/mysql配置远程登录" data-author-key="Moment Only" data-url="http://yoursite.com/post/Linux/mysql配置远程登录"></div>
+	<div class="ds-thread" data-title="mysql配置" data-thread-key="Linux/mysql配置" data-author-key="Moment Only" data-url="http://yoursite.com/post/Linux/mysql配置"></div>
 	
 </section>
 
@@ -164,7 +176,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#mysql配置"><span class="toc-number">1.</span> <span class="toc-text">mysql配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置远程"><span class="toc-number">1.1.</span> <span class="toc-text">配置远程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改密码遇到的坑"><span class="toc-number">1.2.</span> <span class="toc-text">修改密码遇到的坑</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
