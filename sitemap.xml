@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/06/20/Linux/mysql%E9%85%8D%E7%BD%AE/</loc>
+    
+    <lastmod>2019-07-16T07:48:30.542Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/06/20/Linux/%E5%AE%89%E8%A3%85centos7%E7%BC%BA%E5%B0%91%E5%91%BD%E4%BB%A4%E9%97%AE%E9%A2%98/</loc>
     
     <lastmod>2019-07-16T07:45:09.684Z</lastmod>
@@ -47,13 +54,6 @@
     <loc>http://yoursite.com/2019/07/08/Web/HTML%E7%9A%84%E5%AD%A6%E4%B9%A0/</loc>
     
     <lastmod>2019-07-15T02:21:20.192Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/06/20/Linux/mysql%E9%85%8D%E7%BD%AE/</loc>
-    
-    <lastmod>2019-07-11T06:34:42.827Z</lastmod>
     
   </url>
   
