@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/07/10/Web/JavaScript%E7%9A%84%E5%AD%A6%E4%B9%A0/</loc>
+    
+    <lastmod>2019-07-21T09:44:43.634Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/07/21/Web/Js%E4%B8%AD%E7%9A%84%E9%97%AD%E5%8C%85%E7%90%86%E8%A7%A3/</loc>
     
     <lastmod>2019-07-21T09:37:18.713Z</lastmod>
@@ -40,13 +47,6 @@
     <loc>http://yoursite.com/2019/07/18/JavaSE/jdk7%E7%9A%84try-with-resource/</loc>
     
     <lastmod>2019-07-18T02:32:12.202Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/07/10/Web/JavaScript%E7%9A%84%E5%AD%A6%E4%B9%A0/</loc>
-    
-    <lastmod>2019-07-16T08:26:53.820Z</lastmod>
     
   </url>
   
