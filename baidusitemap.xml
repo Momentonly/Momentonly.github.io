@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/2019/07/21/Web/Js%E4%B8%AD%E7%9A%84%E9%97%AD%E5%8C%85%E7%90%86%E8%A7%A3/</loc>
+    <lastmod>2019-07-21T09:37:18.713Z</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/07/19/Web/JS%E4%BD%BF%E7%94%A8a%E6%A0%87%E7%AD%BE%E7%9A%84href/</loc>
+    <lastmod>2019-07-19T14:27:24.845Z</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/07/19/Web/Js%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1/</loc>
+    <lastmod>2019-07-19T14:27:09.737Z</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2018/12/30/JavaSE/java%E5%92%8Cmysql%E7%9A%84%E6%97%B6%E9%97%B4%E7%B1%BB%E5%9E%8B/</loc>
+    <lastmod>2019-07-19T11:41:05.966Z</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/06/17/JDBC/%E5%85%B3%E4%BA%8E%E6%97%B6%E9%97%B4%E6%8F%92%E5%85%A5MYSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B0%918%E4%B8%AA%E5%B0%8F%E6%97%B6%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
+    <lastmod>2019-07-18T12:33:59.514Z</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/07/18/JavaSE/jdk7%E7%9A%84try-with-resource/</loc>
+    <lastmod>2019-07-18T02:32:12.202Z</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/07/10/Web/JavaScript%E7%9A%84%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2019-07-16T08:26:53.820Z</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/2019/06/20/Linux/mysql%E9%85%8D%E7%BD%AE/</loc>
     <lastmod>2019-07-16T07:50:47.133Z</lastmod>
   </url>  <url>
@@ -12,9 +33,6 @@
   </url>  <url>
     <loc>http://yoursite.com/2019/06/20/Linux/centos7%E9%85%8D%E7%BD%AEDHCP%E5%92%8C%E9%9D%99%E6%80%81IP/</loc>
     <lastmod>2019-07-16T07:44:13.040Z</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/2019/07/10/Web/JavaScript%E7%9A%84%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2019-07-15T13:53:19.286Z</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/07/10/Web/CSS%E4%B8%AD%E7%9A%84transform%E5%B1%9E%E6%80%A7/</loc>
     <lastmod>2019-07-15T07:37:44.747Z</lastmod>

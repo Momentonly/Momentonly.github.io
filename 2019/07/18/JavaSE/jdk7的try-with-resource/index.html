@@ -1,0 +1,515 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>jdk7的try-catch-resource | Momentonly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Moment Only">
+    
+    <meta name="description" content="jdk7的try-with-resources​        JDK1.7开始，java引入了 try-with-resources 声明，将 try-catch-finally 简化为 try-catch，这其实是一种语法糖，在编译时会进行转化为 try-catch-finally 语句。新的声">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Momentonly" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Momentonly">Momentonly</a></h1>
+				<a class="blog-motto"></a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/categories/despattern">设计模式</a></li>
+					
+						<li><a href="/categories/tools">工具</a></li>
+					
+						<li><a href="/categories/web">前端</a></li>
+					
+						<li><a href="/categories/database">数据库</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= 17576509095696061073 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/07/18/JavaSE/jdk7的try-with-resource/" title="jdk7的try-catch-resource" itemprop="url">jdk7的try-catch-resource</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2019-07-18T02:08:01.000Z" itemprop="datePublished">2019-07-18</time>
+    更新日期:<time datetime="2019-07-18T02:32:12.202Z" itemprop="dateModified">2019-07-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#jdk7的try-with-resources"><span class="toc-number">1.</span> <span class="toc-text">jdk7的try-with-resources</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#测试"><span class="toc-number">1.1.</span> <span class="toc-text">测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常机制的变化"><span class="toc-number">1.2.</span> <span class="toc-text">异常机制的变化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考来源"><span class="toc-number">1.3.</span> <span class="toc-text">参考来源</span></a></li></ol></li></ol>
+		</div>
+		
+		<h1 id="jdk7的try-with-resources"><a href="#jdk7的try-with-resources" class="headerlink" title="jdk7的try-with-resources"></a>jdk7的try-with-resources</h1><p>​        JDK1.7开始，java引入了 try-with-resources 声明，将 try-catch-finally 简化为 try-catch，这其实是一种语法糖，在编译时会进行转化为 try-catch-finally 语句。新的声明包含三部分：try-with-resources 声明、try 块、catch 块。它要求在 try-with-resources 声明中定义的变量实现了 AutoCloseable 接口，这样在系统可以自动调用它们的close方法，从而替代了finally中关闭资源的功能。</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">    public void TestForTryWithResources() &#123;</span><br><span class="line">        try (InputStream inputStream = new FileInputStream(&quot;/test.md&quot;);</span><br><span class="line">				//InputStream inputStream = TryCatchDemo.class.getResourceAsStream(&quot;/test.md&quot;)</span><br><span class="line">             BufferedReader bf = new BufferedReader(new InputStreamReader(inputStream))</span><br><span class="line">        ) &#123;</span><br><span class="line">            StringBuilder sb = new StringBuilder();</span><br><span class="line">            String tmpString = null;</span><br><span class="line">            while ((tmpString = bf.readLine()) != null) &#123;//抛出IOException的地方</span><br><span class="line">                sb.append(tmpString);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(sb.toString());</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>它的结构是try(){}</p>
+<p>因为括号里头的InputStream ，BufferedReader 都实现了一个AutoCloseable接口，所以无论这段代码是正常执行完，还是有异常往外抛，还是内部代码块发生异常被截获，最终都会按照创建资源的逆顺序，自动关闭资源.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">  @Test</span><br><span class="line">    public void AutoCloseTest() &#123;</span><br><span class="line">        try (AutoCloseAbleBean autoCloseable = new AutoCloseAbleBean()) &#123;</span><br><span class="line">            throw new RuntimeException(&quot;test&quot;);</span><br><span class="line">//            autoCloseable.dosomething();</span><br><span class="line">//            return;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">//            throw new RuntimeException(&quot;test&quot;);</span><br><span class="line">        &#125;finally &#123;</span><br><span class="line">            throw new RuntimeException(&quot;test&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class AutoCloseAbleBean implements AutoCloseable &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void close() throws Exception &#123;</span><br><span class="line">            System.out.println(&quot;i am close&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        void dosomething() &#123;</span><br><span class="line">            System.out.println(&quot;before close&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="异常机制的变化"><a href="#异常机制的变化" class="headerlink" title="异常机制的变化"></a>异常机制的变化</h2><p>​    它们的异常抛出机制发生了变化。在过去的 try-catch-finally 结构中，我们在finally块中关闭资源通常是这样的：    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">catch (Exception e) &#123;</span><br><span class="line">		e.printStackTrace(); // 第一处异常处理</span><br><span class="line">	&#125;</span><br><span class="line">	finally &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            if (c != null) &#123;</span><br><span class="line">                c.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace(); // 第二处异常处理</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>异常处理有两种情况：</p>
+<p>try 块没有发生异常时，直接调用finally块，如果 close 发生异常，就处理。<br>try 块发生异常，catch 块捕捉，进行第一处异常处理，然后调用 finally 块，如果 close 发生异常，就进行第二处异常处理。<br>但是在 try-with-resources 结构中，异常处理也有两种情况（注意，不论 try 中是否有异常，都会首先自动执行 close 方法，然后才判断是否进入 catch 块，建议阅读后面的反编译代码）：</p>
+<p>try 块没有发生异常时，自动调用 close 方法，如果发生异常，catch 块捕捉并处理异常。<br>try 块发生异常，然后自动调用 close 方法，如果 close 也发生异常，catch 块只会捕捉 try 块抛出的异常，close 方法的异常会在catch 中被压制，但是你可以在catch块中，用 Throwable.getSuppressed 方法来获取到压制异常的数组。</p>
+<p>我们可以通过自定义的 AutoCloseable 类来理解这个过程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">public class Main &#123;</span><br><span class="line"></span><br><span class="line">    public static void startTest() &#123;</span><br><span class="line">        try (MyAutoCloseA a = new MyAutoCloseA();</span><br><span class="line">             MyAutoCloseB b = new MyAutoCloseB()) &#123;</span><br><span class="line">            a.test();</span><br><span class="line">            b.test();</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            System.out.println(&quot;Main: exception&quot;);</span><br><span class="line">            System.out.println(e.getMessage());</span><br><span class="line">            Throwable[] suppressed = e.getSuppressed();</span><br><span class="line">            for (int i = 0; i &lt; suppressed.length; i++)</span><br><span class="line">                System.out.println(suppressed[i].getMessage());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line">        startTest();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/* 输出为：</span><br><span class="line">	MyAutoCloaseA: test()</span><br><span class="line">	MyAutoCloseB: on close</span><br><span class="line">	MyAutoCloseA: on close()</span><br><span class="line">	Main: exception</span><br><span class="line">	MyAutoCloaseA: test() IOException</span><br><span class="line">	MyAutoCloaseB: close() ClassNotFoundException</span><br><span class="line">	MyAutoCloaseA: close() ClassNotFoundException</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">class MyAutoCloseA implements AutoCloseable &#123;</span><br><span class="line"></span><br><span class="line">    public void test() throws IOException &#123;</span><br><span class="line">        System.out.println(&quot;MyAutoCloaseA: test()&quot;);</span><br><span class="line">        throw new IOException(&quot;MyAutoCloaseA: test() IOException&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void close() throws Exception &#123;</span><br><span class="line">        System.out.println(&quot;MyAutoCloseA: on close()&quot;);</span><br><span class="line">        throw new ClassNotFoundException(&quot;MyAutoCloaseA: close() ClassNotFoundException&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class MyAutoCloseB implements AutoCloseable &#123;</span><br><span class="line"></span><br><span class="line">    public void test() throws IOException &#123;</span><br><span class="line">        System.out.println(&quot;MyAutoCloaseB: test()&quot;);</span><br><span class="line">        throw new IOException(&quot;MyAutoCloaseB: test() IOException&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    public void close() throws Exception &#123;</span><br><span class="line">        System.out.println(&quot;MyAutoCloseB: on close&quot;);</span><br><span class="line">        throw new ClassNotFoundException(&quot;MyAutoCloaseB: close() ClassNotFoundException&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过反编译class文件，可以看到实际的执行过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">public static void startTest() &#123;</span><br><span class="line">      try &#123;</span><br><span class="line">          MyAutoCloseA a = new MyAutoCloseA();</span><br><span class="line">          Throwable var33 = null;</span><br><span class="line"></span><br><span class="line">          try &#123;</span><br><span class="line">              MyAutoCloseB b = new MyAutoCloseB();</span><br><span class="line">              Throwable var3 = null;</span><br><span class="line"></span><br><span class="line">              try &#123; // 我们定义的 try 块</span><br><span class="line">                  a.test();</span><br><span class="line">                  b.test();</span><br><span class="line">              &#125; catch (Throwable var28) &#123; // try 块中抛出的异常</span><br><span class="line">                  var3 = var28;</span><br><span class="line">                  throw var28;</span><br><span class="line">              &#125; finally &#123;</span><br><span class="line">                  if (b != null) &#123;</span><br><span class="line">                   // 如果 try 块中抛出异常，就将 close 中的异常（如果有）附加为压制异常</span><br><span class="line">                      if (var3 != null) &#123;</span><br><span class="line">                          try &#123;</span><br><span class="line">                              b.close();</span><br><span class="line">                          &#125; catch (Throwable var27) &#123;</span><br><span class="line">                              var3.addSuppressed(var27);</span><br><span class="line">                          &#125;</span><br><span class="line">                      &#125; else &#123; // 如果 try 块没有抛出异常，就直接关闭，可能会抛出关闭异常</span><br><span class="line">                          b.close();</span><br><span class="line">                      &#125;</span><br><span class="line">                  &#125;</span><br><span class="line"></span><br><span class="line">              &#125;</span><br><span class="line">          &#125; catch (Throwable var30) &#123;</span><br><span class="line">              var33 = var30;</span><br><span class="line">              throw var30;</span><br><span class="line">          &#125; finally &#123;</span><br><span class="line">              if (a != null) &#123;</span><br><span class="line">                  if (var33 != null) &#123;</span><br><span class="line">                      try &#123;</span><br><span class="line">                          a.close();</span><br><span class="line">                      &#125; catch (Throwable var26) &#123;</span><br><span class="line">                          var33.addSuppressed(var26);</span><br><span class="line">                      &#125;</span><br><span class="line">                  &#125; else &#123;</span><br><span class="line">                      a.close();</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line"></span><br><span class="line">          &#125;</span><br><span class="line">      // 所有的异常在这里交给 catch 块处理</span><br><span class="line">      &#125; catch (Exception var32) &#123; // 我们定义的 catch 块</span><br><span class="line">          System.out.println(&quot;Main: exception&quot;);</span><br><span class="line">          System.out.println(var32.getMessage());</span><br><span class="line">          Throwable[] suppressed = var32.getSuppressed();</span><br><span class="line"></span><br><span class="line">          for(int i = 0; i &lt; suppressed.length; ++i) &#123;</span><br><span class="line">              System.out.println(suppressed[i].getMessage());</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">我还想补充的是：</span><br><span class="line"></span><br><span class="line">catch 块中，看不到 try-with-recourse 声明中的变量。</span><br><span class="line">try-with-recourse 中，try 块中抛出的异常，在 e.getMessage() 可以获得，而调用 close() 方法抛出的异常在e.getSuppressed() 获得。</span><br><span class="line">try-with-recourse 中定义多个变量时，由反编译可知，关闭的顺序是从后往前。</span><br></pre></td></tr></table></figure>
+<h2 id="参考来源"><a href="#参考来源" class="headerlink" title="参考来源"></a>参考来源</h2><p>1.<a href="https://www.jianshu.com/p/8e4421aff0a6" target="_blank" rel="noopener">https://www.jianshu.com/p/8e4421aff0a6</a></p>
+<p>2.<a href="https://blog.csdn.net/weixin_40255793/article/details/80812961" target="_blank" rel="noopener">https://blog.csdn.net/weixin_40255793/article/details/80812961</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Java/">Java</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/JavaSE/">JavaSE</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2019/07/18/JavaSE/jdk7的try-with-resource/" data-title="jdk7的try-catch-resource | Momentonly" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/07/19/Web/JS使用a标签的href/" title="a标签的href=&#34;javascript:;&#34; href=&#34;javacript:void(0);&#34; href=&#34;#&#34;区别">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  a标签的href=&#34;javascript:;&#34; href=&#34;javacript:void(0);&#34; href=&#34;#&#34;区别</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/07/10/Web/CSS中的transform属性/"  title="CSS中的transform属性">
+ <strong>NEXT:</strong><br/> 
+ <span>CSS中的transform属性
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="jdk7的try-catch-resource" data-thread-key="JavaSE/jdk7的try-with-resource" data-author-key="Moment Only" data-url="http://yoursite.com/post/JavaSE/jdk7的try-with-resource"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#jdk7的try-with-resources"><span class="toc-number">1.</span> <span class="toc-text">jdk7的try-with-resources</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#测试"><span class="toc-number">1.1.</span> <span class="toc-text">测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常机制的变化"><span class="toc-number">1.2.</span> <span class="toc-text">异常机制的变化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考来源"><span class="toc-number">1.3.</span> <span class="toc-text">参考来源</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>13</sup></a></li>
+		
+			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>6</sup></a></li>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/categories/database/" title="database">database<sup>9</sup></a></li>
+		
+			<li><a href="/categories/tools/" title="tools">tools<sup>5</sup></a></li>
+		
+			<li><a href="/categories/web/" title="web">web<sup>7</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/C/" title="C">C<sup>2</sup></a></li>
+		
+			<li><a href="/tags/CSS/" title="CSS">CSS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/HTML/" title="HTML">HTML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JAVA/" title="JAVA">JAVA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDBC/" title="JDBC">JDBC<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>12</sup></a></li>
+		
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JavaWeb/" title="JavaWeb">JavaWeb<sup>5</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>6</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>1</sup></a></li>
+		
+			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/eclipse/" title="eclipse">eclipse<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>3</sup></a></li>
+		
+			<li><a href="/tags/log4j/" title="log4j">log4j<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mybatis/" title="mybatis">mybatis<sup>2</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>3</sup></a></li>
+		
+			<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+		
+			<li><a href="/tags/sublime/" title="sublime">sublime<sup>1</sup></a></li>
+		
+			<li><a href="/tags/tools/" title="tools">tools<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/C/" style="font-size: 12px;">C</a> <a href="/tags/CSS/" style="font-size: 12px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 14px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 16px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 18px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 10px;">Oracle</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 14px;">javascript</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 12px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 14px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 12px;">tools</a> <a href="/tags/乱码/" style="font-size: 12px;">乱码</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2019 
+		
+		<a href="http://yoursite.com" target="_blank" title="Moment Only">Moment Only</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:""};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '', '');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+
