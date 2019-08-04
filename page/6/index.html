@@ -80,6 +80,74 @@
 
   <section class="post" itemscope itemprop="blogPost">
   
+    <a href="/2018/12/29/Java Web/对cookie中的中文处理/" title="保存和获取cookie中的中文信息" itemprop="url">
+  
+      <time datetime="2018-12-29T02:46:17.000Z" itemprop="datePublished">2018-12-29</time>
+    <h1 itemprop="name">保存和获取cookie中的中文信息</h1>
+    
+     
+           <p itemprop="description" >1.保存cookie问题： 出现500错误
+解决：设置字符编码
+Cookie cookie=new Cookie(“test”,URLEncoder.encode(“中文”,”utf-8”));
+2.获取cookie   问题：出现乱码
+   解决：设置字符解码
+System.o</p>
+        
+    
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2018/12/28/Java Web/请求转发与重定向/" title="请求转发与重定向的理解" itemprop="url">
+  
+      <time datetime="2018-12-28T08:37:58.000Z" itemprop="datePublished">2018-12-28</time>
+    <h1 itemprop="name">请求转发与重定向的理解</h1>
+    
+     
+           <p itemprop="description" >forward（转发）是服务器请求资源,服务器直接访问目标地址的URL,把那个URL的响应内容读取过来,然后把这些内容再发给浏览器.浏览器根本不知道服务器发送的内容从哪里来的,因为这个跳转过程实在服务器实现的，并不是在客户端实现的所以客户端并不知道这个跳转动作，所以它的地址栏还是</p>
+        
+    
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2018/12/28/Java Web/sevlet中的乱码/" title="servlet的乱码问题" itemprop="url">
+  
+      <time datetime="2018-12-28T02:00:47.000Z" itemprop="datePublished">2018-12-28</time>
+    <h1 itemprop="name">servlet的乱码问题</h1>
+    
+     
+           <p itemprop="description" >1.post请求1）jsp等页面编码格式1pageEncoding=&amp;quot;UTF-8&amp;quot;
+设置JSP编译成Servlet时使用的编码。
+2）设置请求信息的的解码格式1req.setCharacterEncoding(&amp;quot;utf-8&amp;quot;);
+用指定的编</p>
+        
+    
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2018/10/12/Config/修改Hexo主题/" title="修改Hexo主题" itemprop="url">
+  
+      <time datetime="2018-10-12T10:51:13.000Z" itemprop="datePublished">2018-10-12</time>
+    <h1 itemprop="name">修改Hexo主题</h1>
+    
+     
+           <p itemprop="description" >1.获取主题cd themes
+再将yilia主题clone至themes文件夹中
+git clone https://github.com/litten/hexo-theme-yilia.git yilia
+2.配置：修改hexo根目录下的_config.yml
+ theme:</p>
+        
+    
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
     <a href="/2018/10/11/hello-world/" title="Hello World" itemprop="url">
   
       <time datetime="2018-10-11T14:51:01.594Z" itemprop="datePublished">2018-10-11</time>
@@ -121,13 +189,13 @@
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>13</sup></a></li>
+			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>14</sup></a></li>
 		
-			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>6</sup></a></li>
+			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>8</sup></a></li>
 		
 			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
 		
-			<li><a href="/categories/database/" title="database">database<sup>9</sup></a></li>
+			<li><a href="/categories/database/" title="database">database<sup>10</sup></a></li>
 		
 			<li><a href="/categories/tools/" title="tools">tools<sup>5</sup></a></li>
 		
@@ -150,9 +218,9 @@
 		
 			<li><a href="/tags/JAVA/" title="JAVA">JAVA<sup>1</sup></a></li>
 		
-			<li><a href="/tags/JDBC/" title="JDBC">JDBC<sup>3</sup></a></li>
+			<li><a href="/tags/JDBC/" title="JDBC">JDBC<sup>4</sup></a></li>
 		
-			<li><a href="/tags/Java/" title="Java">Java<sup>12</sup></a></li>
+			<li><a href="/tags/Java/" title="Java">Java<sup>13</sup></a></li>
 		
 			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>1</sup></a></li>
 		
@@ -170,6 +238,8 @@
 		
 			<li><a href="/tags/javascript/" title="javascript">javascript<sup>3</sup></a></li>
 		
+			<li><a href="/tags/jsp/" title="jsp">jsp<sup>1</sup></a></li>
+		
 			<li><a href="/tags/log4j/" title="log4j">log4j<sup>1</sup></a></li>
 		
 			<li><a href="/tags/mybatis/" title="mybatis">mybatis<sup>2</sup></a></li>
@@ -178,9 +248,7 @@
 		
 			<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
 		
-			<li><a href="/tags/sublime/" title="sublime">sublime<sup>1</sup></a></li>
-		
-			<li><a href="/tags/tools/" title="tools">tools<sup>2</sup></a></li>
+			<li><a href="/tags/servlet/" title="servlet">servlet<sup>1</sup></a></li>
 		
 		</ul>
 </div>
@@ -203,7 +271,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/C/" style="font-size: 12px;">C</a> <a href="/tags/CSS/" style="font-size: 12px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 14px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 16px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 18px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 10px;">Oracle</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 14px;">javascript</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 12px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 14px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 12px;">tools</a> <a href="/tags/乱码/" style="font-size: 12px;">乱码</a>
+       <a href="/tags/C/" style="font-size: 11.67px;">C</a> <a href="/tags/CSS/" style="font-size: 11.67px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 15px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 16.67px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 18.33px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 10px;">Oracle</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 11.67px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 11.67px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.67px;">乱码</a>
     </div>
   </div>
 

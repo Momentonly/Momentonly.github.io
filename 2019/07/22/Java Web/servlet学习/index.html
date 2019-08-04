@@ -1,0 +1,639 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>servlet学习 | Momentonly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Moment Only">
+    
+    <meta name="description" content="Servlet学习Servlet介绍问题： 
+​                服务器在接收到浏览器的请求后，会自动调用对应的逻辑代码进行请求 
+​        处理。但是逻辑代码是由程序员编写并放到服务器中，那么服务器怎么知道该怎 
+​        么调用并调用哪个类和哪个方法来进行请求处理。">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Momentonly" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Momentonly">Momentonly</a></h1>
+				<a class="blog-motto"></a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/categories/despattern">设计模式</a></li>
+					
+						<li><a href="/categories/tools">工具</a></li>
+					
+						<li><a href="/categories/web">前端</a></li>
+					
+						<li><a href="/categories/database">数据库</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= 17576509095696061073 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/07/22/Java Web/servlet学习/" title="servlet学习" itemprop="url">servlet学习</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2019-07-22T12:54:03.000Z" itemprop="datePublished">2019-07-22</time>
+    更新日期:<time datetime="2019-08-04T14:48:16.107Z" itemprop="dateModified">2019-08-04</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Servlet学习"><span class="toc-number">1.</span> <span class="toc-text">Servlet学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet介绍"><span class="toc-number">1.1.</span> <span class="toc-text">Servlet介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet-的-web-xml-配置"><span class="toc-number">1.2.</span> <span class="toc-text">Servlet 的 web.xml 配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet是单例的"><span class="toc-number">1.3.</span> <span class="toc-text">Servlet是单例的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet的生命周期"><span class="toc-number">1.4.</span> <span class="toc-text">Servlet的生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet中的方法"><span class="toc-number">1.5.</span> <span class="toc-text">Servlet中的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet-的常见错误总结"><span class="toc-number">1.6.</span> <span class="toc-text">Servlet 的常见错误总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Request-对象"><span class="toc-number">1.7.</span> <span class="toc-text">Request 对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Response对象"><span class="toc-number">1.8.</span> <span class="toc-text">Response对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#乱码问题"><span class="toc-number">1.9.</span> <span class="toc-text">乱码问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#请求转发"><span class="toc-number">1.10.</span> <span class="toc-text">请求转发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#转发"><span class="toc-number">1.10.1.</span> <span class="toc-text">转发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Request对象作用域"><span class="toc-number">1.10.2.</span> <span class="toc-text">Request对象作用域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重定向"><span class="toc-number">1.11.</span> <span class="toc-text">重定向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie"><span class="toc-number">1.12.</span> <span class="toc-text">Cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Session"><span class="toc-number">1.13.</span> <span class="toc-text">Session</span></a></li></ol></li></ol>
+		</div>
+		
+		<h1 id="Servlet学习"><a href="#Servlet学习" class="headerlink" title="Servlet学习"></a>Servlet学习</h1><h2 id="Servlet介绍"><a href="#Servlet介绍" class="headerlink" title="Servlet介绍"></a>Servlet介绍</h2><p>问题： </p>
+<p>​                服务器在接收到浏览器的请求后，会自动调用对应的逻辑代码进行请求 </p>
+<p>​        处理。但是逻辑代码是由程序员编写并放到服务器中，那么服务器怎么知道该怎 </p>
+<p>​        么调用并调用哪个类和哪个方法来进行请求处理。 </p>
+<p>解决： </p>
+<p>​                程序员在编写代码的时候如果能够按照服务器能够识别的规则进行编写， </p>
+<p>​        浏览器按照指定的规则进行发送请求，那么服务器就可以调用并执行响应的逻辑 </p>
+<p>​        代码进行请求处理了。 </p>
+<p>实现： </p>
+<p>​            Servlet 技术 </p>
+<p>概念： </p>
+<p>​                    狭义的 Servlet 是指 Java 语言实现的一个接口，广义的 Servlet 是 </p>
+<p>​            指任何实现了这个 Servlet 接口的类，一般情况下，人们将 Servlet 理解为后者。 </p>
+<p>​            Servlet 运行于支持 Java 的应用服务器中。从原理上讲，Servlet 可以响应任何 </p>
+<p>​            类型的请求，但绝大多数情况下 Servlet 只用来扩展基于 HTTP 协议的 Web 服 务器 </p>
+<p>特点： </p>
+<p>​            运行在支持 java 的应用服务器上 </p>
+<p>​            Servlet 的实现遵循了服务器能够识别的规则，也就是服务器会自动的根据请求调用对应的 servlet 进行请求处理。简单方便，可移植性强 </p>
+<p>使用： </p>
+<p>​                1、 创建普通的 java 类并继承 HttpServlet </p>
+<p>​                2、 覆写 service 方法 </p>
+<p>​                3、 在 service 方法中书写逻辑代码即可 </p>
+<p>​                4、 在 webRoot 下的 WEB-INF 文件夹下的 web.xml 文件中配配置 servlet</p>
+<p>​    </p>
+<h2 id="Servlet-的-web-xml-配置"><a href="#Servlet-的-web-xml-配置" class="headerlink" title="Servlet 的 web.xml 配置"></a>Servlet 的 web.xml 配置</h2><p>​    Web.xml 配置的作用： 保护 Servlet。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">  		精确配置:</span></span><br><span class="line"><span class="comment">  			&lt;url-pattern&gt;/路径名&lt;/url-pattern&gt;</span></span><br><span class="line"><span class="comment">  			注意:"/"是必须的，该配置项可以配置多个</span></span><br><span class="line"><span class="comment">  </span></span><br><span class="line"><span class="comment">  		模糊配置:</span></span><br><span class="line"><span class="comment">  			&lt;url-pattern&gt;*.后缀名&lt;/url-pattern&gt;</span></span><br><span class="line"><span class="comment">  			注意:</span></span><br><span class="line"><span class="comment">  				所有以指定的后缀名结尾的请求会调用该servlet进行处理</span></span><br><span class="line"><span class="comment">  			作用:</span></span><br><span class="line"><span class="comment">  				进行模块化开发的划分</span></span><br><span class="line"><span class="comment">  		拦截所有请求:</span></span><br><span class="line"><span class="comment">  			&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</span></span><br><span class="line"><span class="comment">			注意:</span></span><br><span class="line"><span class="comment">  				会拦截所有类型的请求，包括静态资源请求（css,js,图片）和jsp请求</span></span><br><span class="line"><span class="comment">  		拦截以某个名称开头的路径下的所有请求:</span></span><br><span class="line"><span class="comment">  			 &lt;url-pattern&gt;/one/*&lt;/url-pattern&gt;</span></span><br><span class="line"><span class="comment">   --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">	  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>my<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span>  </span><br><span class="line">	  <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>com.szxy.servlet.MyServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">  	  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>my<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">  	  <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/my<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  	  <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/m<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  	  <span class="comment">&lt;!-- 配置2 --&gt;</span></span><br><span class="line">  	  <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.do<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  	  <span class="comment">&lt;!-- 配置3 --&gt;</span></span><br><span class="line">  	  <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>加载时机： </p>
+<p>​    服务器启动的时候会将 webapps 中部署好的项目统一进行加载，并完成对每个项目的 web.xml 文件的加载。 </p>
+<p>注意： </p>
+<p>​    一个 Servlet 可有拥有多个 url-pattern 配置，但是 一个 url-pattern 配置只能对应一个 Servlet。</p>
+<h2 id="Servlet是单例的"><a href="#Servlet是单例的" class="headerlink" title="Servlet是单例的"></a>Servlet是单例的</h2><p>​    服务器在接收到浏览器的请求后，会开辟一个线程来处理此次请求， 在线程中调用对应的Servlet进行处理。</p>
+<p>服务器调用Servlet处理请求，但是一个Servlet服务器只会创建一个实例化对象，该对象是线程共享的。</p>
+<p>​    Servlet是单例的，只创建一个对象。</p>
+<p>​    </p>
+<h2 id="Servlet的生命周期"><a href="#Servlet的生命周期" class="headerlink" title="Servlet的生命周期"></a>Servlet的生命周期</h2><p> Servlet的生命周期：从第一次被调用到服务器关闭</p>
+<p>​        init():servlet被初始化创建的时候调用</p>
+<p>​        service():处理请求的时候</p>
+<p>​        destory():Servlet对象被销毁的时候（服务器关闭时销毁Servlet对象）</p>
+<p>注意：</p>
+<p>​        可以在web.xml中配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;servlet&gt;</span><br><span class="line">  		&lt;servlet-name&gt;LifeServlet&lt;/servlet-name&gt;</span><br><span class="line">  		&lt;servlet-class&gt;com.szxy.servlet.LifeServlet&lt;/servlet-class&gt;</span><br><span class="line">  		&lt;!-- 配置servlet服务器启动时完成加载和初始化创建 --&gt;</span><br><span class="line">  		&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</span><br><span class="line"> &lt;/servlet&gt;</span><br></pre></td></tr></table></figure>
+<p>来设置Servlet加载时机为服务器启动（生命周期从服务器开启到服务器关闭）</p>
+<p><strong><em>本质：单例的懒汉式和饿汉式</em></strong></p>
+<p>​    </p>
+<p>注：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">在servlet的配置当中，1的含义是：</span><br><span class="line">标记容器是否在启动的时候就加载这个servlet。</span><br><span class="line">当值为0或者大于0时，表示容器在应用启动时就加载这个servlet；</span><br><span class="line">当是一个负数时或者没有指定时，则指示容器在该servlet被选择时才加载。</span><br><span class="line">正数的值越小，启动该servlet的优先级越高。</span><br><span class="line">如果我们在web.xml中设置了多个servlet的时候，可以使用load-on-startup来指定servlet的加载顺序，服务器会根据load-on-startup的大小依次对servlet进行初始化。不过即使我们将load-on-startup设置重复也不会出现异常，服务器会自己决定初始化顺序。</span><br><span class="line">配置load-on-startup后，servlet在startup后立即加载，但只是调用servlet的init()方法，用以初始化该servlet相关的资源。初始化成功后，该servlet可响应web请求；如未配置load-on-startup，容器一般在第一次响应web请求时，会先检测该servlet是否初始化，如未初始化，则调用servlet的init()先初始化，初始化成功后，再响应请求。 </span><br><span class="line">PS：一般我们在开发web应用时，都会配置这个参数，有两个好处：1、如果初始化过程失败，则容器会提示启动失败，此时我们能够提前知道相关错误；2、配置该参数相当于将初始化servlet的工作转移到容器启动过程，使得容器只要启动成功后，就可立即响应web请求。</span><br><span class="line">--------------------- </span><br><span class="line">作者：saiofo </span><br><span class="line">来源：CSDN </span><br><span class="line">原文：https://blog.csdn.net/u012393192/article/details/79323979 </span><br><span class="line">版权声明：本文为博主原创文章，转载请附上博文链接！</span><br></pre></td></tr></table></figure>
+<h2 id="Servlet中的方法"><a href="#Servlet中的方法" class="headerlink" title="Servlet中的方法"></a>Servlet中的方法</h2><p>doGet(HttpServletRequest req, HttpServletResponse resp)</p>
+<p>特点：</p>
+<p>​        处理get方式的请求</p>
+<p>注意：如果在servlet中没有生命对应的请求处理方法，则会报405</p>
+<p>doPost(HttpServletRequest req, HttpServletResponse resp)</p>
+<p>特点：</p>
+<p>​        处理post方式的请求</p>
+<p>service(HttpServletRequest req, HttpServletResponse resp)</p>
+<p>特点：</p>
+<p>​        如果没有重写该方法，父类中调用service()方法进行请求转发（doGet(),doPost()）</p>
+<p>​        如果重写该方法，服务器会执行该方法</p>
+<p><strong><em>注意：tomcat服务器只会调用Servlet中service()方法(Servlet接口中只有service()方法)，如果没有覆写service(),则会调用父类HttpServlet中的service()</em></strong></p>
+<h2 id="Servlet-的常见错误总结"><a href="#Servlet-的常见错误总结" class="headerlink" title="Servlet 的常见错误总结"></a>Servlet 的常见错误总结</h2><p>​        </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Servlet的常见错误：</span><br><span class="line">	404错误:资源未找到</span><br><span class="line">			原因一：在请求地址中的servlet的别名书写错误。</span><br><span class="line">			原因二：虚拟项目名称拼写错误</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> 500错误：内部服务器错误</span><br><span class="line">		 错误一：</span><br><span class="line">			 java.lang.ClassNotFoundException: </span><br><span class="line">			com.bjsxt.servlet.ServletMothod</span><br><span class="line">        解决：</span><br><span class="line">				在web.xml中校验servlet类的全限定路径是否拼写错误。</span><br><span class="line">			 错误二：</span><br><span class="line">				因为service方法体的代码执行错误导致</span><br><span class="line">		 解决：</span><br><span class="line">				根据错误提示对service方法体中的代码进行错误更改。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> 405错误:请求方式不支持</span><br><span class="line">		 原因：</span><br><span class="line">				 请求方式和servlet中的方法不匹配所造成的（调用父类的doGet()</span><br><span class="line">				 	或者doPost()方法）</span><br><span class="line">			 解决：</span><br><span class="line">				尽量使用 service 方法进行请求处理，并且不要再 service 方法中调用父类的service</span><br></pre></td></tr></table></figure>
+<h2 id="Request-对象"><a href="#Request-对象" class="headerlink" title="Request 对象"></a>Request 对象</h2><p>​    问题： </p>
+<p>​            浏览器发起请求到服务器，会遵循HTTP协议将请求数据发送给服务器。 </p>
+<p>​            那么服务器接受到请求的数据改怎么存储呢?不但要存，而且要保证完整性。 </p>
+<p>​    解决： </p>
+<p>​            使用对象进行存储，服务器每接受一个请求，就创建一个对象专门的存 储此次请求的请求数据。 </p>
+<p>​    实现： </p>
+<p>​            request 对象 </p>
+<p>​    解释： </p>
+<p>​            服务器接收到浏览器的请求后，会创建一个 Request 对象，对象中 存储了此次请求相关的请求数据。服务器在调用 Servlet 时会将创建的 Request 对象作为实参传递给 Servlet 的方法，比如：service 方法。 </p>
+<p>​    使用： </p>
+<p>​                获取请求头数据</p>
+<p>​                获取请求行数据 </p>
+<p>​                获取用户数据    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line">package com.szxy.servlet;</span><br><span class="line"></span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.util.Enumeration;</span><br><span class="line"></span><br><span class="line">import javax.servlet.ServletException;</span><br><span class="line">import javax.servlet.annotation.WebServlet;</span><br><span class="line">import javax.servlet.http.HttpServlet;</span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Request对象学习</span><br><span class="line"> * 		获取请求数据：</span><br><span class="line"> * 			请求行：请求方式,请求URL,协议</span><br><span class="line"> * 				getMethod();      返回请求方式</span><br><span class="line"> * 				getRequestURL()   返回请求url</span><br><span class="line"> * 				getRequestURI()	      返回请求uri</span><br><span class="line"> * 				getQueryString()  返回get请求URL中的请求数据</span><br><span class="line"> * 				getScheme()       返回协议</span><br><span class="line"> * 			请求头：getHeader(String name)</span><br><span class="line"> * 					注意：如果获取的请求头信息不存在则放回null</span><br><span class="line"> * 				 getHeaderNames() 返回存储请求头键名的枚举集合</span><br><span class="line"> * 			请求实体：</span><br><span class="line"> * 				 getParameter(String name) 根据键名获取数据</span><br><span class="line"> * 				 注意:</span><br><span class="line"> * 					键名就是前端页面的表单标签的name属性的值或者其他方式提交的数据的键的名</span><br><span class="line"> * 					如果没有对应的请求数据，则返回null</span><br><span class="line"> * 				getParameterValues(String name) 根据键名获取同名不同的值，返回数组</span><br><span class="line"> * 				注意：没有对应的键名，返回null</span><br><span class="line"> * 				getParameterNames() 返回实体数据中键名的枚举</span><br><span class="line"> * 			请求中的网络数据</span><br><span class="line"> * 				getRemoteAddr() 获取客户端ip</span><br><span class="line"> * 				getRemotePort() 获取客户端的端口号</span><br><span class="line"> * 				getLocalAddr() 获取服务器端的ip</span><br><span class="line"> * 				getLocalPort() 获取服务器端的端口</span><br><span class="line"> * @author Momentonly</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">@WebServlet(&quot;/request&quot;)</span><br><span class="line">public class RequestServlet extends HttpServlet&#123;</span><br><span class="line">	@Override</span><br><span class="line">	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;</span><br><span class="line">		</span><br><span class="line">		//获取请求信息</span><br><span class="line">			//获取请求行信息</span><br><span class="line">				//获取请求方式</span><br><span class="line">					String method = req.getMethod();</span><br><span class="line">					System.out.println(&quot;请求方式:&quot; + method);</span><br><span class="line">				//获取请求URL</span><br><span class="line">					StringBuffer requestURL = req.getRequestURL();</span><br><span class="line">					System.out.println(&quot;请求URL:&quot; + requestURL.toString());</span><br><span class="line">				//获取请求URI</span><br><span class="line">					String requestURI = req.getRequestURI();</span><br><span class="line">					System.out.println(&quot;请求URI:&quot; + requestURI);</span><br><span class="line">				//获取get请求URL中的请求数据</span><br><span class="line">					String queryString = req.getQueryString();</span><br><span class="line">					System.out.println(&quot;获取get请求URL中的数据:&quot; + queryString);</span><br><span class="line">				//获取协议</span><br><span class="line">					String scheme = req.getScheme();</span><br><span class="line">					System.out.println(&quot;获取请求协议:&quot; + scheme);</span><br><span class="line">			//获取请求头信息</span><br><span class="line">				//根据键名获取请求头信息(如果不存在则返回null)</span><br><span class="line">					String header = req.getHeader(&quot;User-Agent&quot;);</span><br><span class="line">					System.out.println(&quot;获取浏览器版本信息&quot; + header);</span><br><span class="line">				//获取请求头中键名的枚举</span><br><span class="line">					Enumeration&lt;String&gt; headerNames = req.getHeaderNames();</span><br><span class="line">					while(headerNames.hasMoreElements())&#123;</span><br><span class="line">						//获取请求头键名</span><br><span class="line">						String name = headerNames.nextElement();</span><br><span class="line">						//获取请求头的键名对应的值</span><br><span class="line">						System.out.println(name + &quot;:&quot; + req.getHeader(name));</span><br><span class="line">					&#125;</span><br><span class="line">			//获取请求实体数据（用户数据）</span><br><span class="line">				//根据键名获取数据(如果请求中不存在键则返回null)</span><br><span class="line">					String uname = req.getParameter(&quot;uname&quot;);</span><br><span class="line">					String pwd = req.getParameter(&quot;pwd&quot;);</span><br><span class="line">					System.out.println(&quot;请求实体数据:&quot; + uname + &quot;:&quot; + pwd);</span><br><span class="line">				//获取同键不同值的实体数据</span><br><span class="line">					String[] favs = req.getParameterValues(&quot;fav&quot;);</span><br><span class="line">					if(favs != null)&#123; //NullPointerException</span><br><span class="line">						for(String s : favs)&#123;</span><br><span class="line">							System.out.println(&quot;fav的值为&quot; + s);</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				//获取请求实体中键名的枚举</span><br><span class="line">					Enumeration&lt;String&gt; names = req.getParameterNames();</span><br><span class="line">					while(names.hasMoreElements())&#123;</span><br><span class="line">						//System.out.println(names.nextElement());</span><br><span class="line">						//判断</span><br><span class="line">						String name = names.nextElement();</span><br><span class="line">						if(&quot;fav&quot;.equals(name))&#123;</span><br><span class="line">							String[] favs2 = req.getParameterValues(name);</span><br><span class="line">							if(favs2 != null)&#123;</span><br><span class="line">								for(String s : favs2)&#123;</span><br><span class="line">									System.out.println(name + &quot;:&quot; + s);</span><br><span class="line">								&#125;</span><br><span class="line">							&#125;</span><br><span class="line">						&#125;else&#123;</span><br><span class="line">							String value = req.getParameter(name);</span><br><span class="line">							System.out.println(name + &quot;:&quot; + value);</span><br><span class="line">						&#125;</span><br><span class="line">						</span><br><span class="line">					&#125;</span><br><span class="line">				//请求相关的网络数据</span><br><span class="line">					//获取客户端信息</span><br><span class="line">						String remoteAddr = req.getRemoteAddr();</span><br><span class="line">						System.out.println(&quot;客户端ip:&quot; + remoteAddr);</span><br><span class="line">					//获取客户端的端口号(浏览器)</span><br><span class="line">						int remotePort = req.getRemotePort();</span><br><span class="line">						System.out.println(&quot;客户端的端口号:&quot; + remotePort);</span><br><span class="line">					//获取服务器主机ip</span><br><span class="line">						String localAddr = req.getLocalAddr();</span><br><span class="line">						System.out.println(&quot;获取服务器ip:&quot; + localAddr);</span><br><span class="line">					//获取服务器的端口号</span><br><span class="line">						int localPort = req.getLocalPort();</span><br><span class="line">						System.out.println(&quot;服务器端口号:&quot; + localPort);</span><br><span class="line">						</span><br><span class="line">						</span><br><span class="line">		//处理请求信息</span><br><span class="line">					</span><br><span class="line">			</span><br><span class="line">		//响应处理结果</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Response对象"><a href="#Response对象" class="headerlink" title="Response对象"></a>Response对象</h2><p>问题： </p>
+<p>​        在使用 Request 对象获取了请求数据并进行处理后，处理的结果如何显示到浏览器中呢？ </p>
+<p>解决： </p>
+<p>​        使用 Response 对象 </p>
+<p>解释： </p>
+<p>​            服务器在调用指定的 Servlet 进行请求处理的时候，会给 Servlet 的方法 传递两个实参 request 和 response。        其中 request 中封存了请求相关的请求 数据，而 response 则是用来进行响应的一个对象。 </p>
+<p>使用： </p>
+<p>​        设置响应行</p>
+<p>​        设置响应头</p>
+<p>​        设置响应实体</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">package com.szxy.servlet;</span><br><span class="line"></span><br><span class="line">import java.io.IOException;</span><br><span class="line"></span><br><span class="line">import javax.servlet.ServletException;</span><br><span class="line">import javax.servlet.annotation.WebServlet;</span><br><span class="line">import javax.servlet.http.HttpServlet;</span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Response对象</span><br><span class="line"> * 	设置响应行： 协议   状态码   状态消息</span><br><span class="line"> * 		resp.sendError(int status) 自定义响应的状态码</span><br><span class="line"> *  设置响应头</span><br><span class="line"> * 		addHeader(String name, String value) 添加响应头信息，同名数据不会覆盖</span><br><span class="line"> * 		setHeader(String name, String value) 设置响应头信息，会覆盖原有信息，如果没有该响应头则添加</span><br><span class="line"> * 	设置响应实体(处理结果)</span><br><span class="line"> * 		resp.getWriter().write(&quot;实体内容&quot;);</span><br><span class="line"> * 		注意：</span><br><span class="line"> * 			实体内容可以分开响应</span><br><span class="line"> * </span><br><span class="line"> * 	注意：使用resp对象做出了请求响应，意味着此次请求处理完毕，服务器在响应后会将此次请求相关的req和resp对象销毁</span><br><span class="line"> * 		</span><br><span class="line"> * @author Momentonly</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">@WebServlet(&quot;/response&quot;)</span><br><span class="line">public class ResponseServlet extends HttpServlet&#123;</span><br><span class="line">	@Override</span><br><span class="line">	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;</span><br><span class="line">		System.out.println(&quot;ResponseServlet.service()&quot;);</span><br><span class="line">		//获取请求数据</span><br><span class="line">			</span><br><span class="line">		//处理请求数据</span><br><span class="line">			</span><br><span class="line">		//响应处理结果</span><br><span class="line">			//设置响应行</span><br><span class="line">				//自定义响应404异常</span><br><span class="line">					//resp.sendError(404);</span><br><span class="line">					</span><br><span class="line">			//设置响应头</span><br><span class="line">				//添加响应头信息</span><br><span class="line">					resp.addHeader(&quot;mouse&quot;, &quot;thinkpad&quot;);</span><br><span class="line">					resp.addHeader(&quot;mouse&quot;, &quot;thinkpad2&quot;);</span><br><span class="line">				//设置响应头</span><br><span class="line">					//resp.setHeader(&quot;Content-Length&quot;, &quot;20&quot;);</span><br><span class="line">					//resp.setHeader(&quot;mouse&quot;, &quot;two fly&quot;);</span><br><span class="line">					//resp.setHeader(&quot;mouse&quot;, &quot;two fly2&quot;);</span><br><span class="line">			//设置响应实体</span><br><span class="line">				resp.getWriter().write(&quot;resp object&quot;);</span><br><span class="line">				resp.getWriter().write(&quot;resp object&quot;);</span><br><span class="line">				</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="乱码问题"><a href="#乱码问题" class="headerlink" title="乱码问题"></a>乱码问题</h2><p>​        </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">package com.szxy.servlet;</span><br><span class="line"></span><br><span class="line">import java.io.IOException;</span><br><span class="line"></span><br><span class="line">import javax.servlet.ServletException;</span><br><span class="line">import javax.servlet.annotation.WebServlet;</span><br><span class="line">import javax.servlet.http.HttpServlet;</span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 乱码问题</span><br><span class="line"> * 	        请求乱码（服务器获取的请求数据乱码）</span><br><span class="line"> * 		 post:</span><br><span class="line"> * 			req.setCharacterEncoding(&quot;utf-8&quot;);</span><br><span class="line"> * 		 get:</span><br><span class="line"> * 			方式一：</span><br><span class="line"> * 				String uname = req.getParameter(&quot;uname&quot;);</span><br><span class="line">				String uname2 = new String(uname.getBytes(&quot;iso-8859-1&quot;),&quot;utf-8&quot;);</span><br><span class="line"> * 			方式二：配置tomcat的server.xml</span><br><span class="line"> * 				req.setCharacterEncoding(&quot;utf-8&quot;);</span><br><span class="line"> * 				在tomcat中的server.xml中的Connecgtor标签中增加属性：useBodyEncodingForURI=&quot;true&quot;</span><br><span class="line"> * 	        响应乱码（浏览器中显示的服务器响应数据乱码）</span><br><span class="line"> * 	service流程</span><br><span class="line"> * 		设置请求编码格式</span><br><span class="line"> * 		设置响应编码格式</span><br><span class="line"> * 		获取请求信息</span><br><span class="line"> * 		处理请求信息</span><br><span class="line"> * 		响应处理结果</span><br><span class="line"> * @author Momentonly</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">@WebServlet(&quot;/code&quot;)</span><br><span class="line">public class CodeServlet extends HttpServlet&#123;</span><br><span class="line">	@Override</span><br><span class="line">	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;</span><br><span class="line">		//设置请求编码格式</span><br><span class="line">			req.setCharacterEncoding(&quot;utf-8&quot;);</span><br><span class="line">		//设置响应编码格式</span><br><span class="line">			//resp.setHeader(&quot;ontent-type&quot;,&quot;text/html;charset=utf-8&quot;);</span><br><span class="line">			resp.setContentType(&quot;text/html;charset=utf-8&quot;);</span><br><span class="line">			</span><br><span class="line">		//获取请求数据</span><br><span class="line">			System.out.println(req.getMethod());</span><br><span class="line">			System.out.println(req.getRequestURI());</span><br><span class="line">			String uname = req.getParameter(&quot;uname&quot;);</span><br><span class="line">			//String uname2 = new String(uname.getBytes(&quot;iso-8859-1&quot;),&quot;utf-8&quot;);</span><br><span class="line">		//处理请求数据</span><br><span class="line">			System.out.println(uname);</span><br><span class="line">		//响应处理结果</span><br><span class="line">			resp.getWriter().write(&quot;请求处理完毕&quot;);</span><br><span class="line">			</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong><em>request中的setCharacterEncoding方法作用是用指定的编码集去覆盖request对象中的默认的”ISO-8859-1”编码集，这样request.getParameter(“”)方法就会用新的编码集去解码</em></strong></p>
+<h2 id="请求转发"><a href="#请求转发" class="headerlink" title="请求转发"></a>请求转发</h2><h3 id="转发"><a href="#转发" class="headerlink" title="转发"></a>转发</h3><p>问题： </p>
+<p>​            服务器在接收到浏览器的请求后，仅仅使用一个 Servlet 进行请求处理，会造成不同的 Servlet 逻辑代码冗 </p>
+<p>​     余，Servlet 的职责不明确。 </p>
+<p>解决：    使用请求转发。 </p>
+<p>特点：      降低servlet之间的代码冗余</p>
+<p>​                一次请求转发内的servlet共享此次请求</p>
+<p>​                <strong>浏览器地址栏信息不改变，一次请求</strong></p>
+<p>​                </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">req.getRequestDispatcher(&quot;转发的路径&quot;).forward(req, resp);</span><br></pre></td></tr></table></figure>
+<h3 id="Request对象作用域"><a href="#Request对象作用域" class="headerlink" title="Request对象作用域"></a>Request对象作用域</h3><p>​    <strong><em>一次请求</em></strong></p>
+<p>​    问题：使用请求转发后，不同的 Servlet 之间怎么进行数据的共享 呢？或者说数据怎么从一个 servlet 流转给另外                一个 Servlet 呢？ </p>
+<p>解决：使用 request 对象的作用域 </p>
+<p>使用： </p>
+<p>​        request.setAttribute(object name,Object value); </p>
+<p>​        request.getAttribute(Object obj)</p>
+<p>作用：解决了一次请求内的不同 Servlet 的数据(请求数据+其他数据)共享问题。 </p>
+<p>作用域：基于请求转发，一次请求中的所有 Servlet 共享。 </p>
+<p>注意： </p>
+<p>​        使用 Request 对象进行数据流转，数据只在一次请求内有效。 </p>
+<p>特点： </p>
+<p>​        服务器创建 </p>
+<p>​        每次请求都会创建 </p>
+<p>​        生命周期一次请求</p>
+<h2 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h2><p><strong><em>两次请求</em></strong></p>
+<p>问题： </p>
+<p>​            如果当前的请求，Servlet 无法进行处理怎么办? </p>
+<p>​            如果使用请求转发，造成表单数据重复提交怎么办？ </p>
+<p>解决： </p>
+<p>​            使用重定向 </p>
+<p>使用： </p>
+<p>​            response.sendRedirect(“路径”). </p>
+<p>​            本地路径为：uri </p>
+<p>​            网络路径为：定向资源的 URL 信息 </p>
+<p>特点： </p>
+<p>​            两次请求浏览器地址栏信息改变 </p>
+<p>​            避免因为用户的刷新而造成表单重复提交</p>
+<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><p>​        作用：解决了不同请求之间请求数据共享的问题</p>
+<p>​        </p>
+<p>​        特点：</p>
+<p>​            1）如果不设置有效期，则默认存储在浏览器内存中，浏览器关闭即失效</p>
+<p>​            2）如果不设置有效路径则(Cookie的默认path为当前项目的根路径</p>
+<p>​            3）如果设置了有效期，则存储到客户端的硬盘里，到期后自动销毁</p>
+<p>​            4）如果设置了有效路径则只有在该路径下的请求才会附带设置的cookie信息                </p>
+<p>​        注意：</p>
+<p>​                    c.setPath(“/bjservlet/mm”);</p>
+<p>​                    表示/bjservlet/mm以及/bjservlet/mm/*</p>
+<p>​                    </p>
+<p>​                    c.setPath(“/bjservlet/mm/“);</p>
+<p>​                    表示/bjservlet/mm/*</p>
+<h2 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h2><p>​    </p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/servlet/">servlet</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/JavaWeb/">JavaWeb</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2019/07/22/Java Web/servlet学习/" data-title="servlet学习 | Momentonly" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/07/25/Java Web/jsp中的注释/" title="jsp中的注释">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  jsp中的注释</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/07/21/Web/Js中的闭包理解/"  title="JS中的闭包">
+ <strong>NEXT:</strong><br/> 
+ <span>JS中的闭包
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="servlet学习" data-thread-key="Java Web/servlet学习" data-author-key="Moment Only" data-url="http://yoursite.com/post/Java Web/servlet学习"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Servlet学习"><span class="toc-number">1.</span> <span class="toc-text">Servlet学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet介绍"><span class="toc-number">1.1.</span> <span class="toc-text">Servlet介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet-的-web-xml-配置"><span class="toc-number">1.2.</span> <span class="toc-text">Servlet 的 web.xml 配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet是单例的"><span class="toc-number">1.3.</span> <span class="toc-text">Servlet是单例的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet的生命周期"><span class="toc-number">1.4.</span> <span class="toc-text">Servlet的生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet中的方法"><span class="toc-number">1.5.</span> <span class="toc-text">Servlet中的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet-的常见错误总结"><span class="toc-number">1.6.</span> <span class="toc-text">Servlet 的常见错误总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Request-对象"><span class="toc-number">1.7.</span> <span class="toc-text">Request 对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Response对象"><span class="toc-number">1.8.</span> <span class="toc-text">Response对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#乱码问题"><span class="toc-number">1.9.</span> <span class="toc-text">乱码问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#请求转发"><span class="toc-number">1.10.</span> <span class="toc-text">请求转发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#转发"><span class="toc-number">1.10.1.</span> <span class="toc-text">转发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Request对象作用域"><span class="toc-number">1.10.2.</span> <span class="toc-text">Request对象作用域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重定向"><span class="toc-number">1.11.</span> <span class="toc-text">重定向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie"><span class="toc-number">1.12.</span> <span class="toc-text">Cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Session"><span class="toc-number">1.13.</span> <span class="toc-text">Session</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>14</sup></a></li>
+		
+			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>8</sup></a></li>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/categories/database/" title="database">database<sup>10</sup></a></li>
+		
+			<li><a href="/categories/tools/" title="tools">tools<sup>5</sup></a></li>
+		
+			<li><a href="/categories/web/" title="web">web<sup>7</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/C/" title="C">C<sup>2</sup></a></li>
+		
+			<li><a href="/tags/CSS/" title="CSS">CSS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/HTML/" title="HTML">HTML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JAVA/" title="JAVA">JAVA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDBC/" title="JDBC">JDBC<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>13</sup></a></li>
+		
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JavaWeb/" title="JavaWeb">JavaWeb<sup>5</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>6</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>1</sup></a></li>
+		
+			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/eclipse/" title="eclipse">eclipse<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>3</sup></a></li>
+		
+			<li><a href="/tags/jsp/" title="jsp">jsp<sup>1</sup></a></li>
+		
+			<li><a href="/tags/log4j/" title="log4j">log4j<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mybatis/" title="mybatis">mybatis<sup>2</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>3</sup></a></li>
+		
+			<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
+		
+			<li><a href="/tags/servlet/" title="servlet">servlet<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/C/" style="font-size: 11.67px;">C</a> <a href="/tags/CSS/" style="font-size: 11.67px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 15px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 16.67px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 18.33px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 10px;">Oracle</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 11.67px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 11.67px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.67px;">乱码</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2019 
+		
+		<a href="http://yoursite.com" target="_blank" title="Moment Only">Moment Only</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:""};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '', '');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+
