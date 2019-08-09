@@ -92,7 +92,7 @@
     </p>
   <p class="article-time">
     <time datetime="2019-08-09T07:23:02.000Z" itemprop="datePublished">2019-08-09</time>
-    更新日期:<time datetime="2019-08-09T08:44:24.039Z" itemprop="dateModified">2019-08-09</time>
+    更新日期:<time datetime="2019-08-09T08:52:11.472Z" itemprop="dateModified">2019-08-09</time>
     
   </p>
 </header>
@@ -124,8 +124,8 @@
 <p>　　根据这个规则表，就能很清楚的知道servlet的匹配过程，所以定义servlet的时候也要考虑url-pattern的写法，以免出错。</p>
 <p>　　对于filter，不会像servlet那样只匹配一个servlet，因为filter的集合是一个链，所以只会有处理的顺序不同，而不会出现只选择一个filter.Filter的处理顺序和filter-mapping在web.xml中定义的顺序相同。</p>
 <h2 id="二、url-pattern详解"><a href="#二、url-pattern详解" class="headerlink" title="　二、url-pattern详解"></a>　二、url-pattern详解</h2><p>　　在web.xml文件中，以下语法用于定义映射：</p>
-<p>　　<strong><em>以“/‘开头和以”/\</em>“结尾的是用来做路径映射的。*</strong></p>
-<p>　　<strong><em>以前缀“\</em>.”开头的是用来做扩展映射的。*</strong></p>
+<p>　　以“/‘开头和以”/*“结尾的是用来做路径映射的</p>
+<p>　　以前缀“*.”开头的是用来做扩展映射的</p>
 <p>　　“是用来定义default servlet映射的。</p>
 <p>　　剩下的都是用来定义详细映射的。比如： /aa/bb/cc.action</p>
 <p>　　所以，为什么定义“/*.action”这样一个看起来很正常的匹配会错？因为这个匹配即属于路径映射，也属于扩展映射，导致容器无法判断。</p>
