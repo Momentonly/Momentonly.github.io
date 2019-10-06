@@ -1,0 +1,552 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>solor全文检索服务 | Momentonly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Moment Only">
+    
+    <meta name="description" content="全文检索为什么使用全文检索说明​    没有使用全文检索的时候，大部分会利用WHERE子句匹配LIKE关键词，在庞大的数据字段中搜索某些想要的字，如：    select * from test  WHERE Notes LIKE ‘%你好%’
+​    然而这种查询方式非常没有效率，即使在Note">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Momentonly" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Momentonly">Momentonly</a></h1>
+				<a class="blog-motto"></a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/categories/despattern">设计模式</a></li>
+					
+						<li><a href="/categories/tools">工具</a></li>
+					
+						<li><a href="/categories/web">前端</a></li>
+					
+						<li><a href="/categories/database">数据库</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= 17576509095696061073 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/08/25/JavaAdvancedTechnology/Solr/Solr全文检索服务/" title="solor全文检索服务" itemprop="url">solor全文检索服务</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2019-08-25T09:46:31.000Z" itemprop="datePublished">2019-08-25</time>
+    更新日期:<time datetime="2019-09-03T03:05:19.949Z" itemprop="dateModified">2019-09-03</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#全文检索"><span class="toc-number">1.</span> <span class="toc-text">全文检索</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么使用全文检索"><span class="toc-number">1.1.</span> <span class="toc-text">为什么使用全文检索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#说明"><span class="toc-number">1.1.1.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#有数据库为什么要solr"><span class="toc-number">1.1.2.</span> <span class="toc-text">有数据库为什么要solr</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#二"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">二</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#全文检索定义"><span class="toc-number">1.2.</span> <span class="toc-text">全文检索定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据分类"><span class="toc-number">1.2.1.</span> <span class="toc-text">数据分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非结构化数据查询方法"><span class="toc-number">1.2.2.</span> <span class="toc-text">非结构化数据查询方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#顺序扫描法-Serial-Scanning"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">顺序扫描法(Serial Scanning)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#全文检索-Full-text-Search"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">全文检索(Full-text Search)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何实现全文检索"><span class="toc-number">1.2.3.</span> <span class="toc-text">如何实现全文检索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全文检索技术的应用场景"><span class="toc-number">1.2.4.</span> <span class="toc-text">全文检索技术的应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">1.2.5.</span> <span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#索引"><span class="toc-number">1.2.5.1.</span> <span class="toc-text">索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#搜索"><span class="toc-number">1.2.5.2.</span> <span class="toc-text">搜索</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#全文检索实现"><span class="toc-number">1.3.</span> <span class="toc-text">全文检索实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建索引"><span class="toc-number">1.3.1.</span> <span class="toc-text">创建索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获得原始文档"><span class="toc-number">1.3.2.</span> <span class="toc-text">获得原始文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建文档对象"><span class="toc-number">1.3.3.</span> <span class="toc-text">创建文档对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析文档"><span class="toc-number">1.3.4.</span> <span class="toc-text">分析文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建索引-1"><span class="toc-number">1.3.5.</span> <span class="toc-text">创建索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查询索引"><span class="toc-number">1.3.6.</span> <span class="toc-text">查询索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用户查询接口"><span class="toc-number">1.3.7.</span> <span class="toc-text">用户查询接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建查询"><span class="toc-number">1.3.8.</span> <span class="toc-text">创建查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#执行查询"><span class="toc-number">1.3.9.</span> <span class="toc-text">执行查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#渲染结果"><span class="toc-number">1.3.10.</span> <span class="toc-text">渲染结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Solr集群配置的一些说明"><span class="toc-number">1.4.</span> <span class="toc-text">Solr集群配置的一些说明</span></a></li></ol></li></ol>
+		</div>
+		
+		<h1 id="全文检索"><a href="#全文检索" class="headerlink" title="全文检索"></a>全文检索</h1><h2 id="为什么使用全文检索"><a href="#为什么使用全文检索" class="headerlink" title="为什么使用全文检索"></a>为什么使用全文检索</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>​    没有使用全文检索的时候，大部分会利用WHERE子句匹配LIKE关键词，在庞大的数据字段中搜索某些想要的字，如：    select * from test  WHERE Notes LIKE ‘%你好%’</p>
+<p>​    然而这种查询方式非常没有效率，即使在Notes字段建立了一般的索引，帮助也不大，因为SQL SERVER为数据表建立的索引是排序过的数据结构。因此，可以用二分搜索算法来快速寻找数据，但搜索’%你好%’可没有什么顺序可言，因为搜索条件以’%’开头.<br><strong><em>全文检索则提供完全不同的索引架构，以关键词为基础建立全文检索索引。搭配特有的SQL查询语法，对于大型文本的字词查询更具弹性和效率</em></strong>        </p>
+<p>例1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">我们有一个表大概有50万条数据，其中有一个字段是字符串类型需要实现like 模糊查询，我们使用的是mysql，虽然已经建立了索引，但是由于使用的是%a%模式匹配，很不给力，在大量并发下，数据库会挂掉，或者用户等到抓狂查询结果还不出来，后来想出了一个办法解决了这个问题，每次查询可以控制在15ms左右，效果很是不错。我们采用是全文索引技术：</span><br><span class="line">1、使用lucene或者其他可以提供全文索引的nosql数据库，比如tt server或mongodb</span><br><span class="line">2、把需要模糊查询的字段的字符串数据进行”全分词“，即把所有可能分词都枚举出来，比如abc,可以分成a,ab,abc,b,bc,c</span><br><span class="line">3、把这些分好的term建立索引，如果使用lucene则需要建立一个分词器，能把传入的字符串分解成第2步描述的分词后建立索引，如果使用的是mongodb，则把分好的词存入一个字段并且建立索引，如果使用的tt server，那就简单了，直接建立qgram类型的索引即可，不需要自己去分词，我们最终就是使用tt server解决的问题</span><br><span class="line">4、使用各自提供的查询语法进行查询，绝对高效</span><br><span class="line">最终采用tt server的qgram方式实现，50多万条数据的模糊查询时间不超过15毫秒，有缓存的情况可能是0ms。</span><br></pre></td></tr></table></figure>
+<p>例2：mysql的全文索引与like实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">在数据库使用中，DBA都会告诉大家SQL的LIKE条件为%XXX%号时，由于不能使用索引，当数据量变大时(比如超过百万条)，全表扫描会导致性能很差。</span><br><span class="line">　　但是在实际业务中，很难避免MySQL全文检索并Like索引的这种需求。比如模糊搜索用户帐号，昵称之类。既然这个需求必须做，但又不可以直接用LIKE。这里我和大家分享一下我们关于这种需求的一种解决方案。当然别人也可能采用过类似的办法，我不是很清楚。所以也用一下“原创”吧。</span><br><span class="line"></span><br><span class="line">　　MySQL数据库很早就支持全文索引，但是全文索引和LIKE语句是不同的。具体点说，全文索引的单位是词，耳LIKE匹配的是字符。当然实际的区别更大，比如“老鼠爱大米”这段文本用全文搜索的话，条件“老鼠爱大米”，“老鼠和大米”，“大米老鼠”，“大米与老鼠”会搜索到内容，但是“爱”，“鼠爱”，“爱大”不会搜索到内容。反之，使用LIKE搜索时，“老鼠和大米”，“大米老鼠”，“大米与老鼠”不会找到内容，而“爱”，“鼠爱”，“爱大”会找到内容。我们这里不讨论两种方式的优劣，根据实际情况每种功能都会有各自的实际需求。比如对于大段文本，全文检索是最好的方法，但是对于姓名，帐号，昵称等很短的通常无意义文本，LIKE会更合适一些。</span><br><span class="line">　　虽然全文检索和LIKE搜索不同，但是在特殊情况下，可以用全文搜索功能来实现LIKE搜索。具体就是每个字符作为一个词，而且使用双引号来限制词精确匹配(简单点说就是老鼠大米和大米老鼠不同)，这样可以实现LIKE搜索的功能。</span><br><span class="line">　　</span><br><span class="line"></span><br><span class="line">来自：https://www.cnblogs.com/bobsoft/archive/2012/10/07/2714545.html</span><br></pre></td></tr></table></figure>
+<p>例3：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">当我们访问购物网站的时候，我们可以根据我们随意所想的内容输入关键字就可以查询出相关的内容，这是怎么做到呢？这些随意的数据不可能是根据数据库的字段查询的，那是怎么查询出来的呢，为什么千奇百怪的关键字都可以查询出来呢？</span><br><span class="line">答案就是全文检索工具的实现，luncence采用了词元匹配和切分词。举个例子：北京天安门----luncence切分词：北京  京天  天安  安门  等等这些分词。所以我们搜索的时候都可以检索到。</span><br><span class="line">有一种分词器就是IKanalyzer中文分词器，它有细粒度切分和智能切分，即根据某种智能算法。</span><br><span class="line">这就使用solr的最大的好处：检索功能的实现。</span><br><span class="line"></span><br><span class="line">来自：https://blog.csdn.net/jokeylin/article/details/80562148</span><br></pre></td></tr></table></figure>
+<h3 id="有数据库为什么要solr"><a href="#有数据库为什么要solr" class="headerlink" title="有数据库为什么要solr"></a>有数据库为什么要solr</h3><p>​        lucene负责数据存储，而solr只是一个引擎提供搜索和插入而已，跟数据库的解释器一样，有什么好处呢，比如一个数据库有一个字段存了1000个字，你想从这些字里面搜一个词的时候，普通的数据库只会让你使用like去查询，他会遍历每个字去模糊匹配，效率很低，而且有些是无法查询的，当然除了像一些特殊的数据库带有分词，比如postgresql，那lucene做的事情就是分词，然后去匹配分词的词中是否有你想搜的词就好了，当然了，为了提高这种检索效率和内存节省底层做了很复杂的事情，可以这么简单的认为，全文搜索这件事情上数据库是无法满足的</p>
+<h4 id="二"><a href="#二" class="headerlink" title="二"></a>二</h4><p>​    大型的SQL数据库上很难执行高速的查询。Solr是Apache 下的一个开源项目，使用Java基于Lucene开发的全文检索服务；它是一个<strong>独立的企业级搜索应用服务器</strong>，它对外提供类似于Web-service的API接口。用户可以通过http请求，向搜索引擎服务器提交一定格式的XML文件，生成索引；也可以通过Http Get操作提出查找请求，并得到XML格式的返回结果。</p>
+<p>​    为什么使用solr???????</p>
+<p>　<strong><em>第一点原因来自SQL数据库在性能上缺乏亮点。基本上，你需要在你的查询中使用JOIN操作。</em></strong></p>
+<p>　<strong><em>第二点原因是文档的天然数据特性：松散的文本文件，这种查询都是需要使用LIKE。然而joins和likes都是性能杀手，在目前的数据库引擎中是不方便的。</em></strong></p>
+<p>所以，很多时候希望找到一种跟SQL完全不同的数据检索方式：倒排索引。</p>
+<p>这种数据结构类似与美化过的词典：</p>
+<p>　　　　　　key是单个的term</p>
+<p>　　　　　　values是跟term对应的文档列表</p>
+<p>这种数据方式可以帮助在大型的数据库上面进行高速查询。</p>
+<h2 id="全文检索定义"><a href="#全文检索定义" class="headerlink" title="全文检索定义"></a>全文检索定义</h2><h3 id="数据分类"><a href="#数据分类" class="headerlink" title="数据分类"></a>数据分类</h3><p>我们生活中的数据总体分为两种：结构化数据和非结构化数据。</p>
+<ul>
+<li>结构化数据：指具有固定格式或有限长度的数据，如数据库中的数据，元数据等。</li>
+<li>非结构化数据：指不定长或无固定格式的数据，如邮件，word文档等磁盘上的文件。</li>
+</ul>
+<h3 id="非结构化数据查询方法"><a href="#非结构化数据查询方法" class="headerlink" title="非结构化数据查询方法"></a>非结构化数据查询方法</h3><h4 id="顺序扫描法-Serial-Scanning"><a href="#顺序扫描法-Serial-Scanning" class="headerlink" title="顺序扫描法(Serial Scanning)"></a>顺序扫描法(Serial Scanning)</h4><p>​        所谓顺序扫描，比如要找内容包含某一个字符串的文件，就是一个文档一个文档的看，对于每一个文档，从头看到尾，如果此文档包含此字符串，则此文档为我们要找的文件，接着看下一个文件，直到扫描完所有的文件。如利用windows的搜索也可以搜索文件内容，只是相当的慢。</p>
+<h4 id="全文检索-Full-text-Search"><a href="#全文检索-Full-text-Search" class="headerlink" title="全文检索(Full-text Search)"></a>全文检索(Full-text Search)</h4><p>​        将非结构化数据中的一部分信息提取出来，重新组织，使其变得有一定结构，然后对此有一定结构的数据进行搜索，从而达到搜索相对较快的目的。这部分从非结构化数据中提取出的然后重新组织的信息，我们称之索引。<br>例如：字典。字典的拼音表和部首检字表就相当于字典的索引，对每一个字的解释是非结构化的，如果字典没有音节表和部首检字表，在茫茫辞海中找一个字只能顺序扫描。然而字的某些信息可以提取出来进行结构化处理，比如读音，就比较结构化，分声母和韵母，分别只有几种可以一一列举，于是将读音拿出来按一定的顺序排列，每一项读音都指向此字的详细解释的页数。我们搜索时按结构化的拼音搜到读音，然后按其指向的页数，便可找到我们的非结构化数据——也即对字的解释。<br>这种先建立索引，再对索引进行搜索的过程就叫全文检索(Full-text Search)。<br>虽然创建索引的过程也是非常耗时的，但是索引一旦创建就可以多次使用，全文检索主要处理的是查询，所以耗时间创建索引是值得的。</p>
+<h3 id="如何实现全文检索"><a href="#如何实现全文检索" class="headerlink" title="如何实现全文检索"></a>如何实现全文检索</h3><p>可以使用Lucene实现全文检索。Lucene是apache下的一个开放源代码的全文检索引擎工具包（提供了Jar包，实现全文检索的类库）。它提供了完整的查询引擎和索引引擎，部分文本分析引擎。Lucene的目的是为软件开发人员提供一个简单易用的工具包，以方便地在目标系统中实现全文检索的功能。<br>注意：Lucene只是一个引擎，只是一个工具包，如果使用Lucene开发全文检索功能，要记住Lucene是不能单独运行的。</p>
+<h3 id="全文检索技术的应用场景"><a href="#全文检索技术的应用场景" class="headerlink" title="全文检索技术的应用场景"></a>全文检索技术的应用场景</h3><p>对于数据量大、数据结构不固定的数据可采用全文检索方式搜索。例如：</p>
+<p>使用全文检索技术可以实现搜索引擎（百度、google…），搜索引擎可以搜索互联网上所有的内容（网页、pdf电子书、视频、音乐）。<br>Lucene和搜索引擎的区别：搜索引擎是对外提供全文检索服务，是可以单独运行的。Lucene只是一个工具包不能单独运行，需要在project中加入lucene的jar包，最终project在JVM中运行。<br>使用全文检索技术可以实现站内搜索，站内搜索只能搜索本网站的信息（网页、pdf电子书、视频、音乐、关系数据库中的信息等等），比如：电商网站搜索商品信息，论坛网站搜索网内帖子。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>全文检索过程分为索引、搜索两个过程：</p>
+<h4 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h4><p>从关系数据库中、互联网上、文件系统采集源数据(要搜索的目标信息)，源数据的来源是很广泛的。<br>将源数据采集到一个统一的地方，要创建索引，将索引创建到一个索引库（文件系统）中，从源数据库中提取关键信息，从关键信息中抽取一个一个词，词和源数据是有关联的。也即创建索引时，词和源数据有关联，索引库中记录了这个关联，如果找到了词就说明找到了源数据（http的网页、pdf电子书等……）。</p>
+<h4 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h4><p>用户执行搜索（全文检索）编写查询关键字。<br>从索引库中搜索索引，根据查询关键字搜索索引库中的一个一个词。<br>展示搜索的结果。</p>
+<h2 id="全文检索实现"><a href="#全文检索实现" class="headerlink" title="全文检索实现"></a>全文检索实现</h2><h3 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h3><p>​        对文档索引的过程，将用户要搜索的文档内容进行索引，索引存储在索引库（index）中。<br>这里我们要搜索的文档是磁盘上的文本文件，根据案例描述：凡是文件名或文件内容包括关键字的文件都要找出来，这里要对文件名和文件内容创建索引。</p>
+<h3 id="获得原始文档"><a href="#获得原始文档" class="headerlink" title="获得原始文档"></a>获得原始文档</h3><p>​    原始文档是指要索引和搜索的内容。原始内容包括互联网上的网页、数据库中的数据、磁盘上的文件等    </p>
+<p>​    从互联网上、数据库、文件系统中等数据源处获取需要搜索的原始信息，这个过程就是信息采集，信息采集的目的是为了对原始内容进行索引。针对不同的源数据，使用不同的技术进行采集获得原始文档：</p>
+<p><strong><em>针对互联网上的数据，使用http协议抓取html网页到本地，生成一个html文件。</em></strong><br><strong><em>针对关系数据库中的数据，连接数据库读取表中的数据。</em></strong><br><strong><em>针对文件系统中的数据，通过流读取文件系统的文件。</em></strong></p>
+<p>以上技术中使用第一种较多，因为目前全文检索主要搜索数据的来源是互联网，在Internet上采集信息的软件通常称为爬虫或蜘蛛，也称为网络机器人，爬虫访问互联网上的每一个网页，将获取到的网页内容存储起来，所以搜索引擎使用一种爬虫程序抓取网页（ 通过http抓取html网页信息）。<br>Lucene不提供信息采集的类库，需要自己编写一个爬虫程序实现信息采集，也可以通过一些开源软件实现信息采集，以下是一些爬虫项目（了解）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Solr（http://lucene.apache.org/solr），solr是apache的一个子项目，支持从关系数据库、xml文档中提取原始数据。</span><br><span class="line">Nutch（http://lucene.apache.org/nutch）, Nutch是apache的一个子项目，包括大规模爬虫工具，能够抓取和分辨web网站数据。</span><br><span class="line">jsoup（http://jsoup.org/ ），jsoup是一款Java的HTML解析器，可直接解析某个URL地址、HTML文本内容。它提供了一套非常省力的API，可通过DOM，CSS以及类似于jQuery的操作方法来取出和操作数据。</span><br><span class="line">Heritrix（http://sourceforge.net/projects/archive-crawler/files/），Heritrix是一个由java开发的、开源的网络爬虫，用户可以使用它来从网上抓取想要的资源。其最出色之处在于它良好的可扩展性，方便用户实现自己的抓取逻辑。</span><br></pre></td></tr></table></figure>
+<h3 id="创建文档对象"><a href="#创建文档对象" class="headerlink" title="创建文档对象"></a>创建文档对象</h3><h3 id="分析文档"><a href="#分析文档" class="headerlink" title="分析文档"></a>分析文档</h3><h3 id="创建索引-1"><a href="#创建索引-1" class="headerlink" title="创建索引"></a>创建索引</h3><h3 id="查询索引"><a href="#查询索引" class="headerlink" title="查询索引"></a>查询索引</h3><h3 id="用户查询接口"><a href="#用户查询接口" class="headerlink" title="用户查询接口"></a>用户查询接口</h3><h3 id="创建查询"><a href="#创建查询" class="headerlink" title="创建查询"></a>创建查询</h3><h3 id="执行查询"><a href="#执行查询" class="headerlink" title="执行查询"></a>执行查询</h3><h3 id="渲染结果"><a href="#渲染结果" class="headerlink" title="渲染结果"></a>渲染结果</h3><h2 id="Solr集群配置的一些说明"><a href="#Solr集群配置的一些说明" class="headerlink" title="Solr集群配置的一些说明"></a>Solr集群配置的一些说明</h2><p>​        1)安装zookeeper集群，做配置管理</p>
+<p>​        2)安装四个tomcat,和四个索引库，依旧是一对一(solr的web服务中web.xml配置索引库的绝对路径)</p>
+<p>​        3)上传索引库的配置文件至zookeeper(索引库目录下的collection/conf)</p>
+<p>​        4)修改每一个索引库下的 solr.xml,指定当前实例运行的ip地址及端口号        </p>
+<p>​        5)修改每一台solr的tomcat的bin目录下 catalina.sh文件中加入DzkHost指定zookeeper服务器地址</p>
+<p>​                    JAVA_OPTS=”-DzkHost=192.168.70.147:2181,192.168.70.147:2182,192.168.70.14 7:2183”</p>
+<p>​        </p>
+<p>注意：加入JAVA_OPTS的参数的含义，也就是程序可以读取该键值对配置            </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">JVM自定义参数通过java命令的可选项:</span><br><span class="line">-D&lt;name&gt;=&lt;value&gt;</span><br><span class="line">来传入JVM，传入的参数作为system的property。因此在程序中可以通过下面的语句获取参数值：</span><br><span class="line">System.getProperty(&lt;name&gt;)</span><br><span class="line"></span><br><span class="line">public class JVMParameter &#123;</span><br><span class="line"> </span><br><span class="line">    /**</span><br><span class="line">     * 运行前设置JVM参数 -Djvm.index=1</span><br><span class="line">     * @param args</span><br><span class="line">     */</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // TODO Auto-generated method stub</span><br><span class="line">        String jvmIndex = System.getProperty(&quot;jvm.index&quot;);</span><br><span class="line">        System.out.println(&quot;jvmIndex=&quot; + jvmIndex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">运行class命令：</span><br><span class="line">java -Djvm.index=1 JVMParameter</span><br><span class="line"></span><br><span class="line">说明：</span><br><span class="line">JVM自定义参数可用来在集群环境区分当前class运行在哪个JVM上，可以达到让某个class只在某个指定的JVM上运行，避免多个JVM同时运行，出现混乱。也可以作为程序读取的配置信息</span><br></pre></td></tr></table></figure>
+<p>参考：        </p>
+<p>​        <a href="https://blog.csdn.net/qq_16162981/article/details/70142166" target="_blank" rel="noopener">https://blog.csdn.net/qq_16162981/article/details/70142166</a></p>
+<p>​        <a href="https://blog.csdn.net/yerenyuan_pku/article/details/72582979" target="_blank" rel="noopener">https://blog.csdn.net/yerenyuan_pku/article/details/72582979</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Java/">Java</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/JavaSE/">JavaSE</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2019/08/25/JavaAdvancedTechnology/Solr/Solr全文检索服务/" data-title="solor全文检索服务 | Momentonly" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/08/25/JavaAdvancedTechnology/Dubbo/dubbo使用/" title="dubbo使用">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  dubbo使用</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/08/14/Tools/Maven项目构建工具/"  title="Maven项目构建工具">
+ <strong>NEXT:</strong><br/> 
+ <span>Maven项目构建工具
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="solor全文检索服务" data-thread-key="JavaAdvancedTechnology/Solr/Solr全文检索服务" data-author-key="Moment Only" data-url="http://yoursite.com/post/JavaAdvancedTechnology/Solr/Solr全文检索服务"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#全文检索"><span class="toc-number">1.</span> <span class="toc-text">全文检索</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么使用全文检索"><span class="toc-number">1.1.</span> <span class="toc-text">为什么使用全文检索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#说明"><span class="toc-number">1.1.1.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#有数据库为什么要solr"><span class="toc-number">1.1.2.</span> <span class="toc-text">有数据库为什么要solr</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#二"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">二</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#全文检索定义"><span class="toc-number">1.2.</span> <span class="toc-text">全文检索定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据分类"><span class="toc-number">1.2.1.</span> <span class="toc-text">数据分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非结构化数据查询方法"><span class="toc-number">1.2.2.</span> <span class="toc-text">非结构化数据查询方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#顺序扫描法-Serial-Scanning"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">顺序扫描法(Serial Scanning)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#全文检索-Full-text-Search"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">全文检索(Full-text Search)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何实现全文检索"><span class="toc-number">1.2.3.</span> <span class="toc-text">如何实现全文检索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全文检索技术的应用场景"><span class="toc-number">1.2.4.</span> <span class="toc-text">全文检索技术的应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">1.2.5.</span> <span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#索引"><span class="toc-number">1.2.5.1.</span> <span class="toc-text">索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#搜索"><span class="toc-number">1.2.5.2.</span> <span class="toc-text">搜索</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#全文检索实现"><span class="toc-number">1.3.</span> <span class="toc-text">全文检索实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建索引"><span class="toc-number">1.3.1.</span> <span class="toc-text">创建索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获得原始文档"><span class="toc-number">1.3.2.</span> <span class="toc-text">获得原始文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建文档对象"><span class="toc-number">1.3.3.</span> <span class="toc-text">创建文档对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析文档"><span class="toc-number">1.3.4.</span> <span class="toc-text">分析文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建索引-1"><span class="toc-number">1.3.5.</span> <span class="toc-text">创建索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查询索引"><span class="toc-number">1.3.6.</span> <span class="toc-text">查询索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用户查询接口"><span class="toc-number">1.3.7.</span> <span class="toc-text">用户查询接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建查询"><span class="toc-number">1.3.8.</span> <span class="toc-text">创建查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#执行查询"><span class="toc-number">1.3.9.</span> <span class="toc-text">执行查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#渲染结果"><span class="toc-number">1.3.10.</span> <span class="toc-text">渲染结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Solr集群配置的一些说明"><span class="toc-number">1.4.</span> <span class="toc-text">Solr集群配置的一些说明</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>17</sup></a></li>
+		
+			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>10</sup></a></li>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>2</sup></a></li>
+		
+			<li><a href="/categories/database/" title="database">database<sup>11</sup></a></li>
+		
+			<li><a href="/categories/tools/" title="tools">tools<sup>6</sup></a></li>
+		
+			<li><a href="/categories/web/" title="web">web<sup>7</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/C/" title="C">C<sup>2</sup></a></li>
+		
+			<li><a href="/tags/CSS/" title="CSS">CSS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/HTML/" title="HTML">HTML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JAVA/" title="JAVA">JAVA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDBC/" title="JDBC">JDBC<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>16</sup></a></li>
+		
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JavaWeb/" title="JavaWeb">JavaWeb<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>6</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SpringBoot/" title="SpringBoot">SpringBoot<sup>2</sup></a></li>
+		
+			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/eclipse/" title="eclipse">eclipse<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>3</sup></a></li>
+		
+			<li><a href="/tags/jsp/" title="jsp">jsp<sup>1</sup></a></li>
+		
+			<li><a href="/tags/log4j/" title="log4j">log4j<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mybatis/" title="mybatis">mybatis<sup>2</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>3</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/C/" style="font-size: 11.67px;">C</a> <a href="/tags/CSS/" style="font-size: 11.67px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 15px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 18.33px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 11.67px;">Oracle</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 11.67px;">SpringBoot</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 11.67px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 13.33px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.67px;">乱码</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2019 
+		
+		<a href="http://yoursite.com" target="_blank" title="Moment Only">Moment Only</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:""};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '', '');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+

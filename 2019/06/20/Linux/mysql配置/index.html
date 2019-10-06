@@ -12,8 +12,8 @@
     
     <meta name="author" content="Moment Only">
     
-    <meta name="description" content="mysql配置配置远程1.查看表
-12345678use mysql;select host,user from user; host      | user      |+-----------+-----------+| %         | root      || localhost | ">
+    <meta name="description" content="mysql配置配置远程访问1.查看表
+12345678use mysql;select host,user from user; host      | user      |+-----------+-----------+| %         | root      || localhost ">
     
     
     
@@ -91,7 +91,7 @@
     </p>
   <p class="article-time">
     <time datetime="2019-06-20T14:35:59.000Z" itemprop="datePublished">2019-06-20</time>
-    更新日期:<time datetime="2019-07-16T07:50:47.133Z" itemprop="dateModified">2019-07-16</time>
+    更新日期:<time datetime="2019-09-06T00:56:45.422Z" itemprop="dateModified">2019-09-06</time>
     
   </p>
 </header>
@@ -100,10 +100,10 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#mysql配置"><span class="toc-number">1.</span> <span class="toc-text">mysql配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置远程"><span class="toc-number">1.1.</span> <span class="toc-text">配置远程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改密码遇到的坑"><span class="toc-number">1.2.</span> <span class="toc-text">修改密码遇到的坑</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#mysql配置"><span class="toc-number">1.</span> <span class="toc-text">mysql配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置远程访问"><span class="toc-number">1.1.</span> <span class="toc-text">配置远程访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mysql修改密码"><span class="toc-number">1.2.</span> <span class="toc-text">mysql修改密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mysql出现访问拒绝"><span class="toc-number">1.3.</span> <span class="toc-text">mysql出现访问拒绝</span></a></li></ol></li></ol>
 		</div>
 		
-		<h1 id="mysql配置"><a href="#mysql配置" class="headerlink" title="mysql配置"></a>mysql配置</h1><h2 id="配置远程"><a href="#配置远程" class="headerlink" title="配置远程"></a>配置远程</h2><p>1.查看表</p>
+		<h1 id="mysql配置"><a href="#mysql配置" class="headerlink" title="mysql配置"></a>mysql配置</h1><h2 id="配置远程访问"><a href="#配置远程访问" class="headerlink" title="配置远程访问"></a>配置远程访问</h2><p>1.查看表</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br><span class="line">select host,user from user;</span><br><span class="line"></span><br><span class="line"> host      | user      |</span><br><span class="line">+-----------+-----------+</span><br><span class="line">| %         | root      |</span><br><span class="line">| localhost | mysql.sys |</span><br><span class="line">| localhost | root     |</span><br></pre></td></tr></table></figure>
 <p>host是主机，root表示主机可以登录的用户，%表示所有主机，但不包括localhost</p>
 <p>2.如果没有%,root</p>
@@ -114,20 +114,34 @@
 <p><strong><em>注意</em></strong><br><strong><em>需要注意mysql的配置文件中的bindaddress 的参数和skip-networking 配置</em></strong></p>
 <p><strong><em>bindaddress : 设定哪些ip地址被配置，使得mysql服务器只回应哪些ip地址的请求),最好注释掉该参数或设置成为127.0.0.1以外的值</em></strong></p>
 <p><strong><em>skip-networking : 如果设置了该参数项，将导致所有TCP/IP端口没有被监听,也就是说出了本机，其他客户端都无法用网络连接到本mysql服务器，所以应该注释掉该参数</em></strong></p>
-<h2 id="修改密码遇到的坑"><a href="#修改密码遇到的坑" class="headerlink" title="修改密码遇到的坑"></a>修改密码遇到的坑</h2><p>如果MySQL数据库用户的密码设置过于简单，数据库在用户登录后会提示重置密码，并且不接受简单的密码。</p>
+<h2 id="mysql修改密码"><a href="#mysql修改密码" class="headerlink" title="mysql修改密码"></a>mysql修改密码</h2><p>如果MySQL数据库用户的密码设置过于简单，数据库在用户登录后会提示重置密码，并且不接受简单的密码。</p>
 <p>提示需要重置密码：</p>
 <p>ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER USER USER() IDENTIFIED BY &apos;123456&apos;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER USER &apos;root&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;123456&apos;;</span><br></pre></td></tr></table></figure>
 <p>以上操作后又遇到新问题：<br>ERROR 1819 (HY000): Your password does NOT satisfy the CURRENT policy requirements。</p>
+<p>这是因为密码不符合mysql的密码策略检查</p>
 <p>先设置复杂密码</p>
-<p>alter user user() identified by “Aa123456”;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER USER &apos;root&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;Aa123456*&apos;;</span><br></pre></td></tr></table></figure>
 <p>flush privileges;</p>
-<p>使用以下两个设置简单密码</p>
+<p>mysql初始密码策略</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW VARIABLES LIKE &apos;validate_password%&apos;;</span><br></pre></td></tr></table></figure>
+<p>使用以下两个设置简单密码策略</p>
 <p>set global validate_password_policy=0;</p>
 <p> set global validate_password_length=1;</p>
 <p>再设置简单密码</p>
-<p>alter user user() identified by “123456”;</p>
+<p> ALTER USER ‘root‘@’localhost’ IDENTIFIED BY ‘123456’;</p>
 <p>flush privileges;</p>
+<h2 id="mysql出现访问拒绝"><a href="#mysql出现访问拒绝" class="headerlink" title="mysql出现访问拒绝"></a>mysql出现访问拒绝</h2><p>ERROR 1045 (28000): Access denied for user ‘root‘@’localhost’ (using password: YES)</p>
+<p>解决：</p>
+<p>修改mysql配置文件，跳过权限检查</p>
+<p>​        vim /etc/my.cnf</p>
+<p>加入</p>
+<p>​    skip-grant-tables</p>
+<p>修改密码</p>
+<p>update user set authentication_string=password(123456) where user=’root’;</p>
+<p>flush privileges;</p>
+<p>注释掉      #skip-grant-tables</p>
+<p>重启mysql服务</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -157,7 +171,7 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2019/06/22/MyBatis/mytabis的学习/" title="mytabis的学习">
+ <a href="/2019/06/22/DataBase/MyBatis/mytabis的学习/" title="mytabis的学习">
   <strong>PREVIOUS:</strong><br/>
   <span>
   mytabis的学习</span>
@@ -188,7 +202,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#mysql配置"><span class="toc-number">1.</span> <span class="toc-text">mysql配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置远程"><span class="toc-number">1.1.</span> <span class="toc-text">配置远程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改密码遇到的坑"><span class="toc-number">1.2.</span> <span class="toc-text">修改密码遇到的坑</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#mysql配置"><span class="toc-number">1.</span> <span class="toc-text">mysql配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置远程访问"><span class="toc-number">1.1.</span> <span class="toc-text">配置远程访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mysql修改密码"><span class="toc-number">1.2.</span> <span class="toc-text">mysql修改密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mysql出现访问拒绝"><span class="toc-number">1.3.</span> <span class="toc-text">mysql出现访问拒绝</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
@@ -212,15 +226,19 @@
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>14</sup></a></li>
+			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>17</sup></a></li>
 		
-			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>9</sup></a></li>
+			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>10</sup></a></li>
 		
 			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
 		
-			<li><a href="/categories/database/" title="database">database<sup>10</sup></a></li>
+			<li><a href="/categories/Spring/" title="Spring">Spring<sup>1</sup></a></li>
 		
-			<li><a href="/categories/tools/" title="tools">tools<sup>5</sup></a></li>
+			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>2</sup></a></li>
+		
+			<li><a href="/categories/database/" title="database">database<sup>11</sup></a></li>
+		
+			<li><a href="/categories/tools/" title="tools">tools<sup>6</sup></a></li>
 		
 			<li><a href="/categories/web/" title="web">web<sup>7</sup></a></li>
 		
@@ -243,15 +261,19 @@
 		
 			<li><a href="/tags/JDBC/" title="JDBC">JDBC<sup>4</sup></a></li>
 		
-			<li><a href="/tags/Java/" title="Java">Java<sup>13</sup></a></li>
+			<li><a href="/tags/Java/" title="Java">Java<sup>16</sup></a></li>
 		
 			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>1</sup></a></li>
 		
-			<li><a href="/tags/JavaWeb/" title="JavaWeb">JavaWeb<sup>6</sup></a></li>
+			<li><a href="/tags/JavaWeb/" title="JavaWeb">JavaWeb<sup>7</sup></a></li>
 		
 			<li><a href="/tags/Linux/" title="Linux">Linux<sup>6</sup></a></li>
 		
-			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>1</sup></a></li>
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SpringBoot/" title="SpringBoot">SpringBoot<sup>2</sup></a></li>
 		
 			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
 		
@@ -268,10 +290,6 @@
 			<li><a href="/tags/mybatis/" title="mybatis">mybatis<sup>2</sup></a></li>
 		
 			<li><a href="/tags/mysql/" title="mysql">mysql<sup>3</sup></a></li>
-		
-			<li><a href="/tags/python/" title="python">python<sup>1</sup></a></li>
-		
-			<li><a href="/tags/servlet/" title="servlet">servlet<sup>1</sup></a></li>
 		
 		</ul>
 </div>
@@ -294,7 +312,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/C/" style="font-size: 12px;">C</a> <a href="/tags/CSS/" style="font-size: 12px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 16px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 18px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 18px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 10px;">Oracle</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 14px;">javascript</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 12px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 14px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 12px;">tools</a> <a href="/tags/乱码/" style="font-size: 12px;">乱码</a>
+       <a href="/tags/C/" style="font-size: 11.67px;">C</a> <a href="/tags/CSS/" style="font-size: 11.67px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 15px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 18.33px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 11.67px;">Oracle</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 11.67px;">SpringBoot</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 11.67px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 13.33px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.67px;">乱码</a>
     </div>
   </div>
 

@@ -1,0 +1,570 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>dubbo使用 | Momentonly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Moment Only">
+    
+    <meta name="description" content="assembly打包后启动provider分析assembly打包的目录结构
+​            bin
+​                    start.bat
+​                    …..
+​            conf
+​                dub">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Momentonly" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Momentonly">Momentonly</a></h1>
+				<a class="blog-motto"></a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/categories/despattern">设计模式</a></li>
+					
+						<li><a href="/categories/tools">工具</a></li>
+					
+						<li><a href="/categories/web">前端</a></li>
+					
+						<li><a href="/categories/database">数据库</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= 17576509095696061073 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/08/25/JavaAdvancedTechnology/Dubbo/dubbo使用/" title="dubbo使用" itemprop="url">dubbo使用</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2019-08-25T09:46:31.000Z" itemprop="datePublished">2019-08-25</time>
+    更新日期:<time datetime="2019-08-27T06:02:09.810Z" itemprop="dateModified">2019-08-27</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#assembly打包后启动provider分析"><span class="toc-number">1.</span> <span class="toc-text">assembly打包后启动provider分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#linux环境下运行问题"><span class="toc-number">2.</span> <span class="toc-text">linux环境下运行问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题1-启动provider"><span class="toc-number">2.1.</span> <span class="toc-text">问题1:启动provider</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题2：consumer调用provider"><span class="toc-number">2.2.</span> <span class="toc-text">问题2：consumer调用provider</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dubbo注册IP混乱的问题"><span class="toc-number">3.</span> <span class="toc-text">Dubbo注册IP混乱的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#windows"><span class="toc-number">3.1.</span> <span class="toc-text">windows</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#linux"><span class="toc-number">3.2.</span> <span class="toc-text">linux</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#consumer启动问题以及远程部署"><span class="toc-number">4.</span> <span class="toc-text">consumer启动问题以及远程部署</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#远程部署consumer"><span class="toc-number">4.1.</span> <span class="toc-text">远程部署consumer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#将consumer项目拷贝至tomcat的webapps下"><span class="toc-number">4.2.</span> <span class="toc-text">将consumer项目拷贝至tomcat的webapps下</span></a></li></ol></li></ol>
+		</div>
+		
+		<h3 id="assembly打包后启动provider分析"><a href="#assembly打包后启动provider分析" class="headerlink" title="assembly打包后启动provider分析"></a>assembly打包后启动provider分析</h3><p>assembly打包的目录结构</p>
+<p>​            bin</p>
+<p>​                    start.bat</p>
+<p>​                    …..</p>
+<p>​            conf</p>
+<p>​                dubbo.properties</p>
+<p>​            lib</p>
+<p>​                    所有的jar包</p>
+<p>assembly包的bin下的start.bat（windows下的启动脚本）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@echo off &amp; setlocal enabledelayedexpansion</span><br><span class="line"></span><br><span class="line">set LIB_JARS=&quot;&quot;</span><br><span class="line">cd ..\lib</span><br><span class="line">for %%i in (*) do set LIB_JARS=!LIB_JARS!;..\lib\%%i</span><br><span class="line">cd ..\bin</span><br><span class="line"></span><br><span class="line">if &quot;&quot;%1&quot;&quot; == &quot;&quot;debug&quot;&quot; goto debug</span><br><span class="line">if &quot;&quot;%1&quot;&quot; == &quot;&quot;jmx&quot;&quot; goto jmx</span><br><span class="line"></span><br><span class="line">java -Xms64m -Xmx1024m -XX:MaxPermSize=64M -classpath ..\conf;%LIB_JARS% com.alibaba.dubbo.container.Main</span><br><span class="line">goto end</span><br><span class="line"></span><br><span class="line">:debug</span><br><span class="line">java -Xms64m -Xmx1024m -XX:MaxPermSize=64M -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -classpath ..\conf;%LIB_JARS% com.alibaba.dubbo.container.Main</span><br><span class="line">goto end</span><br><span class="line"></span><br><span class="line">:jmx</span><br><span class="line">java -Xms64m -Xmx1024m -XX:MaxPermSize=64M -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -classpath ..\conf;%LIB_JARS% com.alibaba.dubbo.container.Main</span><br><span class="line"></span><br><span class="line">:end</span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+<p>java -Xms64m -Xmx1024m -XX:MaxPermSize=64M -classpath ..\conf;%LIB_JARS% com.alibaba.dubbo.container.Main</p>
+<p>​        根据以上的理解，该命令是执行com.alibaba.dubbo.container.Main</p>
+<p>但是该类需要依赖许多其他类，因此需要指定-classpath (..\conf是一个配置文件，将其加入到</p>
+<p>classpath中，%LIB_JARS%是执行com.alibaba.dubbo.container.Main所依赖的所有jar包路径,</p>
+<p>也将其加载到classpath中，这样，com.alibaba.dubbo.container.Main才可以正确执行)</p>
+<p>注意：</p>
+<p>​        加入echo  %LIB_JARS% 测试打印结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;;..\lib\aopalliance-1.0.jar;..\lib\aspectjweaver-1.8.4.jar;..\lib\commons-logging-1.2.jar;..\lib\druid-1.0.9.jar;..\lib\dubbo-2.5.4.jar;..\lib\dubbo-mapper-0.0.1-SNAPSHOT.jar;..\lib\dubbo-pojo-0.0.1-SNAPSHOT.jar;..\lib\dubbo-user-interface-0.0.1-SNAPSHOT.jar;..\lib\dubbo-user-service-0.0.1-SNAPSHOT.jar;..\lib\hamcrest-core-1.3.jar;..\lib\javassist-3.20.0-GA.jar;..\lib\jline-0.9.94.jar;..\lib\junit-4.12.jar;..\lib\log4j-1.2.16.jar;..\lib\mybatis-3.2.8.jar;..\lib\mybatis-spring-1.2.2.jar;..\lib\mysql-connector-java-5.1.32.jar;..\lib\netty-3.2.5.Final.jar;..\lib\netty-3.7.0.Final.jar;..\lib\slf4j-api-1.6.1.jar;..\lib\slf4j-log4j12-1.6.4.jar;..\lib\spring-aop-4.1.3.RELEASE.jar;..\lib\spring-aspects-4.1.3.RELEASE.jar;..\lib\spring-beans-4.1.3.RELEASE.jar;..\lib\spring-context-4.1.3.RELEASE.jar;..\lib\spring-core-4.1.3.RELEASE.jar;..\lib\spring-expression-4.1.3.RELEASE.jar;..\lib\spring-jdbc-4.1.3.RELEASE.jar;..\lib\spring-tx-4.1.3.RELEASE.jar;..\lib\spring-web-4.1.3.RELEASE.jar;..\lib\zkclient-0.10.jar;..\lib\zookeeper-3.4.8.jar</span><br></pre></td></tr></table></figure>
+<p>是所有jar的路径，通过-classpath将其加入到类路径中，这样就可以jvm就可以加载到这些jar中的.class或者资源文件</p>
+<h3 id="linux环境下运行问题"><a href="#linux环境下运行问题" class="headerlink" title="linux环境下运行问题"></a>linux环境下运行问题</h3><h4 id="问题1-启动provider"><a href="#问题1-启动provider" class="headerlink" title="问题1:启动provider"></a>问题1:启动provider</h4><p>以下是start.sh部分代码，linux下的执行脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">JAVA_OPTS=&quot; -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true &quot;</span><br><span class="line">JAVA_DEBUG_OPTS=&quot;&quot;</span><br><span class="line">if [ &quot;$1&quot; = &quot;debug&quot; ]; then</span><br><span class="line">    JAVA_DEBUG_OPTS=&quot; -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n &quot;</span><br><span class="line">fi</span><br><span class="line">JAVA_JMX_OPTS=&quot;&quot;</span><br><span class="line">if [ &quot;$1&quot; = &quot;jmx&quot; ]; then</span><br><span class="line">    JAVA_JMX_OPTS=&quot; -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false &quot;</span><br><span class="line">fi</span><br><span class="line">JAVA_MEM_OPTS=&quot;&quot;</span><br><span class="line">BITS=`java -version 2&gt;&amp;1 | grep -i 64-bit`</span><br><span class="line">if [ -n &quot;$BITS&quot; ]; then</span><br><span class="line">    JAVA_MEM_OPTS=&quot; -server -Xmx2g -Xms2g -Xmn256m -XX:PermSize=128m -Xss256k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 &quot;</span><br><span class="line">else</span><br><span class="line">    JAVA_MEM_OPTS=&quot; -server -Xms1g -Xmx1g -XX:PermSize=128m -XX:SurvivorRatio=2 -XX:+UseParallelGC &quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo -e &quot;Starting the $SERVER_NAME ...\c&quot;</span><br><span class="line">nohup java $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS -classpath $CONF_DIR:$LIB_JARS com.alibaba.dubbo.container.Main &gt; $STDOUT_FILE 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<p>java $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS -classpath $CONF_DIR:$LIB_JARS com.alibaba.dubbo.container.Main &gt; $STDOUT_FILE 2&gt;&amp;1 &amp;</p>
+<p>使用了JVM参数，如果配置不当，则会导致服务无法启动，直接jvm错误（产生hs_err_pid8647.log日志文件）</p>
+<p>目前不会配置，因此直接删除JVM参数即可,java  -classpath $CONF_DIR:$LIB_JARS com.alibaba.dubbo.container.Main &gt; $STDOUT_FILE 2&gt;&amp;1 &amp;</p>
+<h4 id="问题2：consumer调用provider"><a href="#问题2：consumer调用provider" class="headerlink" title="问题2：consumer调用provider"></a>问题2：consumer调用provider</h4><p>​        consumer调用provider总是产生Timeout,原本是以为服务运行时间过长导致的，于是在provider中</p>
+<p>的META-INF/spring/application-dubbo.xml配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 设置超时时间 --&gt;</span><br><span class="line">&lt;dubbo:provider timeout=&quot;5000&quot;&gt;&lt;/dubbo:provider&gt;</span><br></pre></td></tr></table></figure>
+<p>在dubbo-admin中可以看到超时时间被设置为5s，但是还是出现Timeout,不是该问题</p>
+<p>以下是报异常的部分代码</p>
+<p>root cause:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">com.alibaba.dubbo.remoting.TimeoutException: Waiting server-side response timeout. start time: 2019-08-26 19:52:03.221, end time: 2019-08-26 19:52:08.222, client elapsed: 0 ms, server elapsed: 5001 ms, timeout: 5000 ms, request: Request [id=6, version=2.0.0, twoway=true, event=false, broken=false, data=RpcInvocation [methodName=selectUsersAll, parameterTypes=[], arguments=[], attachments=&#123;path=com.bjsxt.dubbo.service.FindUserDubboService, interface=com.bjsxt.dubbo.service.FindUserDubboService, version=0.0.0, timeout=5000&#125;]], channel: /192.168.1.112:48407 -&gt; /192.168.1.113:20880</span><br><span class="line">	com.alibaba.dubbo.remoting.exchange.support.DefaultFuture.get(DefaultFuture.java:136)</span><br><span class="line">	com.alibaba.dubbo.remoting.exchange.support.DefaultFuture.get(DefaultFuture.java:113)</span><br><span class="line">	com.alibaba.dubbo.rpc.protocol.dubbo.DubboInvoker.doInvoke(DubboInvoker.java:97)</span><br><span class="line">	com.alibaba.dubbo.rpc.protocol.AbstractInvoker.invoke(AbstractInvoker.java:144)</span><br><span class="line">	com.alibaba.dubbo.monitor.support.MonitorFilter.invoke(MonitorFilter.java:75)</span><br><span class="line">	com.alibaba.dubbo.rpc.protocol.ProtocolFilterWrapper$1.invoke(ProtocolFilterWrapper.java:69)</span><br><span class="line">	com.alibaba.dubbo.rpc.protocol.dubbo.filter.FutureFilter.invoke(FutureFilter.java:54)</span><br><span class="line">	com.alibaba.dubbo.rpc.protocol.ProtocolFilterWrapper$1.invoke(ProtocolFilterWrapper.java:69)</span><br><span class="line">	com.alibaba.dubbo.rpc.filter.ConsumerContextFilter.invoke(ConsumerContextFilter.java:48)</span><br><span class="line">	com.alibaba.dubbo.rpc.protocol.ProtocolFilterWrapper$1.invoke(ProtocolFilterWrapper.java:69)</span><br><span class="line">	com.alibaba.dubbo.rpc.listener.ListenerInvokerWrapper.invoke(ListenerInvokerWrapper.java:74)</span><br><span class="line">	com.alibaba.dubbo.rpc.protocol.InvokerWrapper.invoke(InvokerWrapper.java:53)</span><br><span class="line">	com.alibaba.dubbo.rpc.cluster.support.FailoverClusterInvoker.doInvoke(FailoverClusterInvoker.java:77)</span><br><span class="line">	com.alibaba.dubbo.rpc.cluster.support.AbstractClusterInvoker.invoke(AbstractClusterInvoker.java:229)</span><br><span class="line">	com.alibaba.dubbo.rpc.cluster.support.wrapper.MockClusterInvoker.invoke(MockClusterInvoker.java:72)</span><br><span class="line">	com.alibaba.dubbo.rpc.proxy.InvokerInvocationHandler.invoke(InvokerInvocationHandler.java:52)</span><br><span class="line">	com.alibaba.dubbo.common.bytecode.proxy1.selectUsersAll(proxy1.java)</span><br><span class="line">	com.bjsxt.service.impl.UserServiceImpl.selectUserAll(UserServiceImpl.java:42)</span><br><span class="line">	com.bjsxt.controller.UsersController.findAll(UsersController.java:31)</span><br><span class="line">	sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">	sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)</span><br><span class="line">	sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br><span class="line">	java.lang.reflect.Method.invoke(Method.java:483)</span><br><span class="line">	org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:221)</span><br><span class="line">	org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:137)</span><br><span class="line">	org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:110)</span><br><span class="line">	org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:777)</span><br><span class="line">	org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:706)</span><br><span class="line">	org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)</span><br><span class="line">	org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:943)</span><br><span class="line">	org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:877)</span><br><span class="line">	org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:966)</span><br><span class="line">	org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:857)</span><br><span class="line">	javax.servlet.http.HttpServlet.service(HttpServlet.java:621)</span><br><span class="line">	org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:842)</span><br><span class="line">	javax.servlet.http.HttpServlet.service(HttpServlet.java:728)</span><br><span class="line">	org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)</span><br><span class="line">	org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)</span><br><span class="line">	org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)</span><br></pre></td></tr></table></figure>
+<p>问题解决：</p>
+<p>​        provider(192.168.1.113)中使用的是192.168.1.103的主机的mysql,而192.168.1.103的防火墙需要打开</p>
+<p>​        然后重启provider即可.</p>
+<p>注意：</p>
+<p>​        consumer和provider两台主机需要开放dubbo协议连接的所需端口(连接形成一个channel: /192.168.1.112:52877 -&gt; /192.168.1.113:20880)</p>
+<p>​            </p>
+<p>1）provider：配置服务端口</p>
+<p>​        linux中开放服务端口，例如20880（或者关闭防火墙，否则consumer启动失败）</p>
+<p>​        iptables相关配置：                </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1)iptables -nL --line-number    查看规则，行号</span><br><span class="line">2)iptables -D INPUT 6        删除行号为6的规则</span><br><span class="line"># 因为最后一行是reject-with icmp-host-prohibited，拒绝所有,因此需要插入到最后一行前面</span><br><span class="line">3)iptables -I INPUT 3  -p tcp --dport 8080 -j ACCEPT     添加规则插入到第3行，</span><br><span class="line">#注意不要使用service iptables restart,否则规则会到最后一行</span><br><span class="line">4)iptables-save          保存即可</span><br></pre></td></tr></table></figure>
+<p>​                </p>
+<p>2）consumer:</p>
+<p>​                请求连接并获得回应：channel: /192.168.1.112:37711 -&gt; /192.168.1.113:20880</p>
+<p>注意：37711端口没有开放为什么可以得到回应?                                </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IPtable第一条规则</span><br><span class="line">1    ACCEPT   all  --  0.0.0.0/0      0.0.0.0/0      state RELATED,ESTABLISHED </span><br><span class="line">这个想要进入的封包是否为刚刚我发出去的回应?如果是刚刚我发出去的回应,那麼就可以予以接受放行.</span><br><span class="line">ESTABLISHED：已建立的链接状态.</span><br><span class="line">RELATED：该封包为本机发出的封包有关.</span><br></pre></td></tr></table></figure>
+<p>192.168.1.112:37711向192.168.1.113:20880请求服务，provider处理完毕，再通过192.168.1.113:20880将结果回应给192.168.1.112:37711。</p>
+<p>由于是37711建立的连接，按照iptables的第一条规则所以允许接收，因此consumer的37711这个端口可以不建立iptables放行规则。                                                            </p>
+<h3 id="Dubbo注册IP混乱的问题"><a href="#Dubbo注册IP混乱的问题" class="headerlink" title="Dubbo注册IP混乱的问题"></a>Dubbo注册IP混乱的问题</h3><h4 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h4><p>​            关闭其他网卡服务，例如虚拟机的vmnet1,vmnet8</p>
+<h4 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h4><p>a) 通过hostname命令得到机器名<br>b) 通过vim /etc/hosts设置机器名对应的外网IP<br>127.0.0.1  localhost  localhost.localdomain<br>外网IP    VM_31_182_centos</p>
+<p>示例配置:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line">192.168.1.112 slave1</span><br></pre></td></tr></table></figure>
+<h3 id="consumer启动问题以及远程部署"><a href="#consumer启动问题以及远程部署" class="headerlink" title="consumer启动问题以及远程部署"></a>consumer启动问题以及远程部署</h3><h4 id="远程部署consumer"><a href="#远程部署consumer" class="headerlink" title="远程部署consumer"></a>远程部署consumer</h4><p>​    通过maven插件远程部署consumer(一个web项目)至tomcat，由于 zookeeper 注册中心没有开启，    </p>
+<p>因此consumer无法从zookeeper获取服务接口信息，初始化会失败，即项目启动失败。</p>
+<p>注意：</p>
+<p>​        远程部署需要配置tomcat用户,conf/tomcat-users.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;role rolename=&quot;manager-gui&quot;/&gt;</span><br><span class="line">&lt;role rolename=&quot;manager-script&quot;/&gt;</span><br><span class="line">&lt;user username=&quot;tomcat&quot; password=&quot;tomcat&quot; roles=&quot;manager-gui,manager-script&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="将consumer项目拷贝至tomcat的webapps下"><a href="#将consumer项目拷贝至tomcat的webapps下" class="headerlink" title="将consumer项目拷贝至tomcat的webapps下"></a>将consumer项目拷贝至tomcat的webapps下</h4><p>注意：</p>
+<p>​        在consumer的项目中，如果使用的某些路径是/,则要将其拷贝至ROOT中</p>
+<p>将consumer拷贝至webapps目录下，启动tomcat,如果zookeeper注册中心没有启动，</p>
+<p>或者zookeeper启动但是consumer无法获取需要的服务接口信息，都会导致consumer启动</p>
+<p>失败.</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Java/">Java</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/JavaSE/">JavaSE</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2019/08/25/JavaAdvancedTechnology/Dubbo/dubbo使用/" data-title="dubbo使用 | Momentonly" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/08/25/JavaSE/java的classpath/" title="java的classpath">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  java的classpath</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/08/25/JavaAdvancedTechnology/Solr/Solr全文检索服务/"  title="solor全文检索服务">
+ <strong>NEXT:</strong><br/> 
+ <span>solor全文检索服务
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="dubbo使用" data-thread-key="JavaAdvancedTechnology/Dubbo/dubbo使用" data-author-key="Moment Only" data-url="http://yoursite.com/post/JavaAdvancedTechnology/Dubbo/dubbo使用"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#assembly打包后启动provider分析"><span class="toc-number">1.</span> <span class="toc-text">assembly打包后启动provider分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#linux环境下运行问题"><span class="toc-number">2.</span> <span class="toc-text">linux环境下运行问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题1-启动provider"><span class="toc-number">2.1.</span> <span class="toc-text">问题1:启动provider</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题2：consumer调用provider"><span class="toc-number">2.2.</span> <span class="toc-text">问题2：consumer调用provider</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dubbo注册IP混乱的问题"><span class="toc-number">3.</span> <span class="toc-text">Dubbo注册IP混乱的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#windows"><span class="toc-number">3.1.</span> <span class="toc-text">windows</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#linux"><span class="toc-number">3.2.</span> <span class="toc-text">linux</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#consumer启动问题以及远程部署"><span class="toc-number">4.</span> <span class="toc-text">consumer启动问题以及远程部署</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#远程部署consumer"><span class="toc-number">4.1.</span> <span class="toc-text">远程部署consumer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#将consumer项目拷贝至tomcat的webapps下"><span class="toc-number">4.2.</span> <span class="toc-text">将consumer项目拷贝至tomcat的webapps下</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>17</sup></a></li>
+		
+			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>10</sup></a></li>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>2</sup></a></li>
+		
+			<li><a href="/categories/database/" title="database">database<sup>11</sup></a></li>
+		
+			<li><a href="/categories/tools/" title="tools">tools<sup>6</sup></a></li>
+		
+			<li><a href="/categories/web/" title="web">web<sup>7</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/C/" title="C">C<sup>2</sup></a></li>
+		
+			<li><a href="/tags/CSS/" title="CSS">CSS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/HTML/" title="HTML">HTML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JAVA/" title="JAVA">JAVA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDBC/" title="JDBC">JDBC<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>16</sup></a></li>
+		
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JavaWeb/" title="JavaWeb">JavaWeb<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>6</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SpringBoot/" title="SpringBoot">SpringBoot<sup>2</sup></a></li>
+		
+			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/eclipse/" title="eclipse">eclipse<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>3</sup></a></li>
+		
+			<li><a href="/tags/jsp/" title="jsp">jsp<sup>1</sup></a></li>
+		
+			<li><a href="/tags/log4j/" title="log4j">log4j<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mybatis/" title="mybatis">mybatis<sup>2</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>3</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/C/" style="font-size: 11.67px;">C</a> <a href="/tags/CSS/" style="font-size: 11.67px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 15px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 18.33px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 11.67px;">Oracle</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 11.67px;">SpringBoot</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 11.67px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 13.33px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.67px;">乱码</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2019 
+		
+		<a href="http://yoursite.com" target="_blank" title="Moment Only">Moment Only</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:""};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '', '');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+

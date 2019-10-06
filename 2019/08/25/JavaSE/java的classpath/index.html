@@ -1,0 +1,590 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>java的classpath | Momentonly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Moment Only">
+    
+    <meta name="description" content="java中classpath理解类路径(classpath)​            默认java虚拟机要从classpath环境变量的路径中搜索class文件去执行，对于java虚拟机来说，这不是类文件，而是类。它只有类路径，而没有文件系统路径。而classpath环境变量正是为java虚拟机提供">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Momentonly" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Momentonly">Momentonly</a></h1>
+				<a class="blog-motto"></a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/categories/despattern">设计模式</a></li>
+					
+						<li><a href="/categories/tools">工具</a></li>
+					
+						<li><a href="/categories/web">前端</a></li>
+					
+						<li><a href="/categories/database">数据库</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= 17576509095696061073 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/08/25/JavaSE/java的classpath/" title="java的classpath" itemprop="url">java的classpath</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2019-08-25T09:46:31.000Z" itemprop="datePublished">2019-08-25</time>
+    更新日期:<time datetime="2019-09-11T09:23:44.847Z" itemprop="dateModified">2019-09-11</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#java中classpath理解"><span class="toc-number">1.</span> <span class="toc-text">java中classpath理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#类路径-classpath"><span class="toc-number">1.1.</span> <span class="toc-text">类路径(classpath)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#包-package"><span class="toc-number">2.</span> <span class="toc-text">包(package)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1）"><span class="toc-number">2.0.1.</span> <span class="toc-text">1）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2）"><span class="toc-number">2.0.2.</span> <span class="toc-text">2）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#类搜索机制"><span class="toc-number">2.0.3.</span> <span class="toc-text">类搜索机制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA获取classpath路径："><span class="toc-number">2.1.</span> <span class="toc-text">JAVA获取classpath路径：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#如何执行指定class文件目录（classpath）"><span class="toc-number">2.1.1.</span> <span class="toc-text">如何执行指定class文件目录（classpath）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#assembly打包duboo-provider的理解"><span class="toc-number">2.1.2.</span> <span class="toc-text">assembly打包duboo-provider的理解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#eclipse中执行的classpath分析"><span class="toc-number">2.1.3.</span> <span class="toc-text">eclipse中执行的classpath分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">2.2.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+		</div>
+		
+		<h2 id="java中classpath理解"><a href="#java中classpath理解" class="headerlink" title="java中classpath理解"></a>java中classpath理解</h2><h3 id="类路径-classpath"><a href="#类路径-classpath" class="headerlink" title="类路径(classpath)"></a>类路径(classpath)</h3><p>​            默认java虚拟机要从classpath环境变量的路径中搜索class文件去执行，对于java虚拟机来说，这不是类文件，而是类。它只有类路径，而没有文件系统路径。而classpath环境变量正是为java虚拟机提供搜索类路径的环境。注意，<strong><em>虚拟机不会递归搜索classpath定义的路径。</em></strong>（因此，在spring中有classpath*,表示递归classpath定义的路径下的所有路径）</p>
+<p>java编译器编译.java文件和java虚拟机执行.class文件时的路径和写法不一样。在没有设置任何classpath环境变量的情况下，javac可以编译全路径的.java文件</p>
+<p>​        要明确的是javac编译器搜索的是文件路径，和环境变量classpath无关。而java虚拟机搜索的是类文件，严格地说是类，搜索路径由环境变量classpath决定，且有先后顺序</p>
+<p>(1).何时需要使用-classpath：当你要编译或执行的类引用了其它的类，但被引用类的.class文件不在当前目录下时，就需要通过-classpath来引入类路径</p>
+<p>(2).何时需要指定路径：当你要编译的类所在的目录和你执行javac命令的目录不是同一个目录时，就需要指定源文件的路径(CLASSPATH是用来指定.class路径的，不是用来指定.java文件的路径的)</p>
+<h2 id="包-package"><a href="#包-package" class="headerlink" title="包(package)"></a>包(package)</h2><h4 id="1）"><a href="#1）" class="headerlink" title="1）"></a>1）</h4><p>​    包是类的集合。在java源文件的第一行(不包括注释行或空行)写上package关键字并给定包名，即可将该类文件放到包中。</p>
+<p>​    javac在编译时从路径上搜索文件。例如，将这个Cat.java放到com/longshuai/home下。执行时java虚拟机从classpath搜索要加载的类文件，而加载类的方式是使用”.”连接各类名。所以编译这个文件和java虚拟机执行这个文件时的方法分别是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">javac com/longshuai/home/Cat.java</span><br><span class="line">java com.longshuai.home.Cat</span><br></pre></td></tr></table></figure>
+<p>注意，嵌套的包之间没有任何关系，例如java.util包和java.util.jar包没有任何依赖关系。</p>
+<h4 id="2）"><a href="#2）" class="headerlink" title="2）"></a>2）</h4><p>​            在某个java源文件中，无法直接使用其他文件中的类，除非要使用的这个类正好能被classpath的路径搜索到。要引用非classpath下的其他类，只能将其添加到classpath或者装入package中，然后引用包中的类。</p>
+<p>​    导入包时可以在尾部使用星号”<em>“通配导入的所有类，只能在尾部使用”</em>“，因为”<em>“匹配的是类名，而不是包名。也因此，不能在非结尾处使用”</em>“号来表示导入其他包中的类，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import com.longshuai.home.*; //导入com.longshuai.home包中的所有类</span><br><span class="line">import com.longshuai.*;      //导入com.longshuai包中所有类，但不会导入com.longshuai.home中类</span><br></pre></td></tr></table></figure>
+<h4 id="类搜索机制"><a href="#类搜索机制" class="headerlink" title="类搜索机制"></a>类搜索机制</h4><p>​        在java虚拟机搜索类文件时，除了classpath环境变量指定的路径，还会先搜索两个默认的路径:jre/lib和jre/lib/ext下的jar文件中似乎否有待搜索的类。</p>
+<p>​    例如，当classpath设置为”.;d:\myjava;d:\myjar.jar”时，要搜索com.longshuai.com.Cat类文件：<br>(a).先搜索jre/lib和jre/lib/ext下的jar文件;<br>(b).再搜索当前目录下是否有com\longshuai\com\Cat.class;<br>(c).再搜索d:\myjava\Cat.class;<br>(d).搜索d:\myjar.jar文件中是否有com.longshuai.com.Cat类。</p>
+<p>如果在某个java源文件中引用了某个类，则在编译时，将通过以下几种方式判断该类是否合理有效：</p>
+<p>(1).搜索导入的包类中是否包含该类。<br>(2).搜索隐式导入的java.lang包，该包是默认导入的。<br>(3).当前文件中是否定义了该类。<br>(4).按照类路径的搜索规则((a)-(d))搜索其中是否有该类。</p>
+<h3 id="JAVA获取classpath路径："><a href="#JAVA获取classpath路径：" class="headerlink" title="JAVA获取classpath路径："></a>JAVA获取classpath路径：</h3><p>ClassLoader 提供了两个方法用于从装载的类路径中取得资源：</p>
+<p>​        public URL  getResource (String name);<br>​        public InputStream  getResourceAsStream (String name);  </p>
+<p>   这里name是资源的类路径，它是相对与“/”根路径下的位置。getResource得到的是一个URL对象来定位资源，而getResourceAsStream取得该资源输入流的引用保证程序可以从正确的位置抽取数据。<br>       但是真正使用的不是ClassLoader的这两个方法，而是Class的 getResource和getResourceAsStream方法，因为Class对象可以从你的类得到（如YourClass.class或 YourClass.getClass()），而ClassLoader则需要再调用一次YourClass.getClassLoader()方法，不过根据JDK文档的说法，Class对象的这两个方法其实是“委托”（delegate）给装载它的ClassLoader来做的，所以只需要使用 Class对象的这两个方法就可以了。</p>
+<p>​       因此，直接调用  this.getClass().getResourceAsStream(String name) ;获取流，静态化方法中则使用ClassLoader.getSystemResourceAsStream (String name) ; 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">1.this.getClass().getResource（&quot;&quot;） </span><br><span class="line">得到的是当前类class文件的URI目录。不包括自己！</span><br><span class="line">如：file：/D：/workspace/jbpmtest3/bin/com/test/</span><br><span class="line"></span><br><span class="line">2.this.getClass().getResource（&quot;/&quot;） </span><br><span class="line">得到的是当前的classpath的绝对URI路径 。</span><br><span class="line">如：file：/D：/workspace/jbpmtest3/bin/</span><br><span class="line"></span><br><span class="line">3.this.getClass() .getClassLoader().getResource（&quot;&quot;） </span><br><span class="line">得到的也是当前ClassPath的绝对URI路径 。</span><br><span class="line">如：file：/D：/workspace/jbpmtest3/bin/</span><br><span class="line"></span><br><span class="line">4.ClassLoader.getSystemResource（&quot;&quot;） </span><br><span class="line">得到的也是当前ClassPath的绝对URI路径 。</span><br><span class="line">如：file：/D：/workspace/jbpmtest3/bin/</span><br><span class="line"></span><br><span class="line">5.Thread.currentThread().getContextClassLoader ().getResource（&quot;&quot;） </span><br><span class="line">得到的也是当前ClassPath的绝对URI路径 。</span><br><span class="line">如：file：/D：/workspace/jbpmtest3/bin/</span><br><span class="line"></span><br><span class="line">6.ServletActionContext.getServletContext().getRealPath(“/”) </span><br><span class="line">Web应用程序 中，得到Web应用程序的根目录的绝对路径。这样，我们只需要提供相对于Web应用程序根目录的路径，就可以构建出定位资源的绝对路径。</span><br><span class="line">如：file：/D:/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/WebProject</span><br></pre></td></tr></table></figure>
+<p>注意点：</p>
+<p>1.尽量不要使用相对于System.getProperty（”user.dir”）当前用户目录的相对路径。这是一颗定时炸 弹，随时可能要你的命。</p>
+<p>2.尽量使用URI形式的绝对路径资源。它可以很容易的转变为URI，URL，File对象。</p>
+<p>3.尽量使用相对classpath的相对路径。不要使用绝对路径。使用上面ClassLoaderUtil类的public static URL getExtendResource（String relativePath）方法已经能够使用相对于classpath的相对路径定位所有位置的资源。</p>
+<p>4.绝对不要使用硬编码的绝对路径。因为，我们完全可以使用ClassLoader类的getResource（””）方法得到当前classpath的绝对路径。如果你一定要指定一个绝对路径，那么使用配置文件，也比硬编码要好得多！</p>
+<p>获得CLASSPATH之外路径的方法：<br>URL base = this.getClass（）.getResource（””）； //先获得本类的所在位置，如/home/popeye/testjava/build/classes/net/<br>      String path = new File（base.getFile（）， “……/……/……/“+name）.getCanonicalPath（）； //就可以得到/home/popeye/testjava/name</p>
+<p>另外，如果从ANT启动程序，this.getClass().getResource(“”)取出来的比较怪，直接用JAVA命令行调试就可成功。</p>
+<p>PS：以上内容来自转载</p>
+<p>在dos下编译<a href="http://lib.csdn.net/base/javase" target="_blank" rel="noopener">Java</a>程序，就要用到classpath这个概念，尤其是在没有设置环境变量的时候。classpath就是存放.class等编译后文件的路径。</p>
+<p><strong>在spring中，classpath 和 classpath* 区别：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">classpath：只会到你的class路径中查找找文件;</span><br><span class="line">classpath*：不仅包含class路径，还将递归classpath定义的路径下的所有子路径</span><br></pre></td></tr></table></figure>
+<h4 id="如何执行指定class文件目录（classpath）"><a href="#如何执行指定class文件目录（classpath）" class="headerlink" title="如何执行指定class文件目录（classpath）"></a>如何执行指定class文件目录（classpath）</h4><p>如果我们 Java 编译后的class文件不在当前目录，我们可以使用 -classpath 来指定class文件目录：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:&gt; java -classpath C:\java\DemoClasses HelloWorld</span><br></pre></td></tr></table></figure>
+<p>以上命令中我们使用了 -classpath 参数指定了 HelloWorld 的 class 文件所在目录。</p>
+<p>如果class文件在jar文件中，则命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c:&gt; java -classpath C:\java\myclasses.jar com.test.HelloWorld</span><br></pre></td></tr></table></figure>
+<p><strong>javac：</strong> 如果当前你要编译的 java 文件中引用了其它的类(比如说：继承)，但该引用类的 .class 文件不在当前目录下，这种情况下就需要在 javac 命令后面加上 -classpath 参数，通过使用以下三种类型的方法 来指导编译器在编译的时候去指定的路径下查找引用类。</p>
+<ul>
+<li>(1).绝对路径：<strong>javac -classpath c:/junit3.8.1/junit.jar Xxx.java</strong></li>
+<li>(2).相对路径：<strong>javac -classpath ../junit3.8.1/Junit.javr Xxx.java</strong></li>
+<li>(3).系统变量：<strong>javac -classpath %CLASSPATH% Xxx.java</strong> (注意：%CLASSPATH%表示使用系统变量CLASSPATH的值进行查找，这里假设Junit.jar的路径就包含在CLASSPATH系统变量中)</li>
+</ul>
+<p><strong>总结：</strong></p>
+<ul>
+<li>(1).何时需要使用 -classpath：当你要编译或执行的类引用了其它的类，但被引用类的 .class 文件不在当前目录下时，就需要通过 -classpath 来引入类</li>
+<li>(2).何时需要指定路径：当你要编译的类所在的目录和你执行 javac 命令的目录不是同一个目录时，就需要指定源文件的路径(CLASSPATH 是用来指定 .class 路径的，不是用来指定 .java 文件的路径的)</li>
+</ul>
+<h4 id="assembly打包duboo-provider的理解"><a href="#assembly打包duboo-provider的理解" class="headerlink" title="assembly打包duboo-provider的理解"></a>assembly打包duboo-provider的理解</h4><p>assembly打包的目录结构</p>
+<p>​            bin</p>
+<p>​                    start.bat</p>
+<p>​                    …..</p>
+<p>​            conf</p>
+<p>​                dubbo.properties</p>
+<p>​            lib</p>
+<p>​                    所有的jar包</p>
+<p>assembly的bin下的start.bat</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@echo off &amp; setlocal enabledelayedexpansion</span><br><span class="line"></span><br><span class="line">set LIB_JARS=&quot;&quot;</span><br><span class="line">cd ..\lib</span><br><span class="line">for %%i in (*) do set LIB_JARS=!LIB_JARS!;..\lib\%%i</span><br><span class="line">cd ..\bin</span><br><span class="line"></span><br><span class="line">if &quot;&quot;%1&quot;&quot; == &quot;&quot;debug&quot;&quot; goto debug</span><br><span class="line">if &quot;&quot;%1&quot;&quot; == &quot;&quot;jmx&quot;&quot; goto jmx</span><br><span class="line"></span><br><span class="line">java -Xms64m -Xmx1024m -XX:MaxPermSize=64M -classpath ..\conf;%LIB_JARS% com.alibaba.dubbo.container.Main</span><br><span class="line">goto end</span><br><span class="line"></span><br><span class="line">:debug</span><br><span class="line">java -Xms64m -Xmx1024m -XX:MaxPermSize=64M -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -classpath ..\conf;%LIB_JARS% com.alibaba.dubbo.container.Main</span><br><span class="line">goto end</span><br><span class="line"></span><br><span class="line">:jmx</span><br><span class="line">java -Xms64m -Xmx1024m -XX:MaxPermSize=64M -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -classpath ..\conf;%LIB_JARS% com.alibaba.dubbo.container.Main</span><br><span class="line"></span><br><span class="line">:end</span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+<p>java -Xms64m -Xmx1024m -XX:MaxPermSize=64M -classpath ..\conf;%LIB_JARS% com.alibaba.dubbo.container.Main</p>
+<p>​        根据以上的理解，该命令是执行com.alibaba.dubbo.container.Main</p>
+<p>但是该类需要依赖许多其他类，因此需要指定-classpath (..\conf是一个配置文件，将其加入到</p>
+<p>classpath中，%LIB_JARS%是执行com.alibaba.dubbo.container.Main所依赖的所有jar包路径,</p>
+<p>也将其加载到classpath中，这样，com.alibaba.dubbo.container.Main才可以正确执行)</p>
+<p>注意：</p>
+<p>​        加入echo  %LIB_JARS% 测试打印结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;;..\lib\aopalliance-1.0.jar;..\lib\aspectjweaver-1.8.4.jar;..\lib\commons-logging-1.2.jar;..\lib\druid-1.0.9.jar;..\lib\dubbo-2.5.4.jar;..\lib\dubbo-mapper-0.0.1-SNAPSHOT.jar;..\lib\dubbo-pojo-0.0.1-SNAPSHOT.jar;..\lib\dubbo-user-interface-0.0.1-SNAPSHOT.jar;..\lib\dubbo-user-service-0.0.1-SNAPSHOT.jar;..\lib\hamcrest-core-1.3.jar;..\lib\javassist-3.20.0-GA.jar;..\lib\jline-0.9.94.jar;..\lib\junit-4.12.jar;..\lib\log4j-1.2.16.jar;..\lib\mybatis-3.2.8.jar;..\lib\mybatis-spring-1.2.2.jar;..\lib\mysql-connector-java-5.1.32.jar;..\lib\netty-3.2.5.Final.jar;..\lib\netty-3.7.0.Final.jar;..\lib\slf4j-api-1.6.1.jar;..\lib\slf4j-log4j12-1.6.4.jar;..\lib\spring-aop-4.1.3.RELEASE.jar;..\lib\spring-aspects-4.1.3.RELEASE.jar;..\lib\spring-beans-4.1.3.RELEASE.jar;..\lib\spring-context-4.1.3.RELEASE.jar;..\lib\spring-core-4.1.3.RELEASE.jar;..\lib\spring-expression-4.1.3.RELEASE.jar;..\lib\spring-jdbc-4.1.3.RELEASE.jar;..\lib\spring-tx-4.1.3.RELEASE.jar;..\lib\spring-web-4.1.3.RELEASE.jar;..\lib\zkclient-0.10.jar;..\lib\zookeeper-3.4.8.jar</span><br></pre></td></tr></table></figure>
+<p>是所有jar的路径，通过-classpath将其加入到类路径中，这样就可以引用这些jar中的.class或者资源文件</p>
+<h4 id="eclipse中执行的classpath分析"><a href="#eclipse中执行的classpath分析" class="headerlink" title="eclipse中执行的classpath分析"></a>eclipse中执行的classpath分析</h4><p>​        eclipse的项目文件夹有一个.classpath文件，用于描述classpath</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;classpath&gt;</span><br><span class="line">	&lt;classpathentry kind=&quot;src&quot; path=&quot;src&quot;/&gt;</span><br><span class="line">	&lt;classpathentry kind=&quot;con&quot; path=&quot;org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8&quot;/&gt;</span><br><span class="line">	&lt;classpathentry kind=&quot;lib&quot; path=&quot;lib/mysql-connector-java-8.0.11.jar&quot;/&gt;</span><br><span class="line">	&lt;classpathentry kind=&quot;lib&quot; path=&quot;lib/commons-beanutils-1.9.3.jar&quot;/&gt;</span><br><span class="line">	&lt;classpathentry kind=&quot;lib&quot; path=&quot;lib/commons-logging-1.2.jar&quot;/&gt;</span><br><span class="line">	&lt;classpathentry kind=&quot;output&quot; path=&quot;bin&quot;/&gt;</span><br><span class="line">&lt;/classpath&gt;</span><br></pre></td></tr></table></figure>
+<p>将src目录，以及所引用的jar路径都添加到classpath中，这样才能保证程序正常执行。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>​    将一个路径添加到classpath中，则该路径下的目录或者资源可以被直接通过类路径被访问到，例如:</p>
+<p>​            hello目录下有test,resource两个文件夹，test中有com/szxy/Test.class，resource中有一个res/index.html,   </p>
+<p>​                    hello</p>
+<p>​                            test</p>
+<p>​                                    com</p>
+<p>​                                            test</p>
+<p>​                                                    Test.class</p>
+<p>​                            resource</p>
+<p>​                                    res</p>
+<p>​                                            index.html        </p>
+<p>执行        java -classpath ./test;./resource     com.bjsxt.Test，将test和resouce都加载到类路径中，</p>
+<p>com.szxy.Test类中需要加载这个资源，通过getResourceAsStream(“res/index.html”),</p>
+<p>因为类路径是test目录下和resource目录下，因此可以拿到资源res/index.html,</p>
+<p>需要注意一点，不能直接getResourceAsStream(“index.html”)，因为类路径加载了不会递归查询，除非将</p>
+<p>hello/resource/res也添加到类路径中才可以直接拿到，否则必须从类路径下沿着路径找到资源.</p>
+<p>参考：</p>
+<p>​        <a href="https://www.cnblogs.com/jixp/articles/9349845.html" target="_blank" rel="noopener">https://www.cnblogs.com/jixp/articles/9349845.html</a></p>
+<p>​        <a href="https://www.runoob.com/java/env-classpath.html" target="_blank" rel="noopener">https://www.runoob.com/java/env-classpath.html</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Java/">Java</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/JavaSE/">JavaSE</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2019/08/25/JavaSE/java的classpath/" data-title="java的classpath | Momentonly" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/09/04/SpringBoot/SpringBoot的原理分析/" title="SpringBoot的原理分析">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  SpringBoot的原理分析</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/08/25/JavaAdvancedTechnology/Dubbo/dubbo使用/"  title="dubbo使用">
+ <strong>NEXT:</strong><br/> 
+ <span>dubbo使用
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="java的classpath" data-thread-key="JavaSE/java的classpath" data-author-key="Moment Only" data-url="http://yoursite.com/post/JavaSE/java的classpath"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#java中classpath理解"><span class="toc-number">1.</span> <span class="toc-text">java中classpath理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#类路径-classpath"><span class="toc-number">1.1.</span> <span class="toc-text">类路径(classpath)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#包-package"><span class="toc-number">2.</span> <span class="toc-text">包(package)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1）"><span class="toc-number">2.0.1.</span> <span class="toc-text">1）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2）"><span class="toc-number">2.0.2.</span> <span class="toc-text">2）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#类搜索机制"><span class="toc-number">2.0.3.</span> <span class="toc-text">类搜索机制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA获取classpath路径："><span class="toc-number">2.1.</span> <span class="toc-text">JAVA获取classpath路径：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#如何执行指定class文件目录（classpath）"><span class="toc-number">2.1.1.</span> <span class="toc-text">如何执行指定class文件目录（classpath）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#assembly打包duboo-provider的理解"><span class="toc-number">2.1.2.</span> <span class="toc-text">assembly打包duboo-provider的理解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#eclipse中执行的classpath分析"><span class="toc-number">2.1.3.</span> <span class="toc-text">eclipse中执行的classpath分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">2.2.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>17</sup></a></li>
+		
+			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>10</sup></a></li>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>2</sup></a></li>
+		
+			<li><a href="/categories/database/" title="database">database<sup>11</sup></a></li>
+		
+			<li><a href="/categories/tools/" title="tools">tools<sup>6</sup></a></li>
+		
+			<li><a href="/categories/web/" title="web">web<sup>7</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/C/" title="C">C<sup>2</sup></a></li>
+		
+			<li><a href="/tags/CSS/" title="CSS">CSS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/HTML/" title="HTML">HTML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JAVA/" title="JAVA">JAVA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDBC/" title="JDBC">JDBC<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>16</sup></a></li>
+		
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JavaWeb/" title="JavaWeb">JavaWeb<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>6</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SpringBoot/" title="SpringBoot">SpringBoot<sup>2</sup></a></li>
+		
+			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/eclipse/" title="eclipse">eclipse<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>3</sup></a></li>
+		
+			<li><a href="/tags/jsp/" title="jsp">jsp<sup>1</sup></a></li>
+		
+			<li><a href="/tags/log4j/" title="log4j">log4j<sup>1</sup></a></li>
+		
+			<li><a href="/tags/mybatis/" title="mybatis">mybatis<sup>2</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>3</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/C/" style="font-size: 11.67px;">C</a> <a href="/tags/CSS/" style="font-size: 11.67px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 15px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 18.33px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 11.67px;">Oracle</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 11.67px;">SpringBoot</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 11.67px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 13.33px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.67px;">乱码</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2019 
+		
+		<a href="http://yoursite.com" target="_blank" title="Moment Only">Moment Only</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:""};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '', '');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+
