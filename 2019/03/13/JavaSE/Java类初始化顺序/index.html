@@ -12,8 +12,7 @@
     
     <meta name="author" content="Moment Only">
     
-    <meta name="description" content="Java的类初始化顺序
-123456789101112131415161718192021222324252627282930313233343536373839404142package com.szxy;/** *  * @author Administrator * */public clas">
+    <meta name="description" content="Java的类初始化顺序123456789101112131415161718192021222324252627282930313233343536373839404142package com.szxy;/** *  * @author Administrator * */public class">
     
     
     
@@ -91,7 +90,7 @@
     </p>
   <p class="article-time">
     <time datetime="2019-03-13T09:20:20.000Z" itemprop="datePublished">2019-03-13</time>
-    更新日期:<time datetime="2019-06-22T07:02:14.169Z" itemprop="dateModified">2019-06-22</time>
+    更新日期:<time datetime="2020-04-06T09:10:52.006Z" itemprop="dateModified">2020-04-06</time>
     
   </p>
 </header>
@@ -100,11 +99,10 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java的类初始化顺序"><span class="toc-number">1.</span> <span class="toc-text">Java的类初始化顺序</span></a></li></ol>
 		</div>
 		
-		<p> Java的类初始化顺序</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.szxy;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InitClassTest</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">new</span> B();    </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">	<span class="keyword">static</span> A a = <span class="keyword">new</span> A();                        <span class="comment">//1)</span></span><br><span class="line">	<span class="keyword">static</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"A:static"</span>);          <span class="comment">//2)</span></span><br><span class="line">	&#125;</span><br><span class="line">	C c = <span class="keyword">new</span> C();                               <span class="comment">//5)</span></span><br><span class="line">	&#123;                                            <span class="comment">//6)</span></span><br><span class="line">		System.out.println(<span class="string">"A:not static"</span>);      </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">A</span><span class="params">()</span> </span>&#123;                                 <span class="comment">//7)</span></span><br><span class="line">		System.out.println(<span class="string">"A:constructor"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">	<span class="keyword">static</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"B:static"</span>);          <span class="comment">//3)</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">static</span> B b = <span class="keyword">new</span> B();                        <span class="comment">//4)</span></span><br><span class="line">	&#123;                                            <span class="comment">//8)</span></span><br><span class="line">		System.out.println(<span class="string">"B:not static"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">B</span><span class="params">()</span> </span>&#123;                                 <span class="comment">//9)</span></span><br><span class="line">		System.out.println(<span class="string">"B:constructor"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">C</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"C"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+		<h1 id="Java的类初始化顺序"><a href="#Java的类初始化顺序" class="headerlink" title="Java的类初始化顺序"></a>Java的类初始化顺序</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.szxy;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InitClassTest</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">new</span> B();    </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">	<span class="keyword">static</span> A a = <span class="keyword">new</span> A();                        <span class="comment">//1)</span></span><br><span class="line">	<span class="keyword">static</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"A:static"</span>);          <span class="comment">//2)</span></span><br><span class="line">	&#125;</span><br><span class="line">	C c = <span class="keyword">new</span> C();                               <span class="comment">//5)</span></span><br><span class="line">	&#123;                                            <span class="comment">//6)</span></span><br><span class="line">		System.out.println(<span class="string">"A:not static"</span>);      </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">A</span><span class="params">()</span> </span>&#123;                                 <span class="comment">//7)</span></span><br><span class="line">		System.out.println(<span class="string">"A:constructor"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">	<span class="keyword">static</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"B:static"</span>);          <span class="comment">//3)</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">static</span> B b = <span class="keyword">new</span> B();                        <span class="comment">//4)</span></span><br><span class="line">	&#123;                                            <span class="comment">//8)</span></span><br><span class="line">		System.out.println(<span class="string">"B:not static"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">B</span><span class="params">()</span> </span>&#123;                                 <span class="comment">//9)</span></span><br><span class="line">		System.out.println(<span class="string">"B:constructor"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">C</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"C"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>console打印</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">C                     //1)</span><br><span class="line">A:not static          //1)</span><br><span class="line">A:constructor         //1)</span><br><span class="line">A:static              //2)</span><br><span class="line">B:static              //3)</span><br><span class="line">C                     //4)</span><br><span class="line">A:not static          //4)</span><br><span class="line">A:constructor         //4)</span><br><span class="line">B:not static          //4)</span><br><span class="line">B:constructor         //4)</span><br><span class="line">C                     //5)</span><br><span class="line">A:not static          //6)</span><br><span class="line">A:constructor         //7)</span><br><span class="line">B:not static          //8)</span><br><span class="line">B:constructor         //9)</span><br></pre></td></tr></table></figure>
 <p><em>根据打印结果：<strong>父类静态变量（静态代码块）-&gt;  子类静态变量（静态代码块）</strong></em></p>
@@ -172,7 +170,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java的类初始化顺序"><span class="toc-number">1.</span> <span class="toc-text">Java的类初始化顺序</span></a></li></ol>
   </div>
 
 <div id="asidepart">
@@ -196,19 +194,21 @@
 	<p class="asidetitle">分类</p>
 		<ul>
 		
+			<li><a href="/categories/Design-Pattern/" title="Design Pattern">Design Pattern<sup>1</sup></a></li>
+		
 			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>17</sup></a></li>
 		
-			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>10</sup></a></li>
+			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>13</sup></a></li>
 		
 			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
 		
-			<li><a href="/categories/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+			<li><a href="/categories/Spring/" title="Spring">Spring<sup>3</sup></a></li>
 		
-			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>2</sup></a></li>
+			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>3</sup></a></li>
 		
-			<li><a href="/categories/database/" title="database">database<sup>11</sup></a></li>
+			<li><a href="/categories/database/" title="database">database<sup>13</sup></a></li>
 		
-			<li><a href="/categories/tools/" title="tools">tools<sup>6</sup></a></li>
+			<li><a href="/categories/tools/" title="tools">tools<sup>7</sup></a></li>
 		
 			<li><a href="/categories/web/" title="web">web<sup>7</sup></a></li>
 		
@@ -241,11 +241,15 @@
 		
 			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>2</sup></a></li>
 		
-			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>3</sup></a></li>
 		
-			<li><a href="/tags/SpringBoot/" title="SpringBoot">SpringBoot<sup>2</sup></a></li>
+			<li><a href="/tags/SpringBoot/" title="SpringBoot">SpringBoot<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Transaction/" title="Transaction">Transaction<sup>1</sup></a></li>
 		
 			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/data/" title="data">data<sup>1</sup></a></li>
 		
 			<li><a href="/tags/eclipse/" title="eclipse">eclipse<sup>1</sup></a></li>
 		
@@ -253,13 +257,9 @@
 		
 			<li><a href="/tags/javascript/" title="javascript">javascript<sup>3</sup></a></li>
 		
-			<li><a href="/tags/jsp/" title="jsp">jsp<sup>1</sup></a></li>
+			<li><a href="/tags/jsp/" title="jsp">jsp<sup>3</sup></a></li>
 		
 			<li><a href="/tags/log4j/" title="log4j">log4j<sup>1</sup></a></li>
-		
-			<li><a href="/tags/mybatis/" title="mybatis">mybatis<sup>2</sup></a></li>
-		
-			<li><a href="/tags/mysql/" title="mysql">mysql<sup>3</sup></a></li>
 		
 		</ul>
 </div>
@@ -282,7 +282,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/C/" style="font-size: 11.67px;">C</a> <a href="/tags/CSS/" style="font-size: 11.67px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 15px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 18.33px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 11.67px;">Oracle</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 11.67px;">SpringBoot</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 11.67px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 13.33px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.67px;">乱码</a>
+       <a href="/tags/C/" style="font-size: 11.67px;">C</a> <a href="/tags/CSS/" style="font-size: 11.67px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 15px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 18.33px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 11.67px;">Oracle</a> <a href="/tags/Spring/" style="font-size: 13.33px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.33px;">SpringBoot</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/data/" style="font-size: 10px;">data</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a> <a href="/tags/jsp/" style="font-size: 13.33px;">jsp</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 13.33px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 11.67px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 15px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.67px;">乱码</a>
     </div>
   </div>
 
@@ -292,7 +292,7 @@
     </div>
     <footer><div id="footer" >
     
-            <p class="copyright"> © 2019 
+            <p class="copyright"> © 2020 
 		
 		<a href="http://yoursite.com" target="_blank" title="Moment Only">Moment Only</a>
 		

@@ -1,0 +1,539 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>SpringBoot不推荐使用jsp | Momentonly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Moment Only">
+    
+    <meta name="description" content="关于Springboot不推荐使用Jsp的讨论springboot不推荐使用jsp，如果使用了jsp会失去一些springboot的特性，这是为什么呢？jsp和其他模板引擎FreeMarker，thymeleaf有什么区别呢？
+回答1原因简单，就因为它叫 JSP (Java Server Page)">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Momentonly" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Momentonly">Momentonly</a></h1>
+				<a class="blog-motto"></a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/categories/despattern">设计模式</a></li>
+					
+						<li><a href="/categories/tools">工具</a></li>
+					
+						<li><a href="/categories/web">前端</a></li>
+					
+						<li><a href="/categories/database">数据库</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= 17576509095696061073 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/04/05/SpringBoot/SpringBoot不推荐jsp/" title="SpringBoot不推荐使用jsp" itemprop="url">SpringBoot不推荐使用jsp</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2020-04-05T13:08:59.000Z" itemprop="datePublished">2020-04-05</time>
+    更新日期:<time datetime="2020-04-05T13:16:55.772Z" itemprop="dateModified">2020-04-05</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#关于Springboot不推荐使用Jsp的讨论"><span class="toc-number">1.</span> <span class="toc-text">关于Springboot不推荐使用Jsp的讨论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#回答1"><span class="toc-number">1.1.</span> <span class="toc-text">回答1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#回答2"><span class="toc-number">1.2.</span> <span class="toc-text">回答2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#springboot官方说明jsp限制"><span class="toc-number">1.3.</span> <span class="toc-text">springboot官方说明jsp限制</span></a></li></ol></li></ol>
+		</div>
+		
+		<h1 id="关于Springboot不推荐使用Jsp的讨论"><a href="#关于Springboot不推荐使用Jsp的讨论" class="headerlink" title="关于Springboot不推荐使用Jsp的讨论"></a>关于Springboot不推荐使用Jsp的讨论</h1><p>springboot不推荐使用jsp，如果使用了jsp会失去一些springboot的特性，这是为什么呢？jsp和其他模板引擎FreeMarker，thymeleaf有什么区别呢？</p>
+<h2 id="回答1"><a href="#回答1" class="headerlink" title="回答1"></a>回答1</h2><p>原因简单，就因为它叫 JSP (Java Server Page)</p>
+<p>Java社区的领导者JCP 制定JSP规则就是专门为了给 JavaServer 用的， 所以 JSP 的定义里就指定了它是运行在容器里的.</p>
+<p>里面最最重要的就是第一条.</p>
+<blockquote>
+<p>(使用jsp的项目 部署时) 把war包放到 tomcat或者其他 java 容器；或者用 java -jar 启一个可执行的 <strong>war包</strong> 时 是可以正常工作的， 但 <strong>直接执行 jar包是不支持的</strong>。</p>
+<p>也就是说打包方式不一样同样的代码运行结果就是不一样：<br> “java -jar app.jar”  不可以解析jsp<br>“java -jar app.war” 正常解析</p>
+</blockquote>
+<p>剩余几个限制也多少都是因为jsp的规范/法律层面上的原因联锁引起的，或者导致开发者修复/额外考虑的兴致不大。</p>
+<p>至于<strong>从技术层面的开发使用上 用 JSP当模板 和 用其他模板引擎支持的文件没有任何本质的区别</strong>。</p>
+<p>差别仅存在于开发书写效率和程序解析运行效率。</p>
+<p>比如 jsp 和 freemarker 的解析执行效率都是很高的，</p>
+<p>而thymeleaf的书写效率高并且与前端模板语法很相似，学习成本很低。</p>
+<h2 id="回答2"><a href="#回答2" class="headerlink" title="回答2"></a>回答2</h2><p>springboot 是内嵌web容器的，推荐打成jar包不是war包</p>
+<p>你如果想使用jsp也可以啊，自建WEB-INF web.xml  然后像往常一样使用jsp</p>
+<p>打成war包使用外部容器即可，这就相当于失去了一些springboot的特性了</p>
+<p>至于模板引擎其实都差不多，jsp也可以算是模板引擎，springboot推荐的thymeleaf主要嵌入到html的标签属性，这样对前端很友好，有一些优点，但和jsp，FreeMarker比起来也没什么绝对性的优势。</p>
+<p>现在web前端技术飞一样的发展，前后端分离才是主流，模板引擎说白了还是给后端人员用的东西，早就不符合现代的前端思想了，而且和React、Vue这类的前端框架比起来又是连提鞋都不配，所以放弃这些模板引擎改用RestController吧。</p>
+<h2 id="springboot官方说明jsp限制"><a href="#springboot官方说明jsp限制" class="headerlink" title="springboot官方说明jsp限制"></a>springboot官方说明jsp限制</h2><p><a href="https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/htmlsingle/#boot-features-jsp-limitations" target="_blank" rel="noopener">https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/htmlsingle/#boot-features-jsp-limitations</a></p>
+<p>官方：</p>
+<p>28.4.5 JSP Limitations</p>
+<p>When running a Spring Boot application that uses an embedded servlet container (and is packaged as an executable archive), there are some limitations in the JSP support.</p>
+<ul>
+<li>With Jetty and Tomcat, it should work if you use war packaging. An executable war will work when launched with <code>java -jar</code>, and will also be deployable to any standard container. JSPs are not supported when using an executable jar.</li>
+<li>Undertow does not support JSPs.</li>
+<li>Creating a custom <code>error.jsp</code> page does not override the default view for <a href="https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/htmlsingle/#boot-features-error-handling" target="_blank" rel="noopener">error handling</a>. <a href="https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/htmlsingle/#boot-features-error-handling-custom-error-pages" target="_blank" rel="noopener">Custom error pages</a> should be used instead.</li>
+</ul>
+<p>There is a <a href="https://github.com/spring-projects/spring-boot/tree/v2.1.1.RELEASE/spring-boot-samples/spring-boot-sample-web-jsp" target="_blank" rel="noopener">JSP sample</a> so that you can see how to set things up.</p>
+<p>翻译：28.4.5 JSP的局限性</p>
+<p>在运行使用嵌入式servlet容器(并打包为可执行归档文件)的Spring引导应用程序时，JSP支持存在一些限制。</p>
+<p>对于Jetty和Tomcat，如果使用war打包，它应该可以工作。一个可执行的war在使用java -jar启动时可以工作，并且也可以部署到任何标准容器中。使用可执行jar时不支持jsp。</p>
+<p>Undertow不支持jsp。</p>
+<p>创建自定义error.jsp页面不会覆盖用于错误处理的默认视图。应该使用自定义错误页面。</p>
+<p>这里有一个JSP示例，以便您了解如何进行设置。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/SpringBoot/">SpringBoot</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/SpringBoot/">SpringBoot</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2020/04/05/SpringBoot/SpringBoot不推荐jsp/" data-title="SpringBoot不推荐使用jsp | Momentonly" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/04/06/Java Web/servlet3.0/" title="servlet3.0">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  servlet3.0</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/04/04/DataBase/Transaction/事务的隔离级别和传播机制/"  title="事务的隔离级别和传播机制">
+ <strong>NEXT:</strong><br/> 
+ <span>事务的隔离级别和传播机制
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="SpringBoot不推荐使用jsp" data-thread-key="SpringBoot/SpringBoot不推荐jsp" data-author-key="Moment Only" data-url="http://yoursite.com/post/SpringBoot/SpringBoot不推荐jsp"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#关于Springboot不推荐使用Jsp的讨论"><span class="toc-number">1.</span> <span class="toc-text">关于Springboot不推荐使用Jsp的讨论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#回答1"><span class="toc-number">1.1.</span> <span class="toc-text">回答1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#回答2"><span class="toc-number">1.2.</span> <span class="toc-text">回答2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#springboot官方说明jsp限制"><span class="toc-number">1.3.</span> <span class="toc-text">springboot官方说明jsp限制</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Design-Pattern/" title="Design Pattern">Design Pattern<sup>1</sup></a></li>
+		
+			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>17</sup></a></li>
+		
+			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>13</sup></a></li>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Spring/" title="Spring">Spring<sup>3</sup></a></li>
+		
+			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>3</sup></a></li>
+		
+			<li><a href="/categories/database/" title="database">database<sup>13</sup></a></li>
+		
+			<li><a href="/categories/tools/" title="tools">tools<sup>7</sup></a></li>
+		
+			<li><a href="/categories/web/" title="web">web<sup>7</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/C/" title="C">C<sup>2</sup></a></li>
+		
+			<li><a href="/tags/CSS/" title="CSS">CSS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/HTML/" title="HTML">HTML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JAVA/" title="JAVA">JAVA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDBC/" title="JDBC">JDBC<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>16</sup></a></li>
+		
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JavaWeb/" title="JavaWeb">JavaWeb<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>6</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>3</sup></a></li>
+		
+			<li><a href="/tags/SpringBoot/" title="SpringBoot">SpringBoot<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Transaction/" title="Transaction">Transaction<sup>1</sup></a></li>
+		
+			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/data/" title="data">data<sup>1</sup></a></li>
+		
+			<li><a href="/tags/eclipse/" title="eclipse">eclipse<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>3</sup></a></li>
+		
+			<li><a href="/tags/jsp/" title="jsp">jsp<sup>3</sup></a></li>
+		
+			<li><a href="/tags/log4j/" title="log4j">log4j<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/C/" style="font-size: 11.67px;">C</a> <a href="/tags/CSS/" style="font-size: 11.67px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 15px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 18.33px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 11.67px;">Oracle</a> <a href="/tags/Spring/" style="font-size: 13.33px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.33px;">SpringBoot</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/data/" style="font-size: 10px;">data</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a> <a href="/tags/jsp/" style="font-size: 13.33px;">jsp</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 13.33px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 11.67px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 15px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.67px;">乱码</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2020 
+		
+		<a href="http://yoursite.com" target="_blank" title="Moment Only">Moment Only</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:""};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '', '');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+

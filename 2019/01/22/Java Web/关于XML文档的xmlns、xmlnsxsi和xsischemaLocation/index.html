@@ -12,7 +12,7 @@
     
     <meta name="author" content="Moment Only">
     
-    <meta name="description" content="摘要： 相信很多人和我一样，在编写Spring或者Maven或者其他需要用到XML文档的程序时，通常都是将这些XML文档头拷贝过来，并没有理解其中元素 （比如xmlns，xmlns:xsi，xsi:schemaLocation）的真正含义，不知道哪些元素是多余的，也不知道为什么要加那些元素。相信很多">
+    <meta name="description" content="xmlns摘要：相信很多人和我一样，在编写Spring或者Maven或者其他需要用到XML文档的程序时，通常都是将这些XML文档头拷贝过来，并没有理解其中元素 （比如xmlns，xmlns:xsi，xsi:schemaLocation）的真正含义，不知道哪些元素是多余的，也不知道为什么要加那些元素。">
     
     
     
@@ -90,7 +90,7 @@
     </p>
   <p class="article-time">
     <time datetime="2019-01-22T08:30:23.000Z" itemprop="datePublished">2019-01-22</time>
-    更新日期:<time datetime="2019-03-13T08:20:08.603Z" itemprop="dateModified">2019-03-13</time>
+    更新日期:<time datetime="2020-04-12T07:55:37.240Z" itemprop="dateModified">2020-04-12</time>
     
   </p>
 </header>
@@ -99,32 +99,32 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要xmlns？"><span class="toc-number">1.</span> <span class="toc-text">为什么需要xmlns？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何是用xmlns？"><span class="toc-number">2.</span> <span class="toc-text">如何是用xmlns？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xmlns和xmlns-xsi有什么不同？"><span class="toc-number">3.</span> <span class="toc-text">xmlns和xmlns:xsi有什么不同？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xsi-schemaLocation有何作用？"><span class="toc-number">4.</span> <span class="toc-text">xsi:**schemaLocation有何作用？**</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#xmlns"><span class="toc-number">1.</span> <span class="toc-text">xmlns</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么需要xmlns？"><span class="toc-number">1.1.</span> <span class="toc-text">为什么需要xmlns？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何是用xmlns？"><span class="toc-number">1.1.1.</span> <span class="toc-text">如何是用xmlns？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xmlns和xmlns-xsi有什么不同？"><span class="toc-number">1.1.2.</span> <span class="toc-text">xmlns和xmlns:xsi有什么不同？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xsi-schemaLocation有何作用？"><span class="toc-number">1.1.3.</span> <span class="toc-text">xsi:schemaLocation有何作用？</span></a></li></ol></li></ol></li></ol>
 		</div>
 		
-		<p><em>摘要：</em> 相信很多人和我一样，在编写Spring或者Maven或者其他需要用到XML文档的程序时，通常都是将这些XML文档头拷贝过来，并没有理解其中元素 （比如xmlns，xmlns:xsi，xsi:schemaLocation）的真正含义，不知道哪些元素是多余的，也不知道为什么要加那些元素。相信很多人和我一样，在编写Spring或者Maven或者其他需要用到XML文档的程序时，通常都是将这些XML文档头拷贝过来，并没有理解其中元素（比 如xmlns，xmlns:xsi，xsi:schemaLocation）的真正含义，不知道哪些元素是多余的，也不知道为什么要加那些元素。这样当有 时候网上Copy的XML头有错的时候自己却不知道怎么下手。我也是这样的，于是今天花了点时间好好的理解了一下这些元素及其用法，现整理与此，在此谢谢 各位前辈的经验，如有总结的不对或者不好的地方，欢迎留言提出各位的宝贵意见。</p>
+		<h1 id="xmlns"><a href="#xmlns" class="headerlink" title="xmlns"></a>xmlns</h1><p>摘要：相信很多人和我一样，在编写Spring或者Maven或者其他需要用到XML文档的程序时，通常都是将这些XML文档头拷贝过来，并没有理解其中元素 （比如xmlns，xmlns:xsi，xsi:schemaLocation）的真正含义，不知道哪些元素是多余的，也不知道为什么要加那些元素。这样当有 时候网上Copy的XML头有错的时候自己却不知道怎么下手。我也是这样的，于是今天花了点时间好好的理解了一下这些元素及其用法，现整理与此，在此谢谢 各位前辈的经验，如有总结的不对或者不好的地方，欢迎留言提出各位的宝贵意见。</p>
 <p>话不多说，先来一段Spring的XML样本，相信大家都很眼熟：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span>   </span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span>    </span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span>  </span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:mvc</span>=<span class="string">"http://www.springframework.org/schema/mvc"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans </span></span></span><br><span class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/beans/spring-beans.xsd   </span></span></span><br><span class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/context  </span></span></span><br><span class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/context/spring-context.xsd  </span></span></span><br><span class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/mvc        </span></span></span><br><span class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/mvc/spring-mvc.xsd"</span>&gt;</span>   </span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"xxx.xxx.controller"</span> /&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">context:annotation-config</span>/&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:default-servlet-handler</span>/&gt;</span>   </span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:annotation-driven</span>/&gt;</span>         </span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">mapping</span>=<span class="string">"/images/**"</span> <span class="attr">location</span>=<span class="string">"/images/"</span> /&gt;</span>   </span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"xxx"</span> <span class="attr">class</span>=<span class="string">"xxx.xxx.xxx.Xxx"</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"xxx"</span> <span class="attr">value</span>=<span class="string">"xxxx"</span>/&gt;</span>    </span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>​    这 个文档中，根元素<beans>就不用说了，接下来是xmlns。那么什么是xmlns呢？xmlns其实是XML Namespace的缩写，可译为“XML命名空间”，但个人觉得，翻译后的名字反而不好理解，所以我们就叫它为XML Namespace吧。 </beans></p>
+<p>​    这 个文档中，根元素\&lt;beans/>就不用说了，接下来是xmlns。那么什么是xmlns呢？xmlns其实是XML Namespace的缩写，可译为“XML命名空间”，但个人觉得，翻译后的名字反而不好理解，所以我们就叫它为XML Namespace吧。 </p>
 <p>​    </p>
-<h3 id="为什么需要xmlns？"><a href="#为什么需要xmlns？" class="headerlink" title="为什么需要xmlns？"></a>为什么需要xmlns？</h3><p>​    考虑这样两个XML文档：表示HTML表格元素的<table>：</table></p>
+<h2 id="为什么需要xmlns？"><a href="#为什么需要xmlns？" class="headerlink" title="为什么需要xmlns？"></a>为什么需要xmlns？</h2><p>​    考虑这样两个XML文档：表示HTML表格元素的\&lt;table/>：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;table&gt;  </span><br><span class="line">  &lt;tr&gt;    </span><br><span class="line">    &lt;td&gt;Apples&lt;/td&gt;    </span><br><span class="line">    &lt;td&gt;Bananas&lt;/td&gt;  </span><br><span class="line">  &lt;/tr&gt;</span><br><span class="line">&lt;/table&gt;</span><br></pre></td></tr></table></figure>
 <p>​    和描述一张桌子的<table>：</table></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;table&gt;  </span><br><span class="line">  &lt;name&gt;African Coffee Table&lt;/name&gt;  </span><br><span class="line">  &lt;width&gt;80&lt;/width&gt;  </span><br><span class="line">  &lt;length&gt;120&lt;/length&gt;</span><br><span class="line">&lt;/table&gt;</span><br></pre></td></tr></table></figure>
-<p>​    假如这两个 XML 文档被一起使用，由于两个文档都包含带有不同内容和定义的 <table> 元素，就会发生命名冲突。XML 解析器是无法确定如何处理这类冲突。为了解决上述问题，xmlns就产生了。</table></p>
+<p>​    假如这两个 XML 文档被一起使用，由于两个文档都包含带有不同内容和定义的 \&lt;table> 元素，就会发生命名冲突。XML 解析器是无法确定如何处理这类冲突。为了解决上述问题，xmlns就产生了。</p>
 <p>​    </p>
-<h3 id="如何是用xmlns？"><a href="#如何是用xmlns？" class="headerlink" title="如何是用xmlns？"></a><strong>如何是用xmlns？</strong></h3><p>​    很简单，使用语法： <strong>xmlns:namespace-prefix=”namespaceURI”</strong>。其中namespace-prefix为自定义前缀，只要在这个XML文档中保证前缀不重复即可；namespaceURI是这个前缀对应的XML Namespace的定义。例如，</p>
+<h3 id="如何是用xmlns？"><a href="#如何是用xmlns？" class="headerlink" title="如何是用xmlns？"></a>如何是用xmlns？</h3><p>​    很简单，使用语法： <strong>xmlns:namespace-prefix=”namespaceURI”</strong>。其中namespace-prefix为自定义前缀，只要在这个XML文档中保证前缀不重复即可；namespaceURI是这个前缀对应的XML Namespace的定义。例如，</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</span><br></pre></td></tr></table></figure>
 <p>​    这一句定义了一个<a href="http://www.springframwork.org/schema/context的Namespace（这和Java类中的包的声明很相似），并将其和前缀context绑定。所以上面的Spring" target="_blank" rel="noopener">http://www.springframwork.org/schema/context的Namespace（这和Java类中的包的声明很相似），并将其和前缀context绑定。所以上面的Spring</a> XML文档中会有这么一句：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;context:component-scan  base-package=&quot;xxx.xxx.controller&quot;/&gt;</span><br></pre></td></tr></table></figure>
-<p>​    这里的<component-scan>元素就来自别名为context的XML Namespace，也就是在<a href="http://www.springframework.org/schema/context中定义的。" target="_blank" rel="noopener">http://www.springframework.org/schema/context中定义的。</a></component-scan></p>
+<p>​    这里的\&lt;component-scan/>元素就来自别名为context的XML Namespace，也就是在<a href="http://www.springframework.org/schema/context中定义的。" target="_blank" rel="noopener">http://www.springframework.org/schema/context中定义的。</a></p>
 <p>​    我们还可以将前缀定义为abc：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xmlns:abc=&quot;namespaceURI&quot;</span><br></pre></td></tr></table></figure>
 <p>​    这样再使用这个namespaceURI中的元素时，需要以abc为前缀，例如：<a href="abc:xxx/" target="_blank" rel="noopener">abc:xxx/</a>。再拿上面的例子解释怎么使用xmlns：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 这里xmlns:h=&quot;url1&quot;表示这个table是用h作为标记，table的写法在url1中定义 --&gt;&lt;h:table xmlns:h=&quot;url1&quot;&gt; </span><br><span class="line">    &lt;h:tr&gt;    </span><br><span class="line">         &lt;h:td&gt;Apples&lt;/h:td&gt;    </span><br><span class="line">        &lt;h:td&gt;Bananas&lt;/h:td&gt;  </span><br><span class="line">   &lt;/h:tr&gt;</span><br><span class="line">&lt;/h:table&gt;</span><br></pre></td></tr></table></figure>
 <p>​    和：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 这里xmlns:f=&quot;url2&quot;表示这个table是用f作为标记，table的写法在url2中定义 --&gt;&lt;f:table xmlns:f=&quot;url2&quot;&gt;  </span><br><span class="line">   &lt;f:name&gt;African Coffee Table&lt;/f:name&gt;  </span><br><span class="line">   &lt;f:width&gt;80&lt;/f:width&gt;  </span><br><span class="line">   &lt;f:length&gt;120&lt;/f:length&gt;</span><br><span class="line">&lt;/f:table&gt;</span><br></pre></td></tr></table></figure>
-<p>​    后者与前者仅仅使用不同前缀，我们为 <table> 标签添加了一个 xmlns 属性，这样就为前缀赋予了一个与某个命名空间相关联的限定名称。此时再把它们放在一起，XML解析器就不会报错了。</table></p>
+<p>​    后者与前者仅仅使用不同前缀，我们为 \&lt;table> 标签添加了一个 xmlns 属性，这样就为前缀赋予了一个与某个命名空间相关联的限定名称。此时再把它们放在一起，XML解析器就不会报错了。</p>
 <p>​    注意：当xmlns被定义在元素的开始标签中（如这里的&lt;f:table/&gt;）时，所有带有相同前缀的子元素都会与同一个Namespace相关联（即&lt;f:table/&gt;里面的&lt;f:name/&gt;和&lt;f:width/&gt;也会使用url2定义的写法）。</p>
 <p>​    </p>
 <h3 id="xmlns和xmlns-xsi有什么不同？"><a href="#xmlns和xmlns-xsi有什么不同？" class="headerlink" title="xmlns和xmlns:xsi有什么不同？"></a>xmlns和xmlns:xsi有什么不同？</h3><p>​    xmlns表示默认的Namespace。例如Spring XML文档中的</p>
@@ -132,13 +132,14 @@
 <p>​    这一句表示该文档默认的XML Namespace为<a href="http://www.springframwork.org/schema/beans。**对于默认的Namespace中的元素，可以不使用前缀**。例如Spring" target="_blank" rel="noopener">http://www.springframwork.org/schema/beans。**对于默认的Namespace中的元素，可以不使用前缀**。例如Spring</a> XML文档中的</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;xxx&quot; class=&quot;xxx.xxx.xxx.Xxx&quot;&gt;  </span><br><span class="line">    &lt;property name=&quot;xxx&quot; value=&quot;xxxx&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
 <p>​    xmlns:xsi表示使用xsi作为前缀的Namespace，当然前缀xsi需要在文档中声明。</p>
-<h3 id="xsi-schemaLocation有何作用？"><a href="#xsi-schemaLocation有何作用？" class="headerlink" title="xsi:**schemaLocation有何作用？**"></a><strong>xsi:**</strong>schemaLocation有何作用？**</h3><p>​    xsi:schemaLocation属性其实是Namespace为<a href="http://www.w3.org/2001/XMLSchema-instance里的schemaLocation属性，正是因为我们一开始声明了" target="_blank" rel="noopener">http://www.w3.org/2001/XMLSchema-instance里的schemaLocation属性，正是因为我们一开始声明了</a></p>
+<h3 id="xsi-schemaLocation有何作用？"><a href="#xsi-schemaLocation有何作用？" class="headerlink" title="xsi:schemaLocation有何作用？"></a>xsi:schemaLocation有何作用？</h3><p>​    xsi:schemaLocation属性其实是Namespace为<a href="http://www.w3.org/2001/XMLSchema-instance里的schemaLocation属性，正是因为我们一开始声明了" target="_blank" rel="noopener">http://www.w3.org/2001/XMLSchema-instance里的schemaLocation属性，正是因为我们一开始声明了</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br></pre></td></tr></table></figure>
 <p>​    这里才写作xsi:schemaLocation（当然一般都使用这个前缀）。它定义了XML Namespace和对应的 XSD（Xml Schema Definition）文档的位置的关系。它的值由一个或多个URI引用对组成，两个URI之间以空白符分隔（空格和换行均可）。第一个URI是定义的 XML Namespace的值，第二个URI给出Schema文档的位置，Schema处理器将从这个位置读取Schema文档，<strong>该文档的targetNamespace必须与第一个URI相匹配</strong>。例如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xsi:schemaLocation=&quot;http://www.springframework.org/schema/context </span><br><span class="line">   http://www.springframework.org/schema/context/spring-context.xsd&quot;</span><br></pre></td></tr></table></figure>
 <p>​    这里表示Namespace为<a href="http://www.springframework.org/schema/context的Schema的位置为[http://www.springframework.org/schema/context/spring-context.xsd](http://www.springframework.org/schema/context/spring-context.xsd?spm=5176.100239.blogcont40353.18.KFHYwA&amp;file=spring-context.xsd)。这里我们可以打开这个Schema的位置，下面是这个文档的开始部分：" target="_blank" rel="noopener">http://www.springframework.org/schema/context的Schema的位置为[http://www.springframework.org/schema/context/spring-context.xsd](http://www.springframework.org/schema/context/spring-context.xsd?spm=5176.100239.blogcont40353.18.KFHYwA&amp;file=spring-context.xsd)。这里我们可以打开这个Schema的位置，下面是这个文档的开始部分：</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;xsd:schema xmlns=&quot;http://www.springframework.org/schema/context&quot;  </span><br><span class="line">xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;  </span><br><span class="line">xmlns:beans=&quot;http://www.springframework.org/schema/beans&quot;    </span><br><span class="line">xmlns:tool=&quot;http://www.springframework.org/schema/tool&quot; </span><br><span class="line">&lt;!-- 这里的targetNamespace和上方xsi:schemaLocation中的第一个URI匹配 --&gt;  </span><br><span class="line">targetNamespace=&quot;http://www.springframework.org/schema/context&quot; </span><br><span class="line">elementFormDefault=&quot;qualified&quot;                 </span><br><span class="line">attributeFormDefault=&quot;unqualified&quot;&gt;</span><br></pre></td></tr></table></figure>
-<p>​        xmlns=”<a href="http://www.w3.org/2001/XMLSchema&quot;" target="_blank" rel="noopener">http://www.w3.org/2001/XMLSchema&quot;</a></p>
+<p>​      </p>
+<p>  xmlns=”<a href="http://www.w3.org/2001/XMLSchema&quot;" target="_blank" rel="noopener">http://www.w3.org/2001/XMLSchema&quot;</a></p>
 <p>​            表示当前xml文件是一个schema约束文件（这个属性的值是确定的，不能改变，这个就是一个标志）</p>
 <p>targetNamespace=”<a href="http://www.springframework.org/schema/context&quot;" target="_blank" rel="noopener">http://www.springframework.org/schema/context&quot;</a></p>
 <p>​         定义schema地址，被约束文件可以通过这个地址引入使用</p>
@@ -211,7 +212,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要xmlns？"><span class="toc-number">1.</span> <span class="toc-text">为什么需要xmlns？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何是用xmlns？"><span class="toc-number">2.</span> <span class="toc-text">如何是用xmlns？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xmlns和xmlns-xsi有什么不同？"><span class="toc-number">3.</span> <span class="toc-text">xmlns和xmlns:xsi有什么不同？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xsi-schemaLocation有何作用？"><span class="toc-number">4.</span> <span class="toc-text">xsi:**schemaLocation有何作用？**</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#xmlns"><span class="toc-number">1.</span> <span class="toc-text">xmlns</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么需要xmlns？"><span class="toc-number">1.1.</span> <span class="toc-text">为什么需要xmlns？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何是用xmlns？"><span class="toc-number">1.1.1.</span> <span class="toc-text">如何是用xmlns？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xmlns和xmlns-xsi有什么不同？"><span class="toc-number">1.1.2.</span> <span class="toc-text">xmlns和xmlns:xsi有什么不同？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xsi-schemaLocation有何作用？"><span class="toc-number">1.1.3.</span> <span class="toc-text">xsi:schemaLocation有何作用？</span></a></li></ol></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
@@ -235,19 +236,21 @@
 	<p class="asidetitle">分类</p>
 		<ul>
 		
+			<li><a href="/categories/Design-Pattern/" title="Design Pattern">Design Pattern<sup>1</sup></a></li>
+		
 			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>17</sup></a></li>
 		
-			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>10</sup></a></li>
+			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>13</sup></a></li>
 		
 			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
 		
-			<li><a href="/categories/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+			<li><a href="/categories/Spring/" title="Spring">Spring<sup>3</sup></a></li>
 		
-			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>2</sup></a></li>
+			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>3</sup></a></li>
 		
-			<li><a href="/categories/database/" title="database">database<sup>11</sup></a></li>
+			<li><a href="/categories/database/" title="database">database<sup>13</sup></a></li>
 		
-			<li><a href="/categories/tools/" title="tools">tools<sup>6</sup></a></li>
+			<li><a href="/categories/tools/" title="tools">tools<sup>7</sup></a></li>
 		
 			<li><a href="/categories/web/" title="web">web<sup>7</sup></a></li>
 		
@@ -280,11 +283,15 @@
 		
 			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>2</sup></a></li>
 		
-			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>3</sup></a></li>
 		
-			<li><a href="/tags/SpringBoot/" title="SpringBoot">SpringBoot<sup>2</sup></a></li>
+			<li><a href="/tags/SpringBoot/" title="SpringBoot">SpringBoot<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Transaction/" title="Transaction">Transaction<sup>1</sup></a></li>
 		
 			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/data/" title="data">data<sup>1</sup></a></li>
 		
 			<li><a href="/tags/eclipse/" title="eclipse">eclipse<sup>1</sup></a></li>
 		
@@ -292,13 +299,9 @@
 		
 			<li><a href="/tags/javascript/" title="javascript">javascript<sup>3</sup></a></li>
 		
-			<li><a href="/tags/jsp/" title="jsp">jsp<sup>1</sup></a></li>
+			<li><a href="/tags/jsp/" title="jsp">jsp<sup>3</sup></a></li>
 		
 			<li><a href="/tags/log4j/" title="log4j">log4j<sup>1</sup></a></li>
-		
-			<li><a href="/tags/mybatis/" title="mybatis">mybatis<sup>2</sup></a></li>
-		
-			<li><a href="/tags/mysql/" title="mysql">mysql<sup>3</sup></a></li>
 		
 		</ul>
 </div>
@@ -321,7 +324,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/C/" style="font-size: 11.67px;">C</a> <a href="/tags/CSS/" style="font-size: 11.67px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 15px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 18.33px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 11.67px;">Oracle</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 11.67px;">SpringBoot</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 11.67px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 10px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 13.33px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.67px;">乱码</a>
+       <a href="/tags/C/" style="font-size: 11.67px;">C</a> <a href="/tags/CSS/" style="font-size: 11.67px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 15px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 18.33px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 11.67px;">Oracle</a> <a href="/tags/Spring/" style="font-size: 13.33px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.33px;">SpringBoot</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/data/" style="font-size: 10px;">data</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a> <a href="/tags/jsp/" style="font-size: 13.33px;">jsp</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 13.33px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 11.67px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 15px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.67px;">乱码</a>
     </div>
   </div>
 
@@ -331,7 +334,7 @@
     </div>
     <footer><div id="footer" >
     
-            <p class="copyright"> © 2019 
+            <p class="copyright"> © 2020 
 		
 		<a href="http://yoursite.com" target="_blank" title="Moment Only">Moment Only</a>
 		

@@ -1,0 +1,584 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>Springmvc视图解析与渲染 | Momentonly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Moment Only">
+    
+    <meta name="description" content="springmvc视图解析与渲染springmvc处理步骤具体步骤：
+第一步：发起请求到前端控制器(DispatcherServlet)
+第二步：前端控制器请求HandlerMapping查找 Handler （可以根据xml配置、注解进行查找）
+第三步：处理器映射器HandlerMapping向前">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Momentonly" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Momentonly">Momentonly</a></h1>
+				<a class="blog-motto"></a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/categories/despattern">设计模式</a></li>
+					
+						<li><a href="/categories/tools">工具</a></li>
+					
+						<li><a href="/categories/web">前端</a></li>
+					
+						<li><a href="/categories/database">数据库</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= 17576509095696061073 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/03/26/Spring/springmvc视图解析与渲染/" title="Springmvc视图解析与渲染" itemprop="url">Springmvc视图解析与渲染</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2020-03-26T07:45:59.000Z" itemprop="datePublished">2020-03-26</time>
+    更新日期:<time datetime="2020-04-05T07:50:44.433Z" itemprop="dateModified">2020-04-05</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#springmvc视图解析与渲染"><span class="toc-number">1.</span> <span class="toc-text">springmvc视图解析与渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#springmvc处理步骤"><span class="toc-number">1.1.</span> <span class="toc-text">springmvc处理步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#视图解析与渲染-render方法"><span class="toc-number">1.2.</span> <span class="toc-text">视图解析与渲染(render方法)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#视图解析：通过视图解析器进行视图的解析"><span class="toc-number">1.3.</span> <span class="toc-text">视图解析：通过视图解析器进行视图的解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#视图渲染"><span class="toc-number">1.4.</span> <span class="toc-text">视图渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#View接口"><span class="toc-number">1.4.1.</span> <span class="toc-text">View接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#View接口的实现类"><span class="toc-number">1.4.2.</span> <span class="toc-text">View接口的实现类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#具体渲染的一个过程"><span class="toc-number">1.4.3.</span> <span class="toc-text">具体渲染的一个过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DispatcherServlet做最后处理"><span class="toc-number">1.4.4.</span> <span class="toc-text">DispatcherServlet做最后处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.5.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+		</div>
+		
+		<h1 id="springmvc视图解析与渲染"><a href="#springmvc视图解析与渲染" class="headerlink" title="springmvc视图解析与渲染"></a>springmvc视图解析与渲染</h1><h2 id="springmvc处理步骤"><a href="#springmvc处理步骤" class="headerlink" title="springmvc处理步骤"></a>springmvc处理步骤</h2><p>具体步骤：</p>
+<p>第一步：发起请求到前端控制器(DispatcherServlet)</p>
+<p>第二步：前端控制器请求HandlerMapping查找 Handler （可以根据xml配置、注解进行查找）</p>
+<p>第三步：处理器映射器HandlerMapping向前端控制器返回Handler，HandlerMapping会把请求映射为HandlerExecutionChain对象（包含一个Handler处理器（页面控制器）对象，多个HandlerInterceptor拦截器对象），通过这种策略模式，很容易添加新的映射策略</p>
+<p>第四步：前端控制器调用处理器适配器去执行Handler</p>
+<p>第五步：处理器适配器HandlerAdapter将会根据适配的结果去执行Handler</p>
+<p>第六步：Handler执行完成给适配器返回ModelAndView</p>
+<p>第七步：处理器适配器向前端控制器返回ModelAndView （ModelAndView是springmvc框架的一个底层对象，包括 Model和view）</p>
+<p><strong><em>第八步：前端控制器请求视图解析器去进行视图解析 （根据逻辑视图名解析成真正的视图(jsp)），通过这种策略很容易更换其他视图技术，只需要更改视图解析器即可</em></strong></p>
+<p><strong><em>第九步：视图解析器向前端控制器返回View</em></strong></p>
+<p><strong><em>第十步：前端控制器进行视图渲染 （视图渲染将模型数据(在ModelAndView对象中)填充到request域）</em></strong></p>
+<p><strong><em>第十一步：前端控制器向用户响应结果</em></strong></p>
+<h2 id="视图解析与渲染-render方法"><a href="#视图解析与渲染-render方法" class="headerlink" title="视图解析与渲染(render方法)"></a>视图解析与渲染(render方法)</h2><p>org.springframework.web.servlet.DispatcherServlet#doDispatch方法中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mv = ha.handle(processedRequest, response, mappedHandler.getHandler());//945行返回了 ModelAndView 对象</span><br><span class="line">processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);// 959行进行的就是返回值处理问题</span><br></pre></td></tr></table></figure>
+<p>org.springframework.web.servlet.DispatcherServlet#processDispatchResult方法中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">render(mv, request, response); //1012进行视图的渲染（包含视图解析）</span><br></pre></td></tr></table></figure>
+<p><strong><em>org.springframework.web.servlet.DispatcherServlet#render 方法</em></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">protected void render(ModelAndView mv, HttpServletRequest request, HttpServletResponse response) throws Exception &#123;</span><br><span class="line">		// Determine locale for request and apply it to the response.</span><br><span class="line">		Locale locale =</span><br><span class="line">				(this.localeResolver != null ? this.localeResolver.resolveLocale(request) : request.getLocale());</span><br><span class="line">		response.setLocale(locale);</span><br><span class="line"></span><br><span class="line">		View view;</span><br><span class="line">		String viewName = mv.getViewName();</span><br><span class="line">		if (viewName != null) &#123;</span><br><span class="line">			// We need to resolve the view name.</span><br><span class="line">			view = resolveViewName(viewName, mv.getModelInternal(), locale, request);</span><br><span class="line">			if (view == null) &#123;</span><br><span class="line">				throw new ServletException(&quot;Could not resolve view with name &apos;&quot; + mv.getViewName() +</span><br><span class="line">						&quot;&apos; in servlet with name &apos;&quot; + getServletName() + &quot;&apos;&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		else &#123;</span><br><span class="line">			// No need to lookup: the ModelAndView object contains the actual View object.</span><br><span class="line">			view = mv.getView();</span><br><span class="line">			if (view == null) &#123;</span><br><span class="line">				throw new ServletException(&quot;ModelAndView [&quot; + mv + &quot;] neither contains a view name nor a &quot; +</span><br><span class="line">						&quot;View object in servlet with name &apos;&quot; + getServletName() + &quot;&apos;&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// Delegate to the View object for rendering.</span><br><span class="line">		if (logger.isDebugEnabled()) &#123;</span><br><span class="line">			logger.debug(&quot;Rendering view [&quot; + view + &quot;] in DispatcherServlet with name &apos;&quot; + getServletName() + &quot;&apos;&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">		try &#123;</span><br><span class="line">			if (mv.getStatus() != null) &#123;</span><br><span class="line">				response.setStatus(mv.getStatus().value());</span><br><span class="line">			&#125;</span><br><span class="line">			view.render(mv.getModelInternal(), request, response);</span><br><span class="line">		&#125;</span><br><span class="line">		catch (Exception ex) &#123;</span><br><span class="line">			if (logger.isDebugEnabled()) &#123;</span><br><span class="line">				logger.debug(&quot;Error rendering view [&quot; + view + &quot;] in DispatcherServlet with name &apos;&quot; +</span><br><span class="line">						getServletName() + &quot;&apos;&quot;, ex);</span><br><span class="line">			&#125;</span><br><span class="line">			throw ex;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>view = resolveViewName(viewName, mv.getModelInternal(), locale, request);视图解析，返回视图view</p>
+<p>view.render(mv.getModelInternal(), request, response); 视图渲染</p>
+<h2 id="视图解析：通过视图解析器进行视图的解析"><a href="#视图解析：通过视图解析器进行视图的解析" class="headerlink" title="视图解析：通过视图解析器进行视图的解析"></a>视图解析：通过视图解析器进行视图的解析</h2><p>1.解析一个视图名到一个视图对象，具体解析的过程是：在容器中查找所有配置好的视图解析器（List类型），然后进行遍历，</p>
+<p>只要有一个视图解析器能解析出视图就返回 View 对象，若遍历完成后都不能解析出视图，那么返回 null。</p>
+<p>具体来看：</p>
+<p>org.springframework.web.servlet.DispatcherServlet#resolveViewName</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">protected View resolveViewName(String viewName, @Nullable Map&lt;String, Object&gt; model,</span><br><span class="line">			Locale locale, HttpServletRequest request) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">		if (this.viewResolvers != null) &#123;</span><br><span class="line">			for (ViewResolver viewResolver : this.viewResolvers) &#123;</span><br><span class="line">				View view = viewResolver.resolveViewName(viewName, locale);</span><br><span class="line">				if (view != null) &#123;</span><br><span class="line">					return view;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return null;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>解析一个视图名到一个视图对象，具体解析的过程是：在容器中查找所有配置好的视图解析器（List类型），然后进行遍历，只要有一个视图解析器能解析出视图就返回 View 对象，若遍历完成后都不能解析出视图，那么返回 null。</p>
+<p>创建视图，以 InternalResourceViewResolver为例，继承UrlBasedViewResolver</p>
+<p>org.springframework.web.servlet.view.UrlBasedViewResolver#createView</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">	protected View createView(String viewName, Locale locale) throws Exception &#123;</span><br><span class="line">		// If this resolver is not supposed to handle the given view,</span><br><span class="line">		// return null to pass on to the next resolver in the chain.</span><br><span class="line">		if (!canHandle(viewName, locale)) &#123;</span><br><span class="line">			return null;</span><br><span class="line">		&#125;</span><br><span class="line">		// Check for special &quot;redirect:&quot; prefix.</span><br><span class="line">		if (viewName.startsWith(REDIRECT_URL_PREFIX)) &#123;</span><br><span class="line">			String redirectUrl = viewName.substring(REDIRECT_URL_PREFIX.length());</span><br><span class="line">			RedirectView view = new RedirectView(redirectUrl, isRedirectContextRelative(), isRedirectHttp10Compatible());</span><br><span class="line">			String[] hosts = getRedirectHosts();</span><br><span class="line">			if (hosts != null) &#123;</span><br><span class="line">				view.setHosts(hosts);</span><br><span class="line">			&#125;</span><br><span class="line">			return applyLifecycleMethods(viewName, view);</span><br><span class="line">		&#125;</span><br><span class="line">		// Check for special &quot;forward:&quot; prefix.</span><br><span class="line">		if (viewName.startsWith(FORWARD_URL_PREFIX)) &#123;</span><br><span class="line">			String forwardUrl = viewName.substring(FORWARD_URL_PREFIX.length());</span><br><span class="line">			return new InternalResourceView(forwardUrl);</span><br><span class="line">		&#125;</span><br><span class="line">		// Else fall back to superclass implementation: calling loadView.</span><br><span class="line">		return super.createView(viewName, locale);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>在创建视图前会检查返回值是否是以：”redirect:” 或 “forward:” 开头的。</strong></p>
+<p><strong>如果是重定向：则创建一个重定向视图，返回创建的视图。如果是转发：则返回通过 转发 url 创建的 InternalResourceView</strong> <strong>视图。</strong></p>
+<p>super.createView(viewName, locale),调用父类创建视图</p>
+<p>org.springframework.web.servlet.view.UrlBasedViewResolver#loadView</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">protected View createView(String viewName, Locale locale) throws Exception &#123;</span><br><span class="line">		return loadView(viewName, locale);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用具体的 InternalResourceViewResolver ，然后又调用 父类的 buildView() 方法</p>
+<p>org.springframework.web.servlet.view.UrlBasedViewResolver#buildView</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">protected AbstractUrlBasedView buildView(String viewName) throws Exception &#123;</span><br><span class="line">		Class&lt;?&gt; viewClass = getViewClass();</span><br><span class="line">		Assert.state(viewClass != null, &quot;No view class&quot;);</span><br><span class="line"></span><br><span class="line">		AbstractUrlBasedView view = (AbstractUrlBasedView) BeanUtils.instantiateClass(viewClass);</span><br><span class="line">		view.setUrl(getPrefix() + viewName + getSuffix());</span><br><span class="line"></span><br><span class="line">		String contentType = getContentType();</span><br><span class="line">		if (contentType != null) &#123;</span><br><span class="line">			view.setContentType(contentType);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		view.setRequestContextAttribute(getRequestContextAttribute());</span><br><span class="line">		view.setAttributesMap(getAttributesMap());</span><br><span class="line"></span><br><span class="line">		Boolean exposePathVariables = getExposePathVariables();</span><br><span class="line">		if (exposePathVariables != null) &#123;</span><br><span class="line">			view.setExposePathVariables(exposePathVariables);</span><br><span class="line">		&#125;</span><br><span class="line">		Boolean exposeContextBeansAsAttributes = getExposeContextBeansAsAttributes();</span><br><span class="line">		if (exposeContextBeansAsAttributes != null) &#123;</span><br><span class="line">			view.setExposeContextBeansAsAttributes(exposeContextBeansAsAttributes);</span><br><span class="line">		&#125;</span><br><span class="line">		String[] exposedContextBeanNames = getExposedContextBeanNames();</span><br><span class="line">		if (exposedContextBeanNames != null) &#123;</span><br><span class="line">			view.setExposedContextBeanNames(exposedContextBeanNames);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return view;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出：是通过 BeanUtils.instantiateClass(getViewClass()) 来创建 View 对象的。这个例子与其说是 InternalResourceViewResolver ，倒不如说是 UrlBasedViewResolver 类型的例子。</p>
+<p>从这里也可以看出：该类型最终要到的目标URL为：getPrefix() + viewName + getSuffix()</p>
+<h2 id="视图渲染"><a href="#视图渲染" class="headerlink" title="视图渲染"></a>视图渲染</h2><h3 id="View接口"><a href="#View接口" class="headerlink" title="View接口"></a>View接口</h3><p>官方文档：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`* MVC View for a web interaction. Implementations are responsible for rendering* content, and exposing the model. A single view exposes multiple model attributes.** &lt;p&gt;This class and the MVC approach associated with it is discussed in Chapter 12 of* &lt;a href=&quot;http://www.amazon.com/exec/obidos/tg/detail/-/0764543857/&quot;&gt;Expert One-On-One J2EE Design and Development&lt;/a&gt;* by Rod Johnson (Wrox, 2002).** &lt;p&gt;View implementations may differ widely. An obvious implementation would be* JSP-based. Other implementations might be XSLT-based, or use an HTML generation library.* This interface is designed to avoid restricting the range of possible implementations.** &lt;p&gt;Views should be beans. They are likely to be instantiated as beans by a ViewResolver.* As this interface is stateless, view implementations should be thread-safe.`</span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<p>SpringMVC 对一个 web 来说是相互作用的（不太明白）。View 的实现类是负责呈现内容的，并且 exposes（暴露、揭露、揭发的意思，这里就按暴露解释吧，想不出合适的词语） 模型的。</p>
+<p>一个单一的视图可以包含多个模型。</p>
+<p>View 的实现可能有很大的不同。一个明显的实现是基于 JSP 的。其他的实现可能是基于 XSLT 的，或者是一个 HTML 生成库。</p>
+<p>设计这个接口是为了避免约束可能实现的范围（这里是不是说，我们可以通过实现该接口来自定义扩展自定义视图？）。</p>
+<p>所有的视图都应该是一个 Bean 类。他们可能被 ViewResolver 当做一个 bean 进行实例化。</p>
+<p>由于这个接口是无状态的，View 的所有实现类应该是线程安全的。</p>
+<h3 id="View接口的实现类"><a href="#View接口的实现类" class="headerlink" title="View接口的实现类"></a>View接口的实现类</h3><p><strong><em>IDEA中crtl+H可查看View接口所有的实现类</em></strong></p>
+<h3 id="具体渲染的一个过程"><a href="#具体渲染的一个过程" class="headerlink" title="具体渲染的一个过程"></a>具体渲染的一个过程</h3><p>​        举例：View类型为JstlView</p>
+<p>继承关系：</p>
+<p>public class <strong><em>JstlView</em></strong> extends <strong><em>InternalResourceView</em></strong></p>
+<p>​    public class <strong><em>InternalResourceView</em></strong> extends <strong><em>AbstractUrlBasedView</em></strong></p>
+<p>​        public abstract class <strong><em>AbstractUrlBasedView</em></strong> extends <strong><em>AbstractView</em></strong> implements InitializingBean </p>
+<p>​                    public abstract class <strong><em>AbstractView</em></strong> extends WebApplicationObjectSupport implements <strong><em>View</em></strong>,     BeanNameAware</p>
+<p>通过org.springframework.web.servlet.DispatcherServlet#render 方法中的渲染view.render(mv.getModelInternal(), request, response);</p>
+<p>进入到org.springframework.web.servlet.view.AbstractView#render</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">	public void render(@Nullable Map&lt;String, ?&gt; model, HttpServletRequest request,</span><br><span class="line">			HttpServletResponse response) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">		if (logger.isTraceEnabled()) &#123;</span><br><span class="line">			logger.trace(&quot;Rendering view with name &apos;&quot; + this.beanName + &quot;&apos; with model &quot; + model +</span><br><span class="line">				&quot; and static attributes &quot; + this.staticAttributes);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		Map&lt;String, Object&gt; mergedModel = createMergedOutputModel(model, request, response);</span><br><span class="line">		prepareResponse(request, response);</span><br><span class="line">		renderMergedOutputModel(mergedModel, getRequestToExpose(request), response);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>renderMergedOutputModel(mergedModel, getRequestToExpose(request), response);</p>
+<p>这里只看 org.springframework.web.servlet.view.InternalResourceView#renderMergedOutputModel 这个方法</p>
+<p>renderMergedOutputModel（渲染合并输出模型）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">	protected void renderMergedOutputModel(</span><br><span class="line">			Map&lt;String, Object&gt; model, HttpServletRequest request, HttpServletResponse response) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">		// Expose the model object as request attributes.</span><br><span class="line">		exposeModelAsRequestAttributes(model, request);</span><br><span class="line"></span><br><span class="line">		// Expose helpers as request attributes, if any.</span><br><span class="line">		exposeHelpers(request);</span><br><span class="line"></span><br><span class="line">		// Determine the path for the request dispatcher.</span><br><span class="line">		String dispatcherPath = prepareForRendering(request, response);</span><br><span class="line"></span><br><span class="line">		// Obtain a RequestDispatcher for the target resource (typically a JSP).</span><br><span class="line">		RequestDispatcher rd = getRequestDispatcher(request, dispatcherPath);</span><br><span class="line">		if (rd == null) &#123;</span><br><span class="line">			throw new ServletException(&quot;Could not get RequestDispatcher for [&quot; + getUrl() +</span><br><span class="line">					&quot;]: Check that the corresponding file exists within your web application archive!&quot;);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// If already included or response already committed, perform include, else forward.</span><br><span class="line">		if (useInclude(request, response)) &#123;</span><br><span class="line">			response.setContentType(getContentType());</span><br><span class="line">			if (logger.isDebugEnabled()) &#123;</span><br><span class="line">				logger.debug(&quot;Including resource [&quot; + getUrl() + &quot;] in InternalResourceView &apos;&quot; + getBeanName() + &quot;&apos;&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">			rd.include(request, response);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		else &#123;</span><br><span class="line">			// Note: The forwarded resource is supposed to determine the content type itself.</span><br><span class="line">			if (logger.isDebugEnabled()) &#123;</span><br><span class="line">				logger.debug(&quot;Forwarding to resource [&quot; + getUrl() + &quot;] in InternalResourceView &apos;&quot; + getBeanName() + &quot;&apos;&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">			rd.forward(request, response);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>RequestDispatcher rd = getRequestDispatcher(request, dispatcherPath);//创建RequestDispatcher</p>
+<p>rd.forward(request, response); //转发请求</p>
+<p>可以看到前面的几个步骤都是为 RequestDispatch 做准备，装填数据。最后，到目标页面是通过转发。</p>
+<h3 id="DispatcherServlet做最后处理"><a href="#DispatcherServlet做最后处理" class="headerlink" title="DispatcherServlet做最后处理"></a>DispatcherServlet做最后处理</h3><p>DispatcherServlet继承FrameworkServlet</p>
+<p>FrameworkServlet重写service()方法,(也重写了doGet,doPost方法等）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">	protected void service(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">			throws ServletException, IOException &#123;</span><br><span class="line"></span><br><span class="line">		HttpMethod httpMethod = HttpMethod.resolve(request.getMethod());</span><br><span class="line">		if (HttpMethod.PATCH == httpMethod || httpMethod == null) &#123;</span><br><span class="line">			processRequest(request, response);</span><br><span class="line">		&#125;</span><br><span class="line">		else &#123;</span><br><span class="line">			super.service(request, response);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>1）service()方法或者super.service()方法，以及super.service()方法调用的doGet(),doPost()等等都调用processRequest()方法</p>
+<p>2）processRequest()方法，processRequest()调用doService()方法</p>
+<p>3）doService()调用doDispatch(request, response)，</p>
+<p>4）doDispatch(request, response)调用processDispatchResult()，</p>
+<p>5）processDispatchResult方法调用render()方法，虽然在render()方法中请求已经转发，但是后面还做了一些异常处理等</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">	 * Handle the result of handler selection and handler invocation, which is</span><br><span class="line">	 * either a ModelAndView or an Exception to be resolved to a ModelAndView.</span><br><span class="line">	 */</span><br><span class="line">	private void processDispatchResult(HttpServletRequest request, HttpServletResponse response,</span><br><span class="line">			@Nullable HandlerExecutionChain mappedHandler, @Nullable ModelAndView mv,</span><br><span class="line">			@Nullable Exception exception) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">		boolean errorView = false;</span><br><span class="line"></span><br><span class="line">		if (exception != null) &#123;</span><br><span class="line">			if (exception instanceof ModelAndViewDefiningException) &#123;</span><br><span class="line">				logger.debug(&quot;ModelAndViewDefiningException encountered&quot;, exception);</span><br><span class="line">				mv = ((ModelAndViewDefiningException) exception).getModelAndView();</span><br><span class="line">			&#125;</span><br><span class="line">			else &#123;</span><br><span class="line">				Object handler = (mappedHandler != null ? mappedHandler.getHandler() : null);</span><br><span class="line">				mv = processHandlerException(request, response, handler, exception);</span><br><span class="line">				errorView = (mv != null);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// Did the handler return a view to render?</span><br><span class="line">		if (mv != null &amp;&amp; !mv.wasCleared()) &#123;</span><br><span class="line">			render(mv, request, response);</span><br><span class="line">			if (errorView) &#123;</span><br><span class="line">				WebUtils.clearErrorRequestAttributes(request);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		else &#123;</span><br><span class="line">			if (logger.isDebugEnabled()) &#123;</span><br><span class="line">				logger.debug(&quot;Null ModelAndView returned to DispatcherServlet with name &apos;&quot; + getServletName() +</span><br><span class="line">						&quot;&apos;: assuming HandlerAdapter completed request handling&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if (WebAsyncUtils.getAsyncManager(request).isConcurrentHandlingStarted()) &#123;</span><br><span class="line">			// Concurrent handling started during a forward</span><br><span class="line">			return;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if (mappedHandler != null) &#123;</span><br><span class="line">			mappedHandler.triggerAfterCompletion(request, response, null);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>介绍了 SpringMVC 视图解析和视图渲染问题是如何解决的。SpringMVC 为逻辑视图提供了多种视图解析策略，可以在配置文件中配置多个视图的解析策略。并制定其先后顺序。</p>
+<p>这里所说的视图解析策略，就是指视图解析器。视图解析器会将逻辑视图名解析为一个具体的视图对象。再说视图渲染的过程，视图对模型进行了渲染，最终将模型的数据以某种形式呈现给用户。</p>
+<p>参考：<a href="https://www.cnblogs.com/solverpeng/p/5743609.html" target="_blank" rel="noopener">https://www.cnblogs.com/solverpeng/p/5743609.html</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Spring/">Spring</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Spring/">Spring</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2020/03/26/Spring/springmvc视图解析与渲染/" data-title="Springmvc视图解析与渲染 | Momentonly" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/03/26/Spring/Springmvc中的404/" title="Springmvc中的404">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Springmvc中的404</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/03/25/Java Web/jsp使用基路径/"  title="jsp中使用基路径">
+ <strong>NEXT:</strong><br/> 
+ <span>jsp中使用基路径
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="Springmvc视图解析与渲染" data-thread-key="Spring/springmvc视图解析与渲染" data-author-key="Moment Only" data-url="http://yoursite.com/post/Spring/springmvc视图解析与渲染"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#springmvc视图解析与渲染"><span class="toc-number">1.</span> <span class="toc-text">springmvc视图解析与渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#springmvc处理步骤"><span class="toc-number">1.1.</span> <span class="toc-text">springmvc处理步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#视图解析与渲染-render方法"><span class="toc-number">1.2.</span> <span class="toc-text">视图解析与渲染(render方法)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#视图解析：通过视图解析器进行视图的解析"><span class="toc-number">1.3.</span> <span class="toc-text">视图解析：通过视图解析器进行视图的解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#视图渲染"><span class="toc-number">1.4.</span> <span class="toc-text">视图渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#View接口"><span class="toc-number">1.4.1.</span> <span class="toc-text">View接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#View接口的实现类"><span class="toc-number">1.4.2.</span> <span class="toc-text">View接口的实现类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#具体渲染的一个过程"><span class="toc-number">1.4.3.</span> <span class="toc-text">具体渲染的一个过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DispatcherServlet做最后处理"><span class="toc-number">1.4.4.</span> <span class="toc-text">DispatcherServlet做最后处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.5.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Design-Pattern/" title="Design Pattern">Design Pattern<sup>1</sup></a></li>
+		
+			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>17</sup></a></li>
+		
+			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>13</sup></a></li>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Spring/" title="Spring">Spring<sup>3</sup></a></li>
+		
+			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>3</sup></a></li>
+		
+			<li><a href="/categories/database/" title="database">database<sup>13</sup></a></li>
+		
+			<li><a href="/categories/tools/" title="tools">tools<sup>7</sup></a></li>
+		
+			<li><a href="/categories/web/" title="web">web<sup>7</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/C/" title="C">C<sup>2</sup></a></li>
+		
+			<li><a href="/tags/CSS/" title="CSS">CSS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/HTML/" title="HTML">HTML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JAVA/" title="JAVA">JAVA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDBC/" title="JDBC">JDBC<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>16</sup></a></li>
+		
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JavaWeb/" title="JavaWeb">JavaWeb<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>6</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>3</sup></a></li>
+		
+			<li><a href="/tags/SpringBoot/" title="SpringBoot">SpringBoot<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Transaction/" title="Transaction">Transaction<sup>1</sup></a></li>
+		
+			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/data/" title="data">data<sup>1</sup></a></li>
+		
+			<li><a href="/tags/eclipse/" title="eclipse">eclipse<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>3</sup></a></li>
+		
+			<li><a href="/tags/jsp/" title="jsp">jsp<sup>3</sup></a></li>
+		
+			<li><a href="/tags/log4j/" title="log4j">log4j<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/C/" style="font-size: 11.67px;">C</a> <a href="/tags/CSS/" style="font-size: 11.67px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 15px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 18.33px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 11.67px;">Oracle</a> <a href="/tags/Spring/" style="font-size: 13.33px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.33px;">SpringBoot</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/data/" style="font-size: 10px;">data</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a> <a href="/tags/jsp/" style="font-size: 13.33px;">jsp</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 13.33px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 11.67px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 15px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.67px;">乱码</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2020 
+		
+		<a href="http://yoursite.com" target="_blank" title="Moment Only">Moment Only</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:""};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '', '');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+
