@@ -27,8 +27,9 @@ xhr.onreadystatechange = function () {
         // 遍历并保存所有文章对应的标题、链接、内容到对应的数组中
         // 同时过滤掉 HTML 标签
         for (i = 0; i < itemLength; i++) {
-            arrContents[i] = arrItems[i].getElementsByTagName('description')[0].
+            arrContents[i] = arrItems[i].getElementsByTagName('content')[0].
                 childNodes[0].nodeValue.replace(/<.*?>/g, '');
+            alert("aaa");
             arrLinks[i] = arrItems[i].getElementsByTagName('link')[0].
                 childNodes[0].nodeValue.replace(/<.*?>/g, '');
             arrTitles[i] = arrItems[i].getElementsByTagName('title')[0].
