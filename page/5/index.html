@@ -52,7 +52,7 @@
 					 
 						<li><a href="/">首页</a></li>
 					
-						<li><a href="/categories/despattern">设计模式</a></li>
+						<li><a href="/categories/designPattern">设计模式</a></li>
 					
 						<li><a href="/categories/tools">工具</a></li>
 					
@@ -80,20 +80,23 @@
 
   <section class="post" itemscope itemprop="blogPost">
   
-    <a href="/2019/06/20/Linux/centos7配置DHCP和静态IP/" title="centos7配置dhcp和静态Ip" itemprop="url">
+    <a href="/2019/06/20/Linux/安装centos7缺少命令问题/" title="centos7安装缺少命令" itemprop="url">
   
       <time datetime="2019-06-20T05:19:59.000Z" itemprop="datePublished">2019-06-20</time>
-    <h1 itemprop="name">centos7配置dhcp和静态Ip</h1>
+    <h1 itemprop="name">centos7安装缺少命令</h1>
     
      
-           <p itemprop="description" >cd /etc/sysconfig/network-scripts/
-vi ifcfg-eth0
-TYPE=Ethernet
-PROXY_METHOD=none
-BROWSER_ONLY=no
-BOOTPROTO=static
-DEFROUTE=yes
-IPV4_FAILURE_</p>
+           <p itemprop="description" >没有 ifconfig 、netstat命令：
+
+1yum install -y net-tools
+
+没有命令补全，tab补全命令：
+
+1yum install -y bash-completion
+
+没有killall命令：
+
+1yum install  -y psmisc</p>
         
     
   </a>
@@ -148,6 +151,20 @@ IPV4_FAILURE_</p>
 
   <section class="post" itemscope itemprop="blogPost">
   
+    <a href="/2019/06/17/DataBase/JDBC/java中的时间类型和mysql中的时间类型/" title="java中的时间类型和mysql中的时间类型" itemprop="url">
+  
+      <time datetime="2019-06-17T14:35:47.000Z" itemprop="datePublished">2019-06-17</time>
+    <h1 itemprop="name">java中的时间类型和mysql中的时间类型</h1>
+    
+     
+           <p itemprop="description" >java中的时间类型和mysql中的时间类型mysql创建表并插入数据12345678910CREATE TABLE `time_test` (  `id` int(11) NOT NULL AUTO_INCREMENT,  `dt` datetime DEFAULT NULL,</p>
+        
+    
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
     <a href="/2019/06/17/DataBase/JDBC/关于时间插入MYSQL数据库少8个小时的问题/" title="关于时间插入MYSQL数据库少8个小时的问题" itemprop="url">
   
       <time datetime="2019-06-17T14:35:47.000Z" itemprop="datePublished">2019-06-17</time>
@@ -156,20 +173,6 @@ IPV4_FAILURE_</p>
      
            <p itemprop="description" >指定连接参数（时区）1serverTimezone=Asia/Shanghai
 修改mysql时区12set global time_zone = &amp;apos;+8:00&amp;apos;;  ##修改mysql全局时区为北京时间，即我们所在的东8区flush privileges; </p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2019/06/17/DataBase/JDBC/java中的时间类型和mysql中的时间类型/" title="java中的时间类型和mysql中的时间类型" itemprop="url">
-  
-      <time datetime="2019-06-17T14:35:47.000Z" itemprop="datePublished">2019-06-17</time>
-    <h1 itemprop="name">java中的时间类型和mysql中的时间类型</h1>
-    
-     
-           <p itemprop="description" >java中的时间类型和mysql中的时间类型mysql创建表并插入数据12345678910CREATE TABLE `time_test` (  `id` int(11) NOT NULL AUTO_INCREMENT,  `dt` datetime DEFAULT NULL,</p>
         
     
   </a>
@@ -269,8 +272,6 @@ IPV4_FAILURE_</p>
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/Design-Pattern/" title="Design Pattern">Design Pattern<sup>1</sup></a></li>
-		
 			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>17</sup></a></li>
 		
 			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>13</sup></a></li>
@@ -282,6 +283,8 @@ IPV4_FAILURE_</p>
 			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>3</sup></a></li>
 		
 			<li><a href="/categories/database/" title="database">database<sup>13</sup></a></li>
+		
+			<li><a href="/categories/designPattern/" title="designPattern">designPattern<sup>1</sup></a></li>
 		
 			<li><a href="/categories/tools/" title="tools">tools<sup>7</sup></a></li>
 		
