@@ -80,16 +80,13 @@
 
   <section class="post" itemscope itemprop="blogPost">
   
-    <a href="/2019/03/03/JavaSE/java的Package/" title="java的Package" itemprop="url">
+    <a href="/2019/06/17/DataBase/JDBC/JDBC操作数据库/" title="JDBC操作数据库" itemprop="url">
   
-      <time datetime="2019-03-03T04:35:23.000Z" itemprop="datePublished">2019-03-03</time>
-    <h1 itemprop="name">java的Package</h1>
+      <time datetime="2019-06-17T14:35:47.000Z" itemprop="datePublished">2019-06-17</time>
+    <h1 itemprop="name">JDBC操作数据库</h1>
     
      
-           <p itemprop="description" >Java的Package没有包含关系
-例如： com.szxy和com.szxy.test
-import com.szxy.*，则只能用com.szxy目录下的类
-import com.szxy.test.*,则只能用com.szxy.test目录下的类</p>
+           <p itemprop="description" ></p>
         
     
   </a>
@@ -97,16 +94,14 @@ import com.szxy.test.*,则只能用com.szxy.test目录下的类</p>
 
   <section class="post" itemscope itemprop="blogPost">
   
-    <a href="/2019/03/02/JavaSE/带标签的break和continue/" title="带标签的break和continue" itemprop="url">
+    <a href="/2019/06/17/DataBase/JDBC/关于时间插入MYSQL数据库少8个小时的问题/" title="关于时间插入MYSQL数据库少8个小时的问题" itemprop="url">
   
-      <time datetime="2019-03-02T05:00:20.000Z" itemprop="datePublished">2019-03-02</time>
-    <h1 itemprop="name">带标签的break和continue</h1>
+      <time datetime="2019-06-17T14:35:47.000Z" itemprop="datePublished">2019-06-17</time>
+    <h1 itemprop="name">关于时间插入MYSQL数据库少8个小时的问题</h1>
     
      
-           <p itemprop="description" >1.不带标签的break和continue   break：跳出当前的循环
-   continue:跳出本次循环
-2.带标签的break和continuebreak label:跳出到label，并且不再执行该循环。即跳出label标签下的所有循环
-12345678label: </p>
+           <p itemprop="description" >指定连接参数（时区）1serverTimezone=Asia/Shanghai
+修改mysql时区12set global time_zone = &amp;apos;+8:00&amp;apos;;  ##修改mysql全局时区为北京时间，即我们所在的东8区flush privileges; </p>
         
     
   </a>
@@ -114,14 +109,13 @@ import com.szxy.test.*,则只能用com.szxy.test目录下的类</p>
 
   <section class="post" itemscope itemprop="blogPost">
   
-    <a href="/2019/02/24/JavaSE/Java 内部类中使用局部变量必须是final(jdk1.8之前)/" title="Java 内部类中使用局部变量必须是final" itemprop="url">
+    <a href="/2019/06/17/DataBase/JDBC/java中的时间类型和mysql中的时间类型/" title="java中的时间类型和mysql中的时间类型" itemprop="url">
   
-      <time datetime="2019-02-24T10:22:33.000Z" itemprop="datePublished">2019-02-24</time>
-    <h1 itemprop="name">Java 内部类中使用局部变量必须是final</h1>
+      <time datetime="2019-06-17T14:35:47.000Z" itemprop="datePublished">2019-06-17</time>
+    <h1 itemprop="name">java中的时间类型和mysql中的时间类型</h1>
     
      
-           <p itemprop="description" >注：jdk1.8新特性，Java 内部类中使用局部变量可以不用final修饰
-在java中， 方法的内部类可以访问方法中的局部变量，但必须用final修饰才能访问。原因：1.当方法被调用运行完毕之后，局部变量就已消亡了。但内部类对象可能还存在， 直到没有被引用时才会消亡。此时就会</p>
+           <p itemprop="description" >java中的时间类型和mysql中的时间类型mysql创建表并插入数据12345678910CREATE TABLE `time_test` (  `id` int(11) NOT NULL AUTO_INCREMENT,  `dt` datetime DEFAULT NULL,</p>
         
     
   </a>
@@ -129,14 +123,16 @@ import com.szxy.test.*,则只能用com.szxy.test目录下的类</p>
 
   <section class="post" itemscope itemprop="blogPost">
   
-    <a href="/2019/02/17/JavaSE/javaIO流中的InputStream中的read()方法返回int/" title="JavaIO流中InputStream中的read()方法返回int" itemprop="url">
+    <a href="/2019/06/17/DataBase/JDBC/mysql注释的三种写法/" title="mysql注释的三种写法" itemprop="url">
   
-      <time datetime="2019-02-17T07:20:20.000Z" itemprop="datePublished">2019-02-17</time>
-    <h1 itemprop="name">JavaIO流中InputStream中的read()方法返回int</h1>
+      <time datetime="2019-06-17T08:07:47.000Z" itemprop="datePublished">2019-06-17</time>
+    <h1 itemprop="name">mysql注释的三种写法</h1>
     
      
-           <p itemprop="description" >public abstract int read()throws IOExceptior从输入流中读取数据的下一个字节。返回0到255范围内的int字节值。如果因为已经到达流末尾而没有可用的字节,则返回值-1,数据可用、检测到流末尾或者抛出异常前,此方法一直阻塞。
-1234567</p>
+           <p itemprop="description" >MySql--三种注释写法
+需要特别注意  --   这种注释后面要加一个空格
+#DELETE FROM SeatInformation  
+/DELETE FROM SeatInformation /– DELETE FROM SeatInformation</p>
         
     
   </a>
@@ -144,14 +140,15 @@ import com.szxy.test.*,则只能用com.szxy.test目录下的类</p>
 
   <section class="post" itemscope itemprop="blogPost">
   
-    <a href="/2019/01/26/JavaSE/JAVA中类、实例与Class对象/" title="JAVA中类、实例与Class对象" itemprop="url">
+    <a href="/2019/06/17/Java Web/properties文件的读取/" title="properties文件的读取" itemprop="url">
   
-      <time datetime="2019-01-26T12:20:33.000Z" itemprop="datePublished">2019-01-26</time>
-    <h1 itemprop="name">JAVA中类、实例与Class对象</h1>
+      <time datetime="2019-06-17T02:00:38.000Z" itemprop="datePublished">2019-06-17</time>
+    <h1 itemprop="name">properties文件的读取</h1>
     
      
-           <p itemprop="description" >类​      类是面向对象编程语言的一个重要概念，它是对一项事物的抽象概括，可以包含该事物的一些属性定义，以及操作属性的方法。面向对象编程中，我们都是以类来编码。
-实例简单理解，就是new，就是对类的实例化，创建这个类对应的实际对象，类只是对事物的描述，而实例化就相当于为这个描</p>
+           <p itemprop="description" >Java 开发中，需要将一些易变的配置参数放置再 XML 配置文件或者 properties 配置文件中。然而 XML 配置文件需要通过 DOM 或 SAX 方式解析，而读取 properties 配置文件就比较容易。
+读取方式1、基于ClassLoder读取配置文件
+​    </p>
         
     
   </a>
@@ -159,13 +156,16 @@ import com.szxy.test.*,则只能用com.szxy.test目录下的类</p>
 
   <section class="post" itemscope itemprop="blogPost">
   
-    <a href="/2019/01/22/Java Web/关于XML文档的xmlns、xmlnsxsi和xsischemaLocation/" title="关于XML文档的xmlns、xmlns:xsi和xsi:schemaLocation" itemprop="url">
+    <a href="/2019/06/16/Linux/Linux常用命令2/" title="Linux常用命令2" itemprop="url">
   
-      <time datetime="2019-01-22T08:30:23.000Z" itemprop="datePublished">2019-01-22</time>
-    <h1 itemprop="name">关于XML文档的xmlns、xmlns:xsi和xsi:schemaLocation</h1>
+      <time datetime="2019-06-16T08:56:55.000Z" itemprop="datePublished">2019-06-16</time>
+    <h1 itemprop="name">Linux常用命令2</h1>
     
      
-           <p itemprop="description" >xmlns摘要：相信很多人和我一样，在编写Spring或者Maven或者其他需要用到XML文档的程序时，通常都是将这些XML文档头拷贝过来，并没有理解其中元素 （比如xmlns，xmlns:xsi，xsi:schemaLocation）的真正含义，不知道哪些元素是多余的，也不知道</p>
+           <p itemprop="description" >1.scp -r root@39.104.111.122:/usr/local/      /usr/local
+​        将远程39.104.111.122的/usr/local下的文件拷贝到本机/usr/local目录下
+​        -r   复制目录
+2.sc</p>
         
     
   </a>
@@ -173,14 +173,14 @@ import com.szxy.test.*,则只能用com.szxy.test目录下的类</p>
 
   <section class="post" itemscope itemprop="blogPost">
   
-    <a href="/2019/01/18/JavaSE/Java多线程this与Thread.currentThread()的区别/" title="Java多线程之this与Thread.currentThread()的区别" itemprop="url">
+    <a href="/2019/06/16/Java Web/手写服务器总结/" title="手写服务器总结" itemprop="url">
   
-      <time datetime="2019-01-18T12:11:44.000Z" itemprop="datePublished">2019-01-18</time>
-    <h1 itemprop="name">Java多线程之this与Thread.currentThread()的区别</h1>
+      <time datetime="2019-06-16T07:23:02.000Z" itemprop="datePublished">2019-06-16</time>
+    <h1 itemprop="name">手写服务器总结</h1>
     
      
-           <p itemprop="description" >this是当前代码所处的对象的线程，Thread.currentThread()是运行当前代码的线程。
-12345678910111213141516171819202122232425262728293031public class CountOperate extends T</p>
+           <p itemprop="description" >手写服务器总结搭建框架​                        …………………
+实现编写web.xml123456789101112&amp;lt;!--servlet处理请求--&amp;gt;&amp;lt;servlet&amp;gt;	&amp;lt;!--LoginServlet别名:login --</p>
         
     
   </a>
@@ -188,15 +188,14 @@ import com.szxy.test.*,则只能用com.szxy.test目录下的类</p>
 
   <section class="post" itemscope itemprop="blogPost">
   
-    <a href="/2019/01/17/JavaSE/成员变量的同名和方法的重写/" title="Java理解  子类成员变量与父类成员变量同名   方法的重写" itemprop="url">
+    <a href="/2019/06/15/Config/sublime的package control/" title="sublime的package control" itemprop="url">
   
-      <time datetime="2019-01-17T14:53:34.000Z" itemprop="datePublished">2019-01-17</time>
-    <h1 itemprop="name">Java理解  子类成员变量与父类成员变量同名   方法的重写</h1>
+      <time datetime="2019-06-15T07:13:46.000Z" itemprop="datePublished">2019-06-15</time>
+    <h1 itemprop="name">sublime的package control</h1>
     
      
-           <p itemprop="description" >1.子类父类成员变量同名1.子类的成员变量与父类成员变量同名时,在子类中父类成员变量被”隐藏”2.要想访问与父类的同名的成员变量, 两种方法 ①: 在子类中是用 super ②:将该变量强转成父类的类
-3.对象是什么类型的(不是new的那个类型), 成员变量是什么类型. 
-2.子</p>
+           <p itemprop="description" >sublime的package control​    preferences-&amp;gt;package control出现There are no packages available for installation错误
+据说是IPv6的原因，如果我们的Intent服务提供者（</p>
         
     
   </a>
@@ -204,16 +203,15 @@ import com.szxy.test.*,则只能用com.szxy.test目录下的类</p>
 
   <section class="post" itemscope itemprop="blogPost">
   
-    <a href="/2018/12/30/JavaSE/java和mysql的时间类型/" title="Java和mysql的时间类型" itemprop="url">
+    <a href="/2019/06/13/JavaSE/ThreadLocal的使用/" title="ThreadLocal的使用" itemprop="url">
   
-      <time datetime="2018-12-30T02:49:33.000Z" itemprop="datePublished">2018-12-30</time>
-    <h1 itemprop="name">Java和mysql的时间类型</h1>
+      <time datetime="2019-06-13T09:37:18.000Z" itemprop="datePublished">2019-06-13</time>
+    <h1 itemprop="name">ThreadLocal的使用</h1>
     
      
-           <p itemprop="description" >java.util.Date是不能直接插入数据库中的，虽然它包含了日期和时分秒。
-java.sql.Date可以直接插入数据库，但是它只有日期而没有时间；
-java.sql.Time可以直接插入数据库，但是它只有时间，没有日期
-Java.util.Date需要转换为Java.sq</p>
+           <p itemprop="description" >ThreadLocal的使用1.说明​        ThreadLocal 直译为“本地线程”，其实它就是一容器，用于 存放线程的局部变量 
+​        能够保持每一个线程里面的值是相应的，说明这些值已经达到了线程私有的目的。
+​        当你在一个类中使用 sta</p>
         
     
   </a>
@@ -221,14 +219,23 @@ Java.util.Date需要转换为Java.sq</p>
 
   <section class="post" itemscope itemprop="blogPost">
   
-    <a href="/2018/12/30/JavaSE/字符串分割split/" title="String.split()分割字符串用法" itemprop="url">
+    <a href="/2019/06/12/Linux/Linux常用命令1/" title="Linux常用命令1" itemprop="url">
   
-      <time datetime="2018-12-30T02:49:33.000Z" itemprop="datePublished">2018-12-30</time>
-    <h1 itemprop="name">String.split()分割字符串用法</h1>
+      <time datetime="2019-06-12T05:51:55.000Z" itemprop="datePublished">2019-06-12</time>
+    <h1 itemprop="name">Linux常用命令1</h1>
     
      
-           <p itemprop="description" >split方法的参数是一个正则表达式，因此遇到正则表达式中的元字符需要进行转义，而java中的特殊字符也需要转义，因此，分隔的字符既是java特殊字符也是元字符就需要二次转义才能正确分割字符串。
-1.public string[] split(string regex)这里的参数</p>
+           <p itemprop="description" >文件 &amp;amp; 目录操作（16 个）
+ls
+●　ls -a 查看所有文件，包含隐藏文件
+●　ls -l 简写 ll，查看详细信息
+●　ls -h 文件大小以易读的方式显示
+cd
+●　cd ../ 返回上级目录
+●　cd ~ 前往家目录
+●　cd - 返回上一次所在目录
+cp
+●</p>
         
     
   </a>
@@ -236,7 +243,7 @@ Java.util.Date需要转换为Java.sq</p>
 
 
   <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
   </nav>
 
 </div>
@@ -263,23 +270,27 @@ Java.util.Date需要转换为Java.sq</p>
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>17</sup></a></li>
+			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>18</sup></a></li>
 		
 			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>13</sup></a></li>
 		
 			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
 		
-			<li><a href="/categories/Spring/" title="Spring">Spring<sup>3</sup></a></li>
+			<li><a href="/categories/Logging/" title="Logging">Logging<sup>3</sup></a></li>
 		
-			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>3</sup></a></li>
+			<li><a href="/categories/Spring/" title="Spring">Spring<sup>11</sup></a></li>
 		
-			<li><a href="/categories/database/" title="database">database<sup>13</sup></a></li>
+			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>6</sup></a></li>
+		
+			<li><a href="/categories/SpringCloud/" title="SpringCloud">SpringCloud<sup>1</sup></a></li>
+		
+			<li><a href="/categories/database/" title="database">database<sup>12</sup></a></li>
 		
 			<li><a href="/categories/designPattern/" title="designPattern">designPattern<sup>1</sup></a></li>
 		
 			<li><a href="/categories/tools/" title="tools">tools<sup>7</sup></a></li>
 		
-			<li><a href="/categories/web/" title="web">web<sup>7</sup></a></li>
+			<li><a href="/categories/web/" title="web">web<sup>8</sup></a></li>
 		
 		</ul>
 </div>
@@ -290,7 +301,7 @@ Java.util.Date需要转换为Java.sq</p>
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/C/" title="C">C<sup>2</sup></a></li>
+			<li><a href="/tags/C/" title="C">C<sup>3</sup></a></li>
 		
 			<li><a href="/tags/CSS/" title="CSS">CSS<sup>2</sup></a></li>
 		
@@ -300,7 +311,7 @@ Java.util.Date需要转换为Java.sq</p>
 		
 			<li><a href="/tags/JDBC/" title="JDBC">JDBC<sup>4</sup></a></li>
 		
-			<li><a href="/tags/Java/" title="Java">Java<sup>16</sup></a></li>
+			<li><a href="/tags/Java/" title="Java">Java<sup>17</sup></a></li>
 		
 			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>1</sup></a></li>
 		
@@ -310,9 +321,11 @@ Java.util.Date需要转换为Java.sq</p>
 		
 			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>2</sup></a></li>
 		
-			<li><a href="/tags/Spring/" title="Spring">Spring<sup>3</sup></a></li>
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>11</sup></a></li>
 		
-			<li><a href="/tags/SpringBoot/" title="SpringBoot">SpringBoot<sup>3</sup></a></li>
+			<li><a href="/tags/SpringBoot/" title="SpringBoot">SpringBoot<sup>6</sup></a></li>
+		
+			<li><a href="/tags/SpringCloud/" title="SpringCloud">SpringCloud<sup>1</sup></a></li>
 		
 			<li><a href="/tags/Transaction/" title="Transaction">Transaction<sup>1</sup></a></li>
 		
@@ -327,8 +340,6 @@ Java.util.Date需要转换为Java.sq</p>
 			<li><a href="/tags/javascript/" title="javascript">javascript<sup>3</sup></a></li>
 		
 			<li><a href="/tags/jsp/" title="jsp">jsp<sup>3</sup></a></li>
-		
-			<li><a href="/tags/log4j/" title="log4j">log4j<sup>1</sup></a></li>
 		
 		</ul>
 </div>
@@ -351,7 +362,7 @@ Java.util.Date需要转换为Java.sq</p>
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/C/" style="font-size: 11.67px;">C</a> <a href="/tags/CSS/" style="font-size: 11.67px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 15px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 18.33px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 11.67px;">Oracle</a> <a href="/tags/Spring/" style="font-size: 13.33px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.33px;">SpringBoot</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/data/" style="font-size: 10px;">data</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a> <a href="/tags/jsp/" style="font-size: 13.33px;">jsp</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 13.33px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 11.67px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 15px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.67px;">乱码</a>
+       <a href="/tags/C/" style="font-size: 12.86px;">C</a> <a href="/tags/CSS/" style="font-size: 11.43px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 14.29px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 17.14px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 15.71px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 11.43px;">Oracle</a> <a href="/tags/Spring/" style="font-size: 18.57px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 15.71px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/data/" style="font-size: 10px;">data</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 12.86px;">javascript</a> <a href="/tags/jsp/" style="font-size: 12.86px;">jsp</a> <a href="/tags/log/" style="font-size: 11.43px;">log</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 12.86px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 12.86px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 11.43px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 14.29px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.43px;">乱码</a> <a href="/tags/跨域/" style="font-size: 10px;">跨域</a>
     </div>
   </div>
 

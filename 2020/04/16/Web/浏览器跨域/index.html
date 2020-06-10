@@ -1,0 +1,547 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>浏览器跨域 | Momentonly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Moment Only">
+    
+    <meta name="description" content="跨域跨域的本质浏览器有一个很重要的概念——同源策略(Same-Origin Policy)。所谓同源是指，域名，协议，端口相同。不同源的客户端脚本(javascript、ActionScript)在没明确授权的情况下，不能读写对方的资源。
+​    
+但是，form表单提交，img,script标签">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Momentonly" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Momentonly">Momentonly</a></h1>
+				<a class="blog-motto"></a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/categories/designPattern">设计模式</a></li>
+					
+						<li><a href="/categories/tools">工具</a></li>
+					
+						<li><a href="/categories/web">前端</a></li>
+					
+						<li><a href="/categories/database">数据库</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= 17576509095696061073 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/04/16/Web/浏览器跨域/" title="浏览器跨域" itemprop="url">浏览器跨域</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2020-04-16T12:55:11.000Z" itemprop="datePublished">2020-04-16</time>
+    更新日期:<time datetime="2020-04-17T07:33:29.253Z" itemprop="dateModified">2020-04-17</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#跨域"><span class="toc-number">1.</span> <span class="toc-text">跨域</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#跨域的本质"><span class="toc-number">1.1.</span> <span class="toc-text">跨域的本质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决跨域方案"><span class="toc-number">1.2.</span> <span class="toc-text">解决跨域方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#jsonp"><span class="toc-number">1.2.1.</span> <span class="toc-text">jsonp</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#jsonp原理"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">jsonp原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jsonp的缺点"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">jsonp的缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#json的一些实践"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">json的一些实践</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CORS"><span class="toc-number">1.2.2.</span> <span class="toc-text">CORS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#httpclient服务端代理"><span class="toc-number">1.2.3.</span> <span class="toc-text">httpclient服务端代理</span></a></li></ol></li></ol></li></ol>
+		</div>
+		
+		<h1 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h1><h2 id="跨域的本质"><a href="#跨域的本质" class="headerlink" title="跨域的本质"></a>跨域的本质</h2><p>浏览器有一个很重要的概念——同源策略(<strong>Same-Origin Policy</strong>)。所谓同源是指，<strong>域名，协议，端口相同</strong>。不同源的客户端脚本(javascript、ActionScript)在没明确授权的情况下，不能读写对方的资源。</p>
+<p>​    </p>
+<p>但是，form表单提交，img,script标签没有跨域问题，但ajax提交存在跨域问题。</p>
+<p>浏览器的策略本质是：一个域名下面的JS，没有经过允许是不能读取另外一个域名的内容，但是浏览器不阻止你向另外一个域名发送请求。</p>
+<p>所以form表单提交没有跨域问题，提交form表单到另外一个域名，原来页面是无法获取新页面的内容，或者说form提交后不需要返回，但是ajax是需要返回的。</p>
+<p>而ajax是想要读取响应内容，浏览器是不允许你这么做的。</p>
+<p>世界本无跨域，是浏览器不允许js访问别的域，但是浏览器却没有限制自己，img标签和script标签都是可以加载其他域的图片或者js文件。这不就是jsonp的跨域嘛，利用浏览器的历史兼容性。</p>
+<p>浏览器的安全策略限制的是js脚本，并不限制src，form表单提交之类的请求。就是说form表单提交不存在安全问题，ajax提交跨域存在安全问题。</p>
+<p>参考：<a href="https://www.cnblogs.com/tangjiao/p/9951477.html" target="_blank" rel="noopener">https://www.cnblogs.com/tangjiao/p/9951477.html</a></p>
+<h2 id="解决跨域方案"><a href="#解决跨域方案" class="headerlink" title="解决跨域方案"></a>解决跨域方案</h2><h3 id="jsonp"><a href="#jsonp" class="headerlink" title="jsonp"></a>jsonp</h3><h4 id="jsonp原理"><a href="#jsonp原理" class="headerlink" title="jsonp原理"></a>jsonp原理</h4><p>​    我们知道，img,script,这种标签如果有相应的src，那么便会发起一个htttp请求来请求相应的资源,如果有script标签对应的路径是一个js文件，那么在下载完毕这个js之后会马上执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;www.somewhere.com/test.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;!--此时会发起一个请求来获取test.js，下载完成之后会立即执行test.js--&gt;</span><br></pre></td></tr></table></figure>
+<p>假设我们需要从’<a href="http://www.localhost.com’发起一个获取数据的请求’www.somewhere.com/getdata’,如果有我们以ajax来发起请求，那么由于浏览器同源保护策略的限制，该请求的返回值不会被浏览器所接受，这就是跨域问题。但是script这种标签会发起一个get请求，并且这个请求是不受同源策略限制的，如果有我们将’www.somewhere.com/getdata’以script标签来发送变成如下请求方式，那么是不是就不会有跨域问题了" target="_blank" rel="noopener">www.localhost.com’发起一个获取数据的请求’www.somewhere.com/getdata’,如果有我们以ajax来发起请求，那么由于浏览器同源保护策略的限制，该请求的返回值不会被浏览器所接受，这就是跨域问题。但是script这种标签会发起一个get请求，并且这个请求是不受同源策略限制的，如果有我们将’www.somewhere.com/getdata’以script标签来发送变成如下请求方式，那么是不是就不会有跨域问题了</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;www.somewhere.com/getdata&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;!--需要这样一个script来发起get请求--&gt;</span><br></pre></td></tr></table></figure>
+<p>答案是肯定的，这也是jsonp跨域的原理(因此也只能是get请求)。</p>
+<h4 id="jsonp的缺点"><a href="#jsonp的缺点" class="headerlink" title="jsonp的缺点"></a>jsonp的缺点</h4><ul>
+<li><ul>
+<li>只能发送get请求。因为script只能发送get请求</li>
+<li>需要后台配合。此种请求方式应该前后端配合，将返回结果包装成callback(result)的形式。</li>
+</ul>
+</li>
+</ul>
+<p>参考：<a href="https://www.cnblogs.com/willing-shang/p/6719875.html" target="_blank" rel="noopener">https://www.cnblogs.com/willing-shang/p/6719875.html</a></p>
+<h4 id="json的一些实践"><a href="#json的一些实践" class="headerlink" title="json的一些实践"></a>json的一些实践</h4><p>参考：<a href="https://blog.csdn.net/zezezuiaiya/article/details/79158548" target="_blank" rel="noopener">https://blog.csdn.net/zezezuiaiya/article/details/79158548</a></p>
+<h3 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h3><p>规范化的跨域请求解决方案，安全可靠。</p>
+<p>优势：</p>
+<ul>
+<li>在服务端进行控制是否允许跨域，可自定义规则</li>
+<li>支持各种请求方式</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>会产生额外的请求</li>
+</ul>
+<p>参考：<a href="https://www.jianshu.com/p/98d4bc7565b2" target="_blank" rel="noopener">https://www.jianshu.com/p/98d4bc7565b2</a></p>
+<h3 id="httpclient服务端代理"><a href="#httpclient服务端代理" class="headerlink" title="httpclient服务端代理"></a>httpclient服务端代理</h3><p>​    通过服务端使用httpclient代理发送请求解决跨域（因为跨域是浏览器的限制）</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/跨域/">跨域</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/web/">web</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2020/04/16/Web/浏览器跨域/" data-title="浏览器跨域 | Momentonly" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/04/20/Logging/关于获取Log实例的参数问题/" title="关于获取Log实例的参数问题">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  关于获取Log实例的参数问题</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/04/15/Spring/springmvc注解驱动/"  title="Springmvc注解驱动">
+ <strong>NEXT:</strong><br/> 
+ <span>Springmvc注解驱动
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="浏览器跨域" data-thread-key="Web/浏览器跨域" data-author-key="Moment Only" data-url="http://yoursite.com/post/Web/浏览器跨域"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#跨域"><span class="toc-number">1.</span> <span class="toc-text">跨域</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#跨域的本质"><span class="toc-number">1.1.</span> <span class="toc-text">跨域的本质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决跨域方案"><span class="toc-number">1.2.</span> <span class="toc-text">解决跨域方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#jsonp"><span class="toc-number">1.2.1.</span> <span class="toc-text">jsonp</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#jsonp原理"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">jsonp原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jsonp的缺点"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">jsonp的缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#json的一些实践"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">json的一些实践</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CORS"><span class="toc-number">1.2.2.</span> <span class="toc-text">CORS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#httpclient服务端代理"><span class="toc-number">1.2.3.</span> <span class="toc-text">httpclient服务端代理</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>18</sup></a></li>
+		
+			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>13</sup></a></li>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Logging/" title="Logging">Logging<sup>3</sup></a></li>
+		
+			<li><a href="/categories/Spring/" title="Spring">Spring<sup>11</sup></a></li>
+		
+			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>6</sup></a></li>
+		
+			<li><a href="/categories/SpringCloud/" title="SpringCloud">SpringCloud<sup>1</sup></a></li>
+		
+			<li><a href="/categories/database/" title="database">database<sup>12</sup></a></li>
+		
+			<li><a href="/categories/designPattern/" title="designPattern">designPattern<sup>1</sup></a></li>
+		
+			<li><a href="/categories/tools/" title="tools">tools<sup>7</sup></a></li>
+		
+			<li><a href="/categories/web/" title="web">web<sup>8</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/C/" title="C">C<sup>3</sup></a></li>
+		
+			<li><a href="/tags/CSS/" title="CSS">CSS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/HTML/" title="HTML">HTML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JAVA/" title="JAVA">JAVA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDBC/" title="JDBC">JDBC<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>17</sup></a></li>
+		
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JavaWeb/" title="JavaWeb">JavaWeb<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>6</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>11</sup></a></li>
+		
+			<li><a href="/tags/SpringBoot/" title="SpringBoot">SpringBoot<sup>6</sup></a></li>
+		
+			<li><a href="/tags/SpringCloud/" title="SpringCloud">SpringCloud<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Transaction/" title="Transaction">Transaction<sup>1</sup></a></li>
+		
+			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/data/" title="data">data<sup>1</sup></a></li>
+		
+			<li><a href="/tags/eclipse/" title="eclipse">eclipse<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>3</sup></a></li>
+		
+			<li><a href="/tags/jsp/" title="jsp">jsp<sup>3</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/C/" style="font-size: 12.86px;">C</a> <a href="/tags/CSS/" style="font-size: 11.43px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 14.29px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 17.14px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 15.71px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 11.43px;">Oracle</a> <a href="/tags/Spring/" style="font-size: 18.57px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 15.71px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/data/" style="font-size: 10px;">data</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 12.86px;">javascript</a> <a href="/tags/jsp/" style="font-size: 12.86px;">jsp</a> <a href="/tags/log/" style="font-size: 11.43px;">log</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 12.86px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 12.86px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 11.43px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 14.29px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.43px;">乱码</a> <a href="/tags/跨域/" style="font-size: 10px;">跨域</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2020 
+		
+		<a href="http://yoursite.com" target="_blank" title="Moment Only">Moment Only</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:""};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '', '');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+

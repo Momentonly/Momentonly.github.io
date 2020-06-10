@@ -1,0 +1,569 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>Spring加载classpath与classpath*的过程 | Momentonly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Moment Only">
+    
+    <meta name="description" content="Spring加载classpath与classpath*的过程1234567891011121314151617181.无论是classpath还是classpath*都可以加载整个classpath下（包括jar包里面）的资源文件。2.classpath只会返回第一个匹配的资源，查找路径是优先在项">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Momentonly" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Momentonly">Momentonly</a></h1>
+				<a class="blog-motto"></a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/categories/designPattern">设计模式</a></li>
+					
+						<li><a href="/categories/tools">工具</a></li>
+					
+						<li><a href="/categories/web">前端</a></li>
+					
+						<li><a href="/categories/database">数据库</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= 17576509095696061073 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/05/27/Spring/Spring加载classpath与classpath星的过程/" title="Spring加载classpath与classpath*的过程" itemprop="url">Spring加载classpath与classpath*的过程</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2020-05-27T05:45:59.000Z" itemprop="datePublished">2020-05-27</time>
+    更新日期:<time datetime="2020-05-27T14:42:20.764Z" itemprop="dateModified">2020-05-27</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring加载classpath与classpath-的过程"><span class="toc-number">1.</span> <span class="toc-text">Spring加载classpath与classpath*的过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#关于classpath与classpath-的一些测试"><span class="toc-number">2.</span> <span class="toc-text">关于classpath与classpath*的一些测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对于classpath与classpath-的一些理解"><span class="toc-number">3.</span> <span class="toc-text">对于classpath与classpath*的一些理解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#结论1"><span class="toc-number">3.1.</span> <span class="toc-text">结论1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结论2"><span class="toc-number">3.2.</span> <span class="toc-text">结论2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结论3"><span class="toc-number">3.3.</span> <span class="toc-text">结论3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题"><span class="toc-number">3.3.1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">3.3.2.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结论"><span class="toc-number">3.3.3.</span> <span class="toc-text">结论</span></a></li></ol></li></ol></li></ol>
+		</div>
+		
+		<h1 id="Spring加载classpath与classpath-的过程"><a href="#Spring加载classpath与classpath-的过程" class="headerlink" title="Spring加载classpath与classpath*的过程"></a>Spring加载classpath与classpath*的过程</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">1.无论是classpath还是classpath*都可以加载整个classpath下（包括jar包里面）的资源文件。</span><br><span class="line">2.classpath只会返回第一个匹配的资源，查找路径是优先在项目中存在资源文件，再查找jar包。</span><br><span class="line">3.文件名字包含通配符资源(如果spring-.xml，spring.xml)， 如果根目录为&quot;&quot;， classpath加载不到任何资源</span><br><span class="line">而classpath*则可以加载到classpath中可以匹配的目录中的资源，但是不能加载到jar包中的资源</span><br><span class="line">  第1，2点比较好表理解，大家可以自行测试，第三点表述有点绕，举个例，现在有资源文件结构如下：</span><br><span class="line">	src/main/resources</span><br><span class="line">		META-INF</span><br><span class="line">			aaa</span><br><span class="line">				notice.txt</span><br><span class="line">			notice.txt</span><br><span class="line">		notice.txt</span><br><span class="line">		</span><br><span class="line">classpath:notice*.txt     加载不到资源    </span><br><span class="line">classpath*:notice*.txt     加载到resource根目录下notice.txt                       </span><br><span class="line">classpath:META-INF/notice*.txt   加载到META-INF下的一个资源（classpath是加载到匹配的第一个资源，就算删除classpath下的notice.txt，他仍然可以加载jar包中的notice.txt）                 </span><br><span class="line">classpath:META-*/notice*.txt      加载不到任何资源                             </span><br><span class="line">classpath*:META-INF/notice*.txt   加载到classpath以及所有jar包中META-INF目录下以notice开头的txt文件                                     </span><br><span class="line">classpath*:META-*/notice*.txt      只能加载到classpath下 META-INF目录的notice.txt</span><br></pre></td></tr></table></figure>
+<p>有一些错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">classpath:META-INF/notice*.txt        可能什么也加载不到</span><br><span class="line"></span><br><span class="line">classpath*:META-*/notice*.txt        加载到classpath以及所有jar包中META-INF目录下以notice开头的txt文件</span><br></pre></td></tr></table></figure>
+<p>​                 </p>
+<p>原文链接：<a href="https://blog.csdn.net/n447194252/article/details/76664053" target="_blank" rel="noopener">https://blog.csdn.net/n447194252/article/details/76664053</a></p>
+<h1 id="关于classpath与classpath-的一些测试"><a href="#关于classpath与classpath-的一些测试" class="headerlink" title="关于classpath与classpath*的一些测试"></a>关于classpath与classpath*的一些测试</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">测试结果：</span><br><span class="line">1、classpath在使用时，第一级路径无法使用通配符，如classpath:general*.properties或者classpath:general*/general*.properties是无法获取到的</span><br><span class="line">2、在我将general.properties拆成两个文件后，classpath同样可以获取两个文件，读取到全部内容，不知道是不是我测的方法有问题，这方面没感觉出来说是只能获取到第一个文件的限制</span><br><span class="line">3、classpath比classpath*快，明确位置比通配符快。</span><br></pre></td></tr></table></figure>
+<p>对于2的说明：</p>
+<p>应该是相同类路径下的相同名称的资源只能获取第一个，这个测试4中general.properties一个放在general下，一个放在general1下，虽然名称相同，但是不是同一路径了</p>
+<p>原文链接：<a href="https://blog.csdn.net/n447194252/article/details/76664053" target="_blank" rel="noopener">https://blog.csdn.net/n447194252/article/details/76664053</a></p>
+<h1 id="对于classpath与classpath-的一些理解"><a href="#对于classpath与classpath-的一些理解" class="headerlink" title="对于classpath与classpath*的一些理解"></a>对于classpath与classpath*的一些理解</h1><p>一般由PathMatchingResourcePatternResolver类的getResources解析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">new PathMatchingResourcePatternResolver().getResources(locationPattern);</span><br></pre></td></tr></table></figure>
+<p>getResources()方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">	public Resource[] getResources(String locationPattern) throws IOException &#123;</span><br><span class="line">		Assert.notNull(locationPattern, &quot;Location pattern must not be null&quot;);</span><br><span class="line">		// classpath*:前缀</span><br><span class="line">		if (locationPattern.startsWith(CLASSPATH_ALL_URL_PREFIX)) &#123;</span><br><span class="line">			// a class path resource (multiple resources for same name possible)</span><br><span class="line">			if (getPathMatcher().isPattern(locationPattern.substring(CLASSPATH_ALL_URL_PREFIX.length()))) &#123;</span><br><span class="line">				// a class path resource pattern</span><br><span class="line">				return findPathMatchingResources(locationPattern);</span><br><span class="line">			&#125;</span><br><span class="line">			else &#123;</span><br><span class="line">				// all class path resources with the given name</span><br><span class="line">				return findAllClassPathResources(locationPattern.substring(CLASSPATH_ALL_URL_PREFIX.length()));</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		// classpath:前缀</span><br><span class="line">		else &#123;</span><br><span class="line">			// Generally only look for a pattern after a prefix here,</span><br><span class="line">			// and on Tomcat only after the &quot;*/&quot; separator for its &quot;war:&quot; protocol.</span><br><span class="line">			int prefixEnd = (locationPattern.startsWith(&quot;war:&quot;) ? locationPattern.indexOf(&quot;*/&quot;) + 1 :</span><br><span class="line">					locationPattern.indexOf(&apos;:&apos;) + 1);</span><br><span class="line">			if (getPathMatcher().isPattern(locationPattern.substring(prefixEnd))) &#123;</span><br><span class="line">				// a file pattern</span><br><span class="line">				return findPathMatchingResources(locationPattern);</span><br><span class="line">			&#125;</span><br><span class="line">			else &#123;</span><br><span class="line">				// a single resource with the given name</span><br><span class="line">				return new Resource[] &#123;getResourceLoader().getResource(locationPattern)&#125;;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>findPathMatchingResources()方法匹配模式路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">protected Resource[] findPathMatchingResources(String locationPattern) throws IOException &#123;</span><br><span class="line">		String rootDirPath = determineRootDir(locationPattern);</span><br><span class="line">		String subPattern = locationPattern.substring(rootDirPath.length());</span><br><span class="line">		//根路径资源</span><br><span class="line">		Resource[] rootDirResources = getResources(rootDirPath);</span><br><span class="line">		Set&lt;Resource&gt; result = new LinkedHashSet&lt;&gt;(16);</span><br><span class="line">		for (Resource rootDirResource : rootDirResources) &#123;</span><br><span class="line">			rootDirResource = resolveRootDirResource(rootDirResource);</span><br><span class="line">			URL rootDirUrl = rootDirResource.getURL();</span><br><span class="line">			if (equinoxResolveMethod != null &amp;&amp; rootDirUrl.getProtocol().startsWith(&quot;bundle&quot;)) &#123;</span><br><span class="line">				URL resolvedUrl = (URL) ReflectionUtils.invokeMethod(equinoxResolveMethod, null, rootDirUrl);</span><br><span class="line">				if (resolvedUrl != null) &#123;</span><br><span class="line">					rootDirUrl = resolvedUrl;</span><br><span class="line">				&#125;</span><br><span class="line">				rootDirResource = new UrlResource(rootDirUrl);</span><br><span class="line">			&#125;</span><br><span class="line">			if (rootDirUrl.getProtocol().startsWith(ResourceUtils.URL_PROTOCOL_VFS)) &#123;</span><br><span class="line">				result.addAll(VfsResourceMatchingDelegate.findMatchingResources(rootDirUrl, subPattern, getPathMatcher()));</span><br><span class="line">			&#125;</span><br><span class="line">			else if (ResourceUtils.isJarURL(rootDirUrl) || isJarResource(rootDirResource)) &#123;</span><br><span class="line">				result.addAll(doFindPathMatchingJarResources(rootDirResource, rootDirUrl, subPattern));</span><br><span class="line">			&#125;</span><br><span class="line">			else &#123;</span><br><span class="line">				result.addAll(doFindPathMatchingFileResources(rootDirResource, subPattern));</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		if (logger.isTraceEnabled()) &#123;</span><br><span class="line">			logger.trace(&quot;Resolved location pattern [&quot; + locationPattern + &quot;] to resources &quot; + result);</span><br><span class="line">		&#125;</span><br><span class="line">		return result.toArray(new Resource[0]);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="结论1"><a href="#结论1" class="headerlink" title="结论1"></a>结论1</h2><p>classpath*:可以获取同一路径同一名字的多个资源</p>
+<p>classpath:可以获取同一路径同一名字的一个资源</p>
+<h2 id="结论2"><a href="#结论2" class="headerlink" title="结论2"></a>结论2</h2><p>当使用classpath:时，后面的路径不能紧接通配符路径</p>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">classpath:**/*.xml        classpath:spri*/*.xml</span><br></pre></td></tr></table></figure>
+<p>spring的解析类在解析时会将路径其分成两部分（根路径+包含通配符路径）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">classpath: 和 **/*.xml     classpath: 和 spri*/*.xml</span><br></pre></td></tr></table></figure>
+<p>并且getResources()方法中的 </p>
+<p>return new Resource[] {getResourceLoader().getResource(locationPattern)};</p>
+<p>getResourceLoader().getResource(locationPattern)</p>
+<p>进入DefaultResourceLoader类的getResource()方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">	public Resource getResource(String location) &#123;</span><br><span class="line">		Assert.notNull(location, &quot;Location must not be null&quot;);</span><br><span class="line"></span><br><span class="line">		for (ProtocolResolver protocolResolver : getProtocolResolvers()) &#123;</span><br><span class="line">			Resource resource = protocolResolver.resolve(location, this);</span><br><span class="line">			if (resource != null) &#123;</span><br><span class="line">				return resource;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if (location.startsWith(&quot;/&quot;)) &#123;</span><br><span class="line">			return getResourceByPath(location);</span><br><span class="line">		&#125;</span><br><span class="line">		// 截取了classpath:</span><br><span class="line">		else if (location.startsWith(CLASSPATH_URL_PREFIX)) &#123;</span><br><span class="line">			return new ClassPathResource(location.substring(CLASSPATH_URL_PREFIX.length()), getClassLoader());</span><br><span class="line">		&#125;</span><br><span class="line">		else &#123;</span><br><span class="line">			try &#123;</span><br><span class="line">				// Try to parse the location as a URL...</span><br><span class="line">				URL url = new URL(location);</span><br><span class="line">				return (ResourceUtils.isFileURL(url) ? new FileUrlResource(url) : new UrlResource(url));</span><br><span class="line">			&#125;</span><br><span class="line">			catch (MalformedURLException ex) &#123;</span><br><span class="line">				// No URL -&gt; resolve as resource path.</span><br><span class="line">				return getResourceByPath(location);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>classpath:被截取，返回的根路径为””, 这样就获取不到任何资源</p>
+<h2 id="结论3"><a href="#结论3" class="headerlink" title="结论3"></a>结论3</h2><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>关于类路径下META-INF文件夹，使用前缀classpath:以及通配符获取不到资源</p>
+<p>例如路径： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">classpath:META-INF/*.xml</span><br></pre></td></tr></table></figure>
+<p>获取不到META-INF下的mapper.xml</p>
+<p>解决：可以在META-INF中添加一个目录，例如classpath:META-INF/mapper/*.xml就可以了</p>
+<p>调试分析：</p>
+<p>findPathMatchingResources()方法中的有一句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">URL rootDirUrl = rootDirResource.getURL();</span><br></pre></td></tr></table></figure>
+<p>遇到rootDirResource是META-INF时，会获取一个根路径下的一个jar包路径</p>
+<p>(file:/C:Program%20Files/Java/jdk1.8.0_161/jre/lib/ext/jfxrt.jar!/META-INF/)</p>
+<p>在该jar路径下META-INF下查找mapper.xml当然查找不到</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>classpath:使用路径匹配，获取的资源只有一个。</p>
+<p>getResources()方法中的classpath:分支获取根路径资源的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return new Resource[] &#123;getResourceLoader().getResource(locationPattern)&#125;;</span><br></pre></td></tr></table></figure>
+<p>可以看出，虽然new了一个数组Resource，但是实际数组中只有一个根路径资源，</p>
+<p>因此，相同目录下使用classpath:与路径匹配获取的资源只有一个</p>
+<p>并且findPathMatchingResources()方法中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for (Resource rootDirResource : rootDirResources) &#123;</span><br><span class="line">			rootDirResource = resolveRootDirResource(rootDirResource);</span><br><span class="line">			URL rootDirUrl = rootDirResource.getURL();</span><br><span class="line">			...</span><br></pre></td></tr></table></figure>
+<p>根据rootDirResource.getURL()获取一个URL路径</p>
+<p>Resource实现类ClassPathResource中getURL()方法，</p>
+<p>执行了return this.classLoader.getResource(this.path);返回了<strong><em>一个</em></strong>URL</p>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">    public void test5()&#123;</span><br><span class="line">        URL mapper = this.getClass().getClassLoader().getResource(&quot;META-INF/mappers/&quot;);</span><br><span class="line">        System.out.println(mapper.getPath());</span><br><span class="line">        URL metainf = this.getClass().getClassLoader().getResource(&quot;META-INF/&quot;);</span><br><span class="line">        System.out.println(metainf.getPath());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>打印：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">file:/E:/maven/maven-repository/com/szxy/szxy-spring-boot-autoconfigure/1.0-SNAPSHOT/szxy-spring-boot-autoconfigure-1.0-SNAPSHOT.jar!/META-INF/mappers/</span><br><span class="line">file:/C:/Program%20Files/Java/jdk1.8.0_161/jre/lib/ext/jfxrt.jar!/META-INF/</span><br></pre></td></tr></table></figure>
+<p>然而，这两个jar下虽然有对应的目录URL,但并不是我们想要匹配的jar,因此，匹配不到任何资源</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>​    1)使用classpath:获取资源，注意匹配目录不要与其他jar包中的重复，因为其根路径资源只加载</p>
+<p>一个，如果通过根路径获取了另一个不含有资源的jar包(只是具有相同的类路径)，则无法获取资源。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">例： classpath:META-INF/*.txt</span><br><span class="line">	路径分割成根路径META-INF和模式路径*.txt</span><br><span class="line">	许多jar包下都有META-INF目录，但是只会加载一个jar包去匹配资源而忽略其他jar包，因此可能导致需要的资源没有加载</span><br></pre></td></tr></table></figure>
+<p>​    </p>
+<p>2）获取单一资源，可以直接写完整的路径名进行匹配</p>
+<p>3 ) classpath:如果具有相同路径相同名称的资源，则只加载一个</p>
+<p>​            </p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Spring/">Spring</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Spring/">Spring</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2020/05/27/Spring/Spring加载classpath与classpath星的过程/" data-title="Spring加载classpath与classpath*的过程 | Momentonly" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/06/01/Spring/spring中的BeanPostProcessor接口/" title="spring中的BeanPostProcessor接口">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  spring中的BeanPostProcessor接口</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/05/25/Spring/spring中一些使用分析链接/"  title="spring中一些使用分析链接">
+ <strong>NEXT:</strong><br/> 
+ <span>spring中一些使用分析链接
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="Spring加载classpath与classpath*的过程" data-thread-key="Spring/Spring加载classpath与classpath星的过程" data-author-key="Moment Only" data-url="http://yoursite.com/post/Spring/Spring加载classpath与classpath星的过程"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring加载classpath与classpath-的过程"><span class="toc-number">1.</span> <span class="toc-text">Spring加载classpath与classpath*的过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#关于classpath与classpath-的一些测试"><span class="toc-number">2.</span> <span class="toc-text">关于classpath与classpath*的一些测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对于classpath与classpath-的一些理解"><span class="toc-number">3.</span> <span class="toc-text">对于classpath与classpath*的一些理解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#结论1"><span class="toc-number">3.1.</span> <span class="toc-text">结论1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结论2"><span class="toc-number">3.2.</span> <span class="toc-text">结论2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结论3"><span class="toc-number">3.3.</span> <span class="toc-text">结论3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题"><span class="toc-number">3.3.1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">3.3.2.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结论"><span class="toc-number">3.3.3.</span> <span class="toc-text">结论</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>18</sup></a></li>
+		
+			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>13</sup></a></li>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Logging/" title="Logging">Logging<sup>3</sup></a></li>
+		
+			<li><a href="/categories/Spring/" title="Spring">Spring<sup>11</sup></a></li>
+		
+			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>6</sup></a></li>
+		
+			<li><a href="/categories/SpringCloud/" title="SpringCloud">SpringCloud<sup>1</sup></a></li>
+		
+			<li><a href="/categories/database/" title="database">database<sup>12</sup></a></li>
+		
+			<li><a href="/categories/designPattern/" title="designPattern">designPattern<sup>1</sup></a></li>
+		
+			<li><a href="/categories/tools/" title="tools">tools<sup>7</sup></a></li>
+		
+			<li><a href="/categories/web/" title="web">web<sup>8</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/C/" title="C">C<sup>3</sup></a></li>
+		
+			<li><a href="/tags/CSS/" title="CSS">CSS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/HTML/" title="HTML">HTML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JAVA/" title="JAVA">JAVA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDBC/" title="JDBC">JDBC<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>17</sup></a></li>
+		
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JavaWeb/" title="JavaWeb">JavaWeb<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>6</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>11</sup></a></li>
+		
+			<li><a href="/tags/SpringBoot/" title="SpringBoot">SpringBoot<sup>6</sup></a></li>
+		
+			<li><a href="/tags/SpringCloud/" title="SpringCloud">SpringCloud<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Transaction/" title="Transaction">Transaction<sup>1</sup></a></li>
+		
+			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/data/" title="data">data<sup>1</sup></a></li>
+		
+			<li><a href="/tags/eclipse/" title="eclipse">eclipse<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>3</sup></a></li>
+		
+			<li><a href="/tags/jsp/" title="jsp">jsp<sup>3</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/C/" style="font-size: 12.86px;">C</a> <a href="/tags/CSS/" style="font-size: 11.43px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 14.29px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 17.14px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 15.71px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 11.43px;">Oracle</a> <a href="/tags/Spring/" style="font-size: 18.57px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 15.71px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/data/" style="font-size: 10px;">data</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 12.86px;">javascript</a> <a href="/tags/jsp/" style="font-size: 12.86px;">jsp</a> <a href="/tags/log/" style="font-size: 11.43px;">log</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 12.86px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 12.86px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 11.43px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 14.29px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.43px;">乱码</a> <a href="/tags/跨域/" style="font-size: 10px;">跨域</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2020 
+		
+		<a href="http://yoursite.com" target="_blank" title="Moment Only">Moment Only</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:""};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '', '');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+

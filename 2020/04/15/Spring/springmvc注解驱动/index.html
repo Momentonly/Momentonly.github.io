@@ -1,0 +1,580 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>Springmvc注解驱动 | Momentonly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Moment Only">
+    
+    <meta name="description" content="Springmvc注解驱动注解驱动的解析​    通过查看 spring-webmvc-xxx.jar 下的spring.handlers文件可以发现 mvc前缀的标签都是由 MvcNamespaceHandler 来进行解析的。
+spring.handlers
+1http\://www.sprin">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Momentonly" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Momentonly">Momentonly</a></h1>
+				<a class="blog-motto"></a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/categories/designPattern">设计模式</a></li>
+					
+						<li><a href="/categories/tools">工具</a></li>
+					
+						<li><a href="/categories/web">前端</a></li>
+					
+						<li><a href="/categories/database">数据库</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= 17576509095696061073 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/04/15/Spring/springmvc注解驱动/" title="Springmvc注解驱动" itemprop="url">Springmvc注解驱动</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2020-04-15T07:45:59.000Z" itemprop="datePublished">2020-04-15</time>
+    更新日期:<time datetime="2020-04-15T10:51:58.541Z" itemprop="dateModified">2020-04-15</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Springmvc注解驱动"><span class="toc-number">1.</span> <span class="toc-text">Springmvc注解驱动</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#注解驱动的解析"><span class="toc-number">1.1.</span> <span class="toc-text">注解驱动的解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RequestMappingHandlerMapping"><span class="toc-number">1.2.</span> <span class="toc-text">RequestMappingHandlerMapping</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#继承结构"><span class="toc-number">1.2.1.</span> <span class="toc-text">继承结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初始化"><span class="toc-number">1.2.2.</span> <span class="toc-text">初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化接口"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">初始化接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#具体实现接口"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">具体实现接口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">1.2.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol>
+		</div>
+		
+		<h1 id="Springmvc注解驱动"><a href="#Springmvc注解驱动" class="headerlink" title="Springmvc注解驱动"></a>Springmvc注解驱动</h1><h2 id="注解驱动的解析"><a href="#注解驱动的解析" class="headerlink" title="注解驱动的解析"></a>注解驱动的解析</h2><p>​    通过查看 spring-webmvc-xxx.jar 下的spring.handlers文件可以发现 mvc前缀的标签都是由 MvcNamespaceHandler 来进行解析的。</p>
+<p>spring.handlers</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http\://www.springframework.org/schema/mvc=org.springframework.web.servlet.config.MvcNamespaceHandler</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class MvcNamespaceHandler extends NamespaceHandlerSupport &#123;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void init() &#123;</span><br><span class="line">		registerBeanDefinitionParser(&quot;annotation-driven&quot;, new AnnotationDrivenBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(&quot;default-servlet-handler&quot;, new DefaultServletHandlerBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(&quot;interceptors&quot;, new InterceptorsBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(&quot;resources&quot;, new ResourcesBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(&quot;view-controller&quot;, new ViewControllerBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(&quot;redirect-view-controller&quot;, new ViewControllerBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(&quot;status-controller&quot;, new ViewControllerBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(&quot;view-resolvers&quot;, new ViewResolversBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(&quot;tiles-configurer&quot;, new TilesConfigurerBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(&quot;freemarker-configurer&quot;, new FreeMarkerConfigurerBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(&quot;groovy-configurer&quot;, new GroovyMarkupConfigurerBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(&quot;script-template-configurer&quot;, new ScriptTemplateConfigurerBeanDefinitionParser());</span><br><span class="line">		registerBeanDefinitionParser(&quot;cors&quot;, new CorsBeanDefinitionParser());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过查看其内部唯一的方法 init() 的实现可以确定 &lt;mvc:annotation-driven /&gt; 的解析工作是由 AnnotationDrivenBeanDefinitionParser 类全权负责的。其实现了BeanDefinitionParser接口</p>
+<p>唯一的parse()方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">class AnnotationDrivenBeanDefinitionParser implements BeanDefinitionParser &#123;</span><br><span class="line"></span><br><span class="line">	public static final String HANDLER_MAPPING_BEAN_NAME = RequestMappingHandlerMapping.class.getName();</span><br><span class="line"></span><br><span class="line">	public static final String HANDLER_ADAPTER_BEAN_NAME = RequestMappingHandlerAdapter.class.getName();</span><br><span class="line"></span><br><span class="line">	//....省略其他属性</span><br><span class="line"></span><br><span class="line">	public BeanDefinition parse(Element element, ParserContext parserContext) &#123;</span><br><span class="line">		</span><br><span class="line">		//.....省略代码</span><br><span class="line">		</span><br><span class="line">		//此处注册组件</span><br><span class="line">		parserContext.registerComponent(new BeanComponentDefinition(handlerMappingDef, HANDLER_MAPPING_BEAN_NAME)); //注册RequestMappingHandlerMapping</span><br><span class="line">		parserContext.registerComponent(new BeanComponentDefinition(handlerAdapterDef, HANDLER_ADAPTER_BEAN_NAME)); //注册REquestMappingHandlerAdapter</span><br><span class="line">		parserContext.registerComponent(new BeanComponentDefinition(uriCompContribDef, uriCompContribName));</span><br><span class="line">		parserContext.registerComponent(new BeanComponentDefinition(exceptionResolver, methodExceptionResolverName));</span><br><span class="line">		parserContext.registerComponent(new BeanComponentDefinition(statusExceptionResolver, statusExResolverName));</span><br><span class="line">		parserContext.registerComponent(new BeanComponentDefinition(defaultExceptionResolver, defaultExResolverName));</span><br><span class="line">		parserContext.registerComponent(new BeanComponentDefinition(mappedCsInterceptorDef, mappedInterceptorName));</span><br><span class="line"></span><br><span class="line">		// Ensure BeanNameUrlHandlerMapping (SPR-8289) and default HandlerAdapters are not &quot;turned off&quot;</span><br><span class="line">		MvcNamespaceUtils.registerDefaultComponents(parserContext, source);</span><br><span class="line"></span><br><span class="line">		parserContext.popAndRegisterContainingComponent();</span><br><span class="line"></span><br><span class="line">		return null;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>观察该类对所继承接口的实现可以发现:</p>
+<p>​    向SpringMVC容器中注册了 ContentNegotiationManagerFactoryBean<br>​    向SpringMVC容器中注册了 RequestMappingHandlerMapping (间接实现了HandlerMapping接口), order为0<br>​    向SpringMVC容器中注册了 RequestMappingHandlerAdapter (间接实现了HandlerAdapter接口，直接实现了        InitializingBean接口，关于这个接口的实现，参见本人的另外一篇博客)<br>​    向SpringMVC容器中注册了 MappedInterceptor<br>​    向SpringMVC容器中注册了 ExceptionHandlerExceptionResolver (间接实现了HandlerExceptionResolver接口),     order为0<br>​    向SpringMVC容器中注册了 ResponseStatusExceptionResolver (间接实现了HandlerExceptionResolver接口),   order为1<br>​    向SpringMVC容器中注册了 DefaultHandlerExceptionResolver (间接实现了HandlerExceptionResolver接口), order为2</p>
+<h2 id="RequestMappingHandlerMapping"><a href="#RequestMappingHandlerMapping" class="headerlink" title="RequestMappingHandlerMapping"></a>RequestMappingHandlerMapping</h2><h3 id="继承结构"><a href="#继承结构" class="headerlink" title="继承结构"></a>继承结构</h3><p>public class <strong>RequestMappingHandlerMapping</strong> extends RequestMappingInfoHandlerMapping</p>
+<p>​    public abstract class <strong>RequestMappingInfoHandlerMapping</strong> extends     AbstractHandlerMethodMapping</p>
+<p>​    public abstract class <strong>AbstractHandlerMethodMapping</strong>\&lt;T> extends AbstractHandlerMapping implements <strong>InitializingBean</strong>    </p>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><h4 id="初始化接口"><a href="#初始化接口" class="headerlink" title="初始化接口"></a>初始化接口</h4><p>​    该类实现了InitializingBean接口，因此初始化bean时会调用afterPropertiesSet()方法    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public interface InitializingBean &#123;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * Invoked by a BeanFactory after it has set all bean properties supplied</span><br><span class="line">	 * (and satisfied BeanFactoryAware and ApplicationContextAware).</span><br><span class="line">	 * &lt;p&gt;This method allows the bean instance to perform initialization only</span><br><span class="line">	 * possible when all bean properties have been set and to throw an</span><br><span class="line">	 * exception in the event of misconfiguration.</span><br><span class="line">	 * @throws Exception in the event of misconfiguration (such</span><br><span class="line">	 * as failure to set an essential property) or if initialization fails.</span><br><span class="line">	 */</span><br><span class="line">	void afterPropertiesSet() throws Exception;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>InitializingBean接口为bean提供了初始化方法的方式，它只包括afterPropertiesSet方法，凡是继承该接口的类，在初始化bean的时候都会执行该方法。</p>
+<p>补充说明：</p>
+<p>1、Spring为bean提供了两种初始化bean的方式，实现InitializingBean接口，实现afterPropertiesSet方法，或者在配置文件中通过init-method指定，两种方式可以同时使用。</p>
+<p>2、实现InitializingBean接口是直接调用afterPropertiesSet方法，比通过反射调用init-method指定的方法效率要高一点，但是init-method方式消除了对spring的依赖。</p>
+<p>3、如果调用afterPropertiesSet方法时出错，则不调用init-method指定的方法。</p>
+<p>参考：<a href="https://www.cnblogs.com/weiqihome/p/8922937.html" target="_blank" rel="noopener">https://www.cnblogs.com/weiqihome/p/8922937.html</a></p>
+<h4 id="具体实现接口"><a href="#具体实现接口" class="headerlink" title="具体实现接口"></a>具体实现接口</h4><p>1）public abstract class <strong>AbstractHandlerMethodMapping</strong>该类实现了InitializingBean的afterPropertiesSet()方法</p>
+<p>AbstractHandlerMethodMapping—&gt;afterPropertiesSet()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">	public void afterPropertiesSet() &#123;</span><br><span class="line">		initHandlerMethods();</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>调用了initHandlerMethods();</p>
+<p>2）AbstractHandlerMethodMapping–&gt;initHandlerMethods();</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">	 * Scan beans in the ApplicationContext, detect and register handler methods.</span><br><span class="line">	 * @see #isHandler(Class)</span><br><span class="line">	 * @see #getMappingForMethod(Method, Class)</span><br><span class="line">	 * @see #handlerMethodsInitialized(Map)</span><br><span class="line">	 */</span><br><span class="line">	protected void initHandlerMethods() &#123;</span><br><span class="line">		if (logger.isDebugEnabled()) &#123;</span><br><span class="line">			logger.debug(&quot;Looking for request mappings in application context: &quot; + getApplicationContext());</span><br><span class="line">		&#125;</span><br><span class="line">//获取容器中的bean名</span><br><span class="line">		String[] beanNames = (this.detectHandlerMethodsInAncestorContexts ?</span><br><span class="line">				BeanFactoryUtils.beanNamesForTypeIncludingAncestors(obtainApplicationContext(), Object.class) :</span><br><span class="line">				obtainApplicationContext().getBeanNamesForType(Object.class));</span><br><span class="line"></span><br><span class="line">//遍历</span><br><span class="line">		for (String beanName : beanNames) &#123;</span><br><span class="line">			if (!beanName.startsWith(SCOPED_TARGET_NAME_PREFIX)) &#123;</span><br><span class="line">				Class&lt;?&gt; beanType = null;</span><br><span class="line">				try &#123;</span><br><span class="line">					//根据bean名获取该bean的类型(Class)</span><br><span class="line">					beanType = obtainApplicationContext().getType(beanName);</span><br><span class="line">				&#125;</span><br><span class="line">				catch (Throwable ex) &#123;</span><br><span class="line">					// An unresolvable bean type, probably from a lazy bean - let&apos;s ignore it.</span><br><span class="line">					if (logger.isDebugEnabled()) &#123;</span><br><span class="line">						logger.debug(&quot;Could not resolve target class for bean with name &apos;&quot; + beanName + &quot;&apos;&quot;, ex);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				// isHandler在AbstractHandlerMethodMapping&lt;T&gt;类中抽象方法; </span><br><span class="line">				//判断是否是一个Handler</span><br><span class="line">				if (beanType != null &amp;&amp; isHandler(beanType)) &#123;</span><br><span class="line">					//检测Handler中的方法</span><br><span class="line">					detectHandlerMethods(beanName);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		handlerMethodsInitialized(getHandlerMethods());</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>3）String[] beanNames获取容器中的bean名称,然后对bean进行遍历</p>
+<p>4）isHandler()方法</p>
+<p>RequestMappingHandlerMapping类对父类AbstractHandlerMethodMapping\&lt;T>类的实现</p>
+<p>RequestMappingHandlerMapping——–&gt;isHandler</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected boolean isHandler(Class&lt;?&gt; beanType) &#123;</span><br><span class="line">		return (AnnotatedElementUtils.hasAnnotation(beanType, Controller.class) ||</span><br><span class="line">				AnnotatedElementUtils.hasAnnotation(beanType, RequestMapping.class));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>分析：</p>
+<p>​        判断该Bean是否属于Handler</p>
+<p>​        判断依据：是否有Controller注解  ，或者是否有RequestMapping注解</p>
+<p>返回一个boolean类型</p>
+<p>5）如果是一个Handler,则执行 ————- detectHandlerMethods(beanName)</p>
+<p>AbstractHandlerMethodMapping–&gt;detectHandlerMethods(beanName)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">	 * Look for handler methods in a handler.</span><br><span class="line">	 * @param handler the bean name of a handler or a handler instance</span><br><span class="line">	 */</span><br><span class="line">	protected void detectHandlerMethods(final Object handler) &#123;</span><br><span class="line">		Class&lt;?&gt; handlerType = (handler instanceof String ?</span><br><span class="line">				obtainApplicationContext().getType((String) handler) : handler.getClass());</span><br><span class="line"></span><br><span class="line">		if (handlerType != null) &#123;</span><br><span class="line">			final Class&lt;?&gt; userType = ClassUtils.getUserClass(handlerType);</span><br><span class="line">			Map&lt;Method, T&gt; methods = MethodIntrospector.selectMethods(userType,</span><br><span class="line">					(MethodIntrospector.MetadataLookup&lt;T&gt;) method -&gt; &#123;</span><br><span class="line">						try &#123;</span><br><span class="line">							//获取映射方法</span><br><span class="line">							return getMappingForMethod(method, userType);</span><br><span class="line">						&#125;</span><br><span class="line">						catch (Throwable ex) &#123;</span><br><span class="line">							throw new IllegalStateException(&quot;Invalid mapping on handler class [&quot; +</span><br><span class="line">									userType.getName() + &quot;]: &quot; + method, ex);</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;);</span><br><span class="line">			if (logger.isDebugEnabled()) &#123;</span><br><span class="line">				logger.debug(methods.size() + &quot; request handler methods found on &quot; + userType + &quot;: &quot; + methods);</span><br><span class="line">			&#125;</span><br><span class="line">			for (Map.Entry&lt;Method, T&gt; entry : methods.entrySet()) &#123;</span><br><span class="line">				Method invocableMethod = AopUtils.selectInvocableMethod(entry.getKey(), userType);</span><br><span class="line">				T mapping = entry.getValue();</span><br><span class="line">				registerHandlerMethod(handler, invocableMethod, mapping);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>该方法检测Handler（一个Controller）中的方法并进行注册</strong></p>
+<p>该方法主要代码分析：（没有详细分析，下次分析）</p>
+<p>​    1）获取userType中的映射方法放入Map集合中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Method, T&gt; methods = MethodIntrospector.selectMethods(userType,</span><br><span class="line">					(MethodIntrospector.MetadataLookup&lt;T&gt;) method -&gt; &#123;</span><br><span class="line">						try &#123;</span><br><span class="line">							return getMappingForMethod(method, userType);</span><br><span class="line">						&#125;</span><br><span class="line">						catch (Throwable ex) &#123;</span><br><span class="line">							throw new IllegalStateException(&quot;Invalid mapping on handler class [&quot; +</span><br><span class="line">									userType.getName() + &quot;]: &quot; + method, ex);</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;);</span><br></pre></td></tr></table></figure>
+<p>​                        </p>
+<p>​    getMappingForMethod(method, userType)； //返回一个请求映射信息</p>
+<p>​        1）userType为我们自定义的, 被@Controller注解所修饰的类.<br>​        2）method为 java.lang.reflect.Method 类型, 为我们所自定义的userType类型中的方法.<br>​        3）该getMappingForMethod方法也是抽象的, 交由RequestMappingHandlerMapping类来实现.            </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">protected RequestMappingInfo getMappingForMethod(Method method, Class&lt;?&gt; handlerType) &#123;</span><br><span class="line">		// 抽取该方法上注解的@RequestMapping</span><br><span class="line">		RequestMappingInfo info = createRequestMappingInfo(method);</span><br><span class="line">		if (info != null) &#123;</span><br><span class="line">			// 抽取handlerType(即我们自定义的Controller类)上注解的@RequestMapping</span><br><span class="line">			RequestMappingInfo typeInfo = createRequestMappingInfo(handlerType);</span><br><span class="line">			if (typeInfo != null) &#123;</span><br><span class="line">				// 合并两个RequestMapping的信息(controller路径+method)</span><br><span class="line">				info = typeInfo.combine(info);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return info;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>createRequestMappingInfo()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">protected RequestMappingInfo createRequestMappingInfo(</span><br><span class="line">			RequestMapping requestMapping, @Nullable RequestCondition&lt;?&gt; customCondition) &#123;</span><br><span class="line"></span><br><span class="line">		RequestMappingInfo.Builder builder = RequestMappingInfo</span><br><span class="line">	/* 这里说明我们是可以在配置@RequestMapping时, 使用spel表达式的; 例如@RequestMapping(&quot;/yuyue/$&#123;url.mh&#125;/login&quot;) */</span><br><span class="line">				.paths(resolveEmbeddedValuesInPatterns(requestMapping.path()))</span><br><span class="line">				.methods(requestMapping.method())</span><br><span class="line">				.params(requestMapping.params())</span><br><span class="line">				.headers(requestMapping.headers())</span><br><span class="line">				.consumes(requestMapping.consumes())</span><br><span class="line">				.produces(requestMapping.produces())</span><br><span class="line">				.mappingName(requestMapping.name());</span><br><span class="line">		if (customCondition != null) &#123;</span><br><span class="line">			builder.customCondition(customCondition);</span><br><span class="line">		&#125;</span><br><span class="line">		return builder.options(this.config).build();</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>2）注册获取到的映射方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for (Map.Entry&lt;Method, T&gt; entry : methods.entrySet()) &#123;</span><br><span class="line">		Method invocableMethod = AopUtils.selectInvocableMethod(entry.getKey(), userType);</span><br><span class="line">		T mapping = entry.getValue();</span><br><span class="line">		registerHandlerMethod(handler, invocableMethod, mapping);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>registerHandlerMethod(handler, invocableMethod, mapping);</p>
+<p>​    1）andler为传入的bean name<br>​    2）method为 java.lang.reflect.Method 类型, 为我们所自定义的userType类型中的方法.<br>​    3）mappings.get(method)为我们使用getMappingForMethod 构造的RequestMappingInfo 实例</p>
+<p>AbstractHandlerMethodMapping——-&gt;registerHandlerMethod()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">protected void registerHandlerMethod(Object handler, Method method, T mapping) &#123;</span><br><span class="line">		this.mappingRegistry.register(mapping, handler, method);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>AbstractHandlerMethodMapping———&gt;register()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public void register(T mapping, Object handler, Method method) &#123;</span><br><span class="line">			this.readWriteLock.writeLock().lock();</span><br><span class="line">			try &#123;</span><br><span class="line">				HandlerMethod handlerMethod = createHandlerMethod(handler, method);</span><br><span class="line">				assertUniqueMethodMapping(handlerMethod, mapping);</span><br><span class="line"></span><br><span class="line">				if (logger.isInfoEnabled()) &#123;</span><br><span class="line">					logger.info(&quot;Mapped \&quot;&quot; + mapping + &quot;\&quot; onto &quot; + handlerMethod);</span><br><span class="line">				&#125;</span><br><span class="line">				//mappin与hanlderMethod映射</span><br><span class="line">				this.mappingLookup.put(mapping, handlerMethod);</span><br><span class="line"></span><br><span class="line">				List&lt;String&gt; directUrls = getDirectUrls(mapping);</span><br><span class="line">				for (String url : directUrls) &#123;</span><br><span class="line">					//url与mapping映射</span><br><span class="line">					this.urlLookup.add(url, mapping);</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				String name = null;</span><br><span class="line">				if (getNamingStrategy() != null) &#123;</span><br><span class="line">					name = getNamingStrategy().getName(handlerMethod, mapping);</span><br><span class="line">					addMappingName(name, handlerMethod);</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				CorsConfiguration corsConfig = initCorsConfiguration(handler, method, mapping);</span><br><span class="line">				if (corsConfig != null) &#123;</span><br><span class="line">					this.corsLookup.put(handlerMethod, corsConfig);</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				this.registry.put(mapping, new MappingRegistration&lt;&gt;(mapping, handlerMethod, directUrls, name));</span><br><span class="line">			&#125;</span><br><span class="line">			finally &#123;</span><br><span class="line">				this.readWriteLock.writeLock().unlock();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+<p>//属性：private final Map&lt;T, HandlerMethod&gt; mappingLookup = new LinkedHashMap&lt;&gt;();</p>
+<p>this.mappingLookup.put(mapping, handlerMethod);</p>
+<p>mapping:映射路径(例如：/login)</p>
+<p>handlerMethod: 包含了bean和方法信息</p>
+<p>​    抽取出来RequestMappingInfo 信息 注册到 LinkedHashMap&lt;RequestMappingInfo,HandlerMethod&gt;类型的全局字段handlerMethods</p>
+<p>//属性：private final MultiValueMap&lt;String, T&gt; urlLookup = new LinkedMultiValueMap&lt;&gt;();</p>
+<p>this.urlLookup.add(url, mapping);</p>
+<p>url:浏览器请求路径(例如：/login)</p>
+<p>mapping:映射方法路径(“例如: /login”)</p>
+<p>将映射关系注册到urlLookup全局变量中</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>1)context:component-scan 默认是将所有@Component注解的类扫描进容器;</p>
+<p>​        @Controller自身就是被@Component修饰的</p>
+<p>2）mvc:annotation-driven的解析工作是由 AnnotationDrivenBeanDefinitionParser 类全权负责的。<br>3）AnnotationDrivenBeanDefinitionParser会向SpringMVC容器中注册了 RequestMappingHandlerMapping (间接实现了HandlerMapping接口), order为0<br>4）查看RequestMappingHandlerMapping 类的继承链就会发现, 其祖先类 AbstractHandlerMethodMapping 实现了 InitializingBean<br>5）而对InitializingBean的实现中, 会回调AbstractHandlerMethodMapping–&gt;initHandlerMethods()的实现，其中的isHandler()方法中有对@Controller,@RequestMapping注解的扫描</p>
+<p>参考：<a href="https://blog.csdn.net/lqzkcx3/article/details/78159708" target="_blank" rel="noopener">https://blog.csdn.net/lqzkcx3/article/details/78159708</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Spring/">Spring</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Spring/">Spring</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2020/04/15/Spring/springmvc注解驱动/" data-title="Springmvc注解驱动 | Momentonly" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/04/16/Web/浏览器跨域/" title="浏览器跨域">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  浏览器跨域</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/04/15/Logging/Log日志的使用/"  title="Log日志的使用">
+ <strong>NEXT:</strong><br/> 
+ <span>Log日志的使用
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="Springmvc注解驱动" data-thread-key="Spring/springmvc注解驱动" data-author-key="Moment Only" data-url="http://yoursite.com/post/Spring/springmvc注解驱动"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Springmvc注解驱动"><span class="toc-number">1.</span> <span class="toc-text">Springmvc注解驱动</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#注解驱动的解析"><span class="toc-number">1.1.</span> <span class="toc-text">注解驱动的解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RequestMappingHandlerMapping"><span class="toc-number">1.2.</span> <span class="toc-text">RequestMappingHandlerMapping</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#继承结构"><span class="toc-number">1.2.1.</span> <span class="toc-text">继承结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初始化"><span class="toc-number">1.2.2.</span> <span class="toc-text">初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化接口"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">初始化接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#具体实现接口"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">具体实现接口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">1.2.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>18</sup></a></li>
+		
+			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>13</sup></a></li>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Logging/" title="Logging">Logging<sup>3</sup></a></li>
+		
+			<li><a href="/categories/Spring/" title="Spring">Spring<sup>11</sup></a></li>
+		
+			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>6</sup></a></li>
+		
+			<li><a href="/categories/SpringCloud/" title="SpringCloud">SpringCloud<sup>1</sup></a></li>
+		
+			<li><a href="/categories/database/" title="database">database<sup>12</sup></a></li>
+		
+			<li><a href="/categories/designPattern/" title="designPattern">designPattern<sup>1</sup></a></li>
+		
+			<li><a href="/categories/tools/" title="tools">tools<sup>7</sup></a></li>
+		
+			<li><a href="/categories/web/" title="web">web<sup>8</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/C/" title="C">C<sup>3</sup></a></li>
+		
+			<li><a href="/tags/CSS/" title="CSS">CSS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/HTML/" title="HTML">HTML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JAVA/" title="JAVA">JAVA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDBC/" title="JDBC">JDBC<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>17</sup></a></li>
+		
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JavaWeb/" title="JavaWeb">JavaWeb<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>6</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>11</sup></a></li>
+		
+			<li><a href="/tags/SpringBoot/" title="SpringBoot">SpringBoot<sup>6</sup></a></li>
+		
+			<li><a href="/tags/SpringCloud/" title="SpringCloud">SpringCloud<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Transaction/" title="Transaction">Transaction<sup>1</sup></a></li>
+		
+			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/data/" title="data">data<sup>1</sup></a></li>
+		
+			<li><a href="/tags/eclipse/" title="eclipse">eclipse<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>3</sup></a></li>
+		
+			<li><a href="/tags/jsp/" title="jsp">jsp<sup>3</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/C/" style="font-size: 12.86px;">C</a> <a href="/tags/CSS/" style="font-size: 11.43px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 14.29px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 17.14px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 15.71px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 11.43px;">Oracle</a> <a href="/tags/Spring/" style="font-size: 18.57px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 15.71px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/data/" style="font-size: 10px;">data</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 12.86px;">javascript</a> <a href="/tags/jsp/" style="font-size: 12.86px;">jsp</a> <a href="/tags/log/" style="font-size: 11.43px;">log</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 12.86px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 12.86px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 11.43px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 14.29px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.43px;">乱码</a> <a href="/tags/跨域/" style="font-size: 10px;">跨域</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2020 
+		
+		<a href="http://yoursite.com" target="_blank" title="Moment Only">Moment Only</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:""};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '', '');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+

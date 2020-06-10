@@ -1,0 +1,536 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>Log日志的使用 | Momentonly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Moment Only">
+    
+    <meta name="description" content="Log的使用slf4j与commons-logging只是一个日志门面，实际还是要依赖真正的日志库log4j，虽然slf4j和commons-loggins自带了日志库，但是毕竟log4j才是最强大的。
+commons-logging与Log4j为什么同时使用commons-logging和Log4">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Momentonly" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Momentonly">Momentonly</a></h1>
+				<a class="blog-motto"></a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/categories/designPattern">设计模式</a></li>
+					
+						<li><a href="/categories/tools">工具</a></li>
+					
+						<li><a href="/categories/web">前端</a></li>
+					
+						<li><a href="/categories/database">数据库</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= 17576509095696061073 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/04/15/Logging/Log日志的使用/" title="Log日志的使用" itemprop="url">Log日志的使用</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2020-04-15T07:20:03.000Z" itemprop="datePublished">2020-04-15</time>
+    更新日期:<time datetime="2020-04-20T00:47:31.495Z" itemprop="dateModified">2020-04-20</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Log的使用"><span class="toc-number">1.</span> <span class="toc-text">Log的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#commons-logging与Log4j"><span class="toc-number">1.1.</span> <span class="toc-text">commons-logging与Log4j</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么同时使用commons-logging和Log4j-为什么不仅使用其中之一？"><span class="toc-number">1.1.1.</span> <span class="toc-text">为什么同时使用commons-logging和Log4j?为什么不仅使用其中之一？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Commons-logging能帮我们做什么？"><span class="toc-number">1.1.2.</span> <span class="toc-text">Commons-logging能帮我们做什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Common-loggin说明"><span class="toc-number">1.1.3.</span> <span class="toc-text">Common-loggin说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#log4j和sfl4j和lobback到底有什么区别"><span class="toc-number">1.2.</span> <span class="toc-text">log4j和sfl4j和lobback到底有什么区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring自带的日志-JCL"><span class="toc-number">1.3.</span> <span class="toc-text">Spring自带的日志(JCL)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JCL原理"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">JCL原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#spring使用JCL"><span class="toc-number">1.3.0.2.</span> <span class="toc-text">spring使用JCL</span></a></li></ol></li></ol></li></ol></li></ol>
+		</div>
+		
+		<h1 id="Log的使用"><a href="#Log的使用" class="headerlink" title="Log的使用"></a>Log的使用</h1><p>slf4j与commons-logging只是一个日志门面，实际还是要依赖真正的日志库log4j，虽然slf4j和commons-loggins自带了日志库，但是毕竟log4j才是最强大的。</p>
+<h2 id="commons-logging与Log4j"><a href="#commons-logging与Log4j" class="headerlink" title="commons-logging与Log4j"></a>commons-logging与Log4j</h2><h3 id="为什么同时使用commons-logging和Log4j-为什么不仅使用其中之一？"><a href="#为什么同时使用commons-logging和Log4j-为什么不仅使用其中之一？" class="headerlink" title="为什么同时使用commons-logging和Log4j?为什么不仅使用其中之一？"></a>为什么同时使用commons-logging和Log4j?为什么不仅使用其中之一？</h3><p>​        Commons-loggin的目的是为“所有的Java日志实现”提供一个统一的接口，它自身的日志功能平常弱（只有一个简单的SimpleLog?），所以一般不会单独使用它。Log4j的功能非常全面强大，是目前的首选。我发现几乎所有的<a href="https://www.baidu.com/s?wd=Java开源项目&amp;tn=SE_PcZhidaonwhc_ngpagmjz&amp;rsv_dl=gh_pc_zhidao" target="_blank" rel="noopener">Java开源项目</a>都会用到Log4j，但我同时发现，所有用到Log4j的项目一般也同时会用到commons-loggin。我想，大家都不希望自己的项目与Log4j绑定的太紧密吧。另外一个我能想到的“同时使用commons-logging和Log4j”的原因是，简化使用和配置。</p>
+<h3 id="Commons-logging能帮我们做什么？"><a href="#Commons-logging能帮我们做什么？" class="headerlink" title="Commons-logging能帮我们做什么？"></a>Commons-logging能帮我们做什么？</h3><p>​        提供一个统一的日志接口，简单了操作，同时避免项目与某个日志实现系统紧密a耦合很贴心的帮我们自动选择适当的日志实现系统（这一点非常好！）它甚至不需要配置</p>
+<p>这里看一下它怎么“‘很贴心的’帮我们‘自动选择’‘适当的’日志实现系统”：<br>1) 首先在classpath下寻找自己的配置文件commons-logging.properties，如果找到，则使用其中定义的Log实现类；</p>
+<p>2)如果找不到commons-logging.properties文件，则在查找是否已定义系统环境变量org.apache.commons.logging.Log，找到则使用其定义的Log实现类； </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">建立一个叫 ：CATALINA_OPTS 的环境变量 </span><br><span class="line">给他的值 ： - Dorg.apache.commons.logging.Log = org.apache.commons.logging.impl.SimpleLog  - Dorg.apache.commons.logging.simplelog.defaultlog = warn</span><br></pre></td></tr></table></figure>
+<p>3)  否则，查看classpath中是否有Log4j的包，如果发现，则自动使用Log4j作为日志实现类；</p>
+<p>4)  否则，使用JDK自身的日志实现类（JDK1.4以后才有日志实现类）；</p>
+<p>5)  否则，使用commons-logging自己提供的一个简单的日志实现类SimpleLog；</p>
+<p>可见，commons-logging总是能找到一个日志实现类，并且尽可能找到一个“最合适”的日志实现类。我说它“很贴心”实际上是因为：</p>
+<p>1、可以不需要配置文件；<br>2、自动判断有没有Log4j包，有则自动使用之；<br>3、最悲观的情况下也总能保证提供一个日志实现（SimpleLog）。</p>
+<p>可以看到，commons-logging对编程者和Log4j都非常友好。</p>
+<p>​       为了简化配置commons-logging，一般不使用commons-logging的配置文件，也不设置与commons-logging相关的系统环境变量，而只需将Log4j的Jar包放置到classpash中就可以了。这样就很简单地完成了commons-logging与Log4j的融合。如果不想用Log4j了怎么办？只需将classpath中的Log4j的Jar包删除即可。就这么简单！</p>
+<p>参考： <a href="https://www.cnblogs.com/tv151579/archive/2013/01/20/2868846.html" target="_blank" rel="noopener">https://www.cnblogs.com/tv151579/archive/2013/01/20/2868846.html</a></p>
+<h3 id="Common-loggin说明"><a href="#Common-loggin说明" class="headerlink" title="Common-loggin说明"></a>Common-loggin说明</h3><p>​    严格的说，commons-logging不是一个日志控件，没有日志功能，它只是统一了JDK Logging与Log4j的API，并把日志功能交给JDK Loggings或者是log4j。对于不能确定日志方式的系统，commons-logging是一个不错的选择，Spring，Hibernate，Struts等使用的都是commons-logging</p>
+<h2 id="log4j和sfl4j和lobback到底有什么区别"><a href="#log4j和sfl4j和lobback到底有什么区别" class="headerlink" title="log4j和sfl4j和lobback到底有什么区别"></a>log4j和sfl4j和lobback到底有什么区别</h2><p>SLF4J：即简单日志门面（Simple Logging Facade for Java），不是具体的日志解决方案，它只服务于各种各样的日志系统。SLF4J是一个用于日志系统的简单Facade，允许最终用户在部署其应用时使用其所希望的日志系统<strong>(Log4j logback)。</strong></p>
+<p>在使用SLF4J的时候，不需要在代码中或配置文件中指定你打算使用那个具体的日志系统，SLF4J提供了统一的记录日志的接口，只要按照其提供的方法记录即可，最终日志的格式、记录级别、输出方式等通过具体日志系统的配置来实现，因此可以在应用中灵活切换日志系统。</p>
+<p>log4j：没什么好说的，就是一个打日志，并且有日志系统</p>
+<p>logback和log4j是非常相似的，Logback的内核重写了，在一些关键执行路径上性能提升10倍以上。而且logback不仅性能提升了，初始化内存加载也更小。说白了也是个日志系统，存储日志    </p>
+<p>原文链接：<a href="https://blog.csdn.net/u012954706/article/details/79572028" target="_blank" rel="noopener">https://blog.csdn.net/u012954706/article/details/79572028</a></p>
+<h2 id="Spring自带的日志-JCL"><a href="#Spring自带的日志-JCL" class="headerlink" title="Spring自带的日志(JCL)"></a>Spring自带的日志(JCL)</h2><h4 id="JCL原理"><a href="#JCL原理" class="headerlink" title="JCL原理"></a>JCL原理</h4><p>​    JCL，全称为”Jakarta Commons Logging”，也可称为”Apache Commons Logging”。</p>
+<p>​    JCL这个日志框架跟Log4J，Java Logging API等日志框架不同。JCL采用了设计模式中的“适配器模式”，它对外提供统一的接口，然后在适配类中将对日志的操作委托给具体的日志框架，比如Log4J,Java Logging API等。</p>
+<p>在JCL中对外有两个统一的接口，分别是Log和LogFactory。</p>
+<h4 id="spring使用JCL"><a href="#spring使用JCL" class="headerlink" title="spring使用JCL"></a>spring使用JCL</h4><p>Logging是spring中唯一强制的外部依赖，spring中默认使用的日志是<code>commons-logging</code>，简称<code>JCL</code>，这里说的强制性，是因为在<code>spring-core</code>这个模块中引入了该依赖。不过，引入了该依赖，也无需做任何其他的配置，它是`日志门面.</p>
+<p>spring-jcl-xxx.jar下的 org.apache.commons.logging包中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * Copyright 2002-2017 the original author or authors.</span><br><span class="line"> *</span><br><span class="line"> * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span><br><span class="line"> * you may not use this file except in compliance with the License.</span><br><span class="line"> * You may obtain a copy of the License at</span><br><span class="line"> *</span><br><span class="line"> *      http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="line"> *</span><br><span class="line"> * Unless required by applicable law or agreed to in writing, software</span><br><span class="line"> * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span><br><span class="line"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line"> * See the License for the specific language governing permissions and</span><br><span class="line"> * limitations under the License.</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">package org.apache.commons.logging;</span><br><span class="line"></span><br><span class="line">import java.io.Serializable;</span><br><span class="line">import java.util.logging.LogRecord;</span><br><span class="line"></span><br><span class="line">import org.apache.logging.log4j.Level;</span><br><span class="line">import org.apache.logging.log4j.LogManager;</span><br><span class="line">import org.apache.logging.log4j.spi.ExtendedLogger;</span><br><span class="line">import org.apache.logging.log4j.spi.LoggerContext;</span><br><span class="line">import org.slf4j.Logger;</span><br><span class="line">import org.slf4j.LoggerFactory;</span><br><span class="line">import org.slf4j.spi.LocationAwareLogger;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * A minimal incarnation of Apache Commons Logging&apos;s &#123;@code LogFactory&#125; API,</span><br><span class="line"> * providing just the common &#123;@link Log&#125; lookup methods. This is inspired</span><br><span class="line"> * by the JCL-over-SLF4J bridge and should be source as well as binary</span><br><span class="line"> * compatible with all common use of the Commons Logging API (in particular:</span><br><span class="line"> * with &#123;@code LogFactory.getLog(Class/String)&#125; field initializers).</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt;This implementation does not support Commons Logging&apos;s original provider</span><br><span class="line"> * detection. It rather only checks for the presence of the Log4j 2.x API</span><br><span class="line"> * and the SLF4J 1.7 API in the Spring Framework classpath, falling back to</span><br><span class="line"> * &#123;@code java.util.logging&#125; if none of the two is available. In that sense,</span><br><span class="line"> * it works as a replacement for the Log4j 2 Commons Logging bridge as well as</span><br><span class="line"> * the JCL-over-SLF4J bridge, both of which become irrelevant for Spring-based</span><br><span class="line"> * setups as a consequence (with no need for manual excludes of the standard</span><br><span class="line"> * Commons Logging API jar anymore either). Furthermore, for simple setups</span><br><span class="line"> * without an external logging provider, Spring does not require any extra jar</span><br><span class="line"> * on the classpath anymore since this embedded log factory automatically</span><br><span class="line"> * delegates to &#123;@code java.util.logging&#125; in such a scenario.</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt;&lt;b&gt;Note that this Commons Logging variant is only meant to be used for</span><br><span class="line"> * infrastructure logging purposes in the core framework and in extensions.&lt;/b&gt;</span><br><span class="line"> * It also serves as a common bridge for third-party libraries using the</span><br><span class="line"> * Commons Logging API, e.g. Apache HttpClient, Castor and HtmlUnit, bringing</span><br><span class="line"> * them into the same consistent arrangement without any extra bridge jars.</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt;&lt;b&gt;For logging need in application code, prefer direct use of Log4j 2.x</span><br><span class="line"> * or SLF4J or &#123;@code java.util.logging&#125;.&lt;/b&gt; Simply put Log4j 2.x or Logback</span><br><span class="line"> * (or another SLF4J provider) onto your classpath, without any extra bridges,</span><br><span class="line"> * and let the framework auto-adapt to your choice.</span><br><span class="line"> *</span><br><span class="line"> * @author Juergen Hoeller (for the &#123;@code spring-jcl&#125; variant)</span><br><span class="line"> * @since 5.0</span><br><span class="line"> */</span><br><span class="line">public abstract class LogFactory &#123;</span><br><span class="line"></span><br><span class="line">	private static LogApi logApi = LogApi.JUL;</span><br><span class="line"></span><br><span class="line">	static &#123;</span><br><span class="line">		ClassLoader cl = LogFactory.class.getClassLoader();</span><br><span class="line">		try &#123;</span><br><span class="line">			// Try Log4j 2.x API</span><br><span class="line">			cl.loadClass(&quot;org.apache.logging.log4j.spi.ExtendedLogger&quot;);</span><br><span class="line">			logApi = LogApi.LOG4J;</span><br><span class="line">		&#125;</span><br><span class="line">		catch (ClassNotFoundException ex1) &#123;</span><br><span class="line">			try &#123;</span><br><span class="line">				// Try SLF4J 1.7 SPI</span><br><span class="line">				cl.loadClass(&quot;org.slf4j.spi.LocationAwareLogger&quot;);</span><br><span class="line">				logApi = LogApi.SLF4J_LAL;</span><br><span class="line">			&#125;</span><br><span class="line">			catch (ClassNotFoundException ex2) &#123;</span><br><span class="line">				try &#123;</span><br><span class="line">					// Try SLF4J 1.7 API</span><br><span class="line">					cl.loadClass(&quot;org.slf4j.Logger&quot;);</span><br><span class="line">					logApi = LogApi.SLF4J;</span><br><span class="line">				&#125;</span><br><span class="line">				catch (ClassNotFoundException ex3) &#123;</span><br><span class="line">					// Keep java.util.logging as default</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * Convenience method to return a named logger.</span><br><span class="line">	 * @param clazz containing Class from which a log name will be derived</span><br><span class="line">	 */</span><br><span class="line">	public static Log getLog(Class&lt;?&gt; clazz) &#123;</span><br><span class="line">		return getLog(clazz.getName());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * Convenience method to return a named logger.</span><br><span class="line">	 * @param name logical name of the &lt;code&gt;Log&lt;/code&gt; instance to be returned</span><br><span class="line">	 */</span><br><span class="line">	public static Log getLog(String name) &#123;</span><br><span class="line">		switch (logApi) &#123;</span><br><span class="line">			case LOG4J:</span><br><span class="line">				return Log4jDelegate.createLog(name);</span><br><span class="line">			case SLF4J_LAL:</span><br><span class="line">				return Slf4jDelegate.createLocationAwareLog(name);</span><br><span class="line">			case SLF4J:</span><br><span class="line">				return Slf4jDelegate.createLog(name);</span><br><span class="line">			default:</span><br><span class="line">				// Defensively use lazy-initializing delegate class here as well since the</span><br><span class="line">				// java.logging module is not present by default on JDK 9. We are requiring</span><br><span class="line">				// its presence if neither Log4j nor SLF4J is available; however, in the</span><br><span class="line">				// case of Log4j or SLF4J, we are trying to prevent early initialization</span><br><span class="line">				// of the JavaUtilLog adapter - e.g. by a JVM in debug mode - when eagerly</span><br><span class="line">				// trying to parse the bytecode for all the cases of this switch clause.</span><br><span class="line">				return JavaUtilDelegate.createLog(name);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	........</span><br></pre></td></tr></table></figure>
+<p>通过尝试加载log4j,slf4j等日志来创建Log接口的实现类</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/log/">log</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Logging/">Logging</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2020/04/15/Logging/Log日志的使用/" data-title="Log日志的使用 | Momentonly" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/04/15/Spring/springmvc注解驱动/" title="Springmvc注解驱动">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Springmvc注解驱动</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/04/13/Design Pattern/设计模式参考简介/"  title="设计模式简介">
+ <strong>NEXT:</strong><br/> 
+ <span>设计模式简介
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="Log日志的使用" data-thread-key="Logging/Log日志的使用" data-author-key="Moment Only" data-url="http://yoursite.com/post/Logging/Log日志的使用"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Log的使用"><span class="toc-number">1.</span> <span class="toc-text">Log的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#commons-logging与Log4j"><span class="toc-number">1.1.</span> <span class="toc-text">commons-logging与Log4j</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么同时使用commons-logging和Log4j-为什么不仅使用其中之一？"><span class="toc-number">1.1.1.</span> <span class="toc-text">为什么同时使用commons-logging和Log4j?为什么不仅使用其中之一？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Commons-logging能帮我们做什么？"><span class="toc-number">1.1.2.</span> <span class="toc-text">Commons-logging能帮我们做什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Common-loggin说明"><span class="toc-number">1.1.3.</span> <span class="toc-text">Common-loggin说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#log4j和sfl4j和lobback到底有什么区别"><span class="toc-number">1.2.</span> <span class="toc-text">log4j和sfl4j和lobback到底有什么区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring自带的日志-JCL"><span class="toc-number">1.3.</span> <span class="toc-text">Spring自带的日志(JCL)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JCL原理"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">JCL原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#spring使用JCL"><span class="toc-number">1.3.0.2.</span> <span class="toc-text">spring使用JCL</span></a></li></ol></li></ol></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>18</sup></a></li>
+		
+			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>13</sup></a></li>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Logging/" title="Logging">Logging<sup>3</sup></a></li>
+		
+			<li><a href="/categories/Spring/" title="Spring">Spring<sup>11</sup></a></li>
+		
+			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>6</sup></a></li>
+		
+			<li><a href="/categories/SpringCloud/" title="SpringCloud">SpringCloud<sup>1</sup></a></li>
+		
+			<li><a href="/categories/database/" title="database">database<sup>12</sup></a></li>
+		
+			<li><a href="/categories/designPattern/" title="designPattern">designPattern<sup>1</sup></a></li>
+		
+			<li><a href="/categories/tools/" title="tools">tools<sup>7</sup></a></li>
+		
+			<li><a href="/categories/web/" title="web">web<sup>8</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/C/" title="C">C<sup>3</sup></a></li>
+		
+			<li><a href="/tags/CSS/" title="CSS">CSS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/HTML/" title="HTML">HTML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JAVA/" title="JAVA">JAVA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDBC/" title="JDBC">JDBC<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>17</sup></a></li>
+		
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JavaWeb/" title="JavaWeb">JavaWeb<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>6</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>11</sup></a></li>
+		
+			<li><a href="/tags/SpringBoot/" title="SpringBoot">SpringBoot<sup>6</sup></a></li>
+		
+			<li><a href="/tags/SpringCloud/" title="SpringCloud">SpringCloud<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Transaction/" title="Transaction">Transaction<sup>1</sup></a></li>
+		
+			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/data/" title="data">data<sup>1</sup></a></li>
+		
+			<li><a href="/tags/eclipse/" title="eclipse">eclipse<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>3</sup></a></li>
+		
+			<li><a href="/tags/jsp/" title="jsp">jsp<sup>3</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/C/" style="font-size: 12.86px;">C</a> <a href="/tags/CSS/" style="font-size: 11.43px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 14.29px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 17.14px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 15.71px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 11.43px;">Oracle</a> <a href="/tags/Spring/" style="font-size: 18.57px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 15.71px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/data/" style="font-size: 10px;">data</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 12.86px;">javascript</a> <a href="/tags/jsp/" style="font-size: 12.86px;">jsp</a> <a href="/tags/log/" style="font-size: 11.43px;">log</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 12.86px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 12.86px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 11.43px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 14.29px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.43px;">乱码</a> <a href="/tags/跨域/" style="font-size: 10px;">跨域</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2020 
+		
+		<a href="http://yoursite.com" target="_blank" title="Moment Only">Moment Only</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:""};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '', '');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+

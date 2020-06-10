@@ -1,0 +1,557 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>SpringBoot中的SCI接口 | Momentonly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Moment Only">
+    
+    <meta name="description" content="servlet3.0使用Java SPI机制​    Servlet3.0环境下ServletContainerInitializer(简称SCI)接口的使用.
+SCI定义​    
+12345// 完整命名: javax.servlet.ServletContainerInitializerpub">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Momentonly" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Momentonly">Momentonly</a></h1>
+				<a class="blog-motto"></a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/categories/designPattern">设计模式</a></li>
+					
+						<li><a href="/categories/tools">工具</a></li>
+					
+						<li><a href="/categories/web">前端</a></li>
+					
+						<li><a href="/categories/database">数据库</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= 17576509095696061073 ><input type="text" name="q" size="30" placeholder="搜索"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/05/23/SpringBoot/SpringBoot中的SCI接口/" title="SpringBoot中的SCI接口" itemprop="url">SpringBoot中的SCI接口</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="Moment Only">Moment Only</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2020-05-23T11:12:59.000Z" itemprop="datePublished">2020-05-23</time>
+    更新日期:<time datetime="2020-05-23T14:08:49.650Z" itemprop="dateModified">2020-05-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#servlet3-0使用Java-SPI机制"><span class="toc-number">1.</span> <span class="toc-text">servlet3.0使用Java SPI机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SCI定义"><span class="toc-number">1.1.</span> <span class="toc-text">SCI定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SCI概述"><span class="toc-number">1.2.</span> <span class="toc-text">SCI概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SCI原理"><span class="toc-number">1.3.</span> <span class="toc-text">SCI原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#与类加载的区别"><span class="toc-number">1.4.</span> <span class="toc-text">与类加载的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpringMVC中的应用"><span class="toc-number">1.5.</span> <span class="toc-text">SpringMVC中的应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tomcat调用SCI的时机"><span class="toc-number">1.6.</span> <span class="toc-text">Tomcat调用SCI的时机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#springBoot打成war在外部容器的启动"><span class="toc-number">2.</span> <span class="toc-text">springBoot打成war在外部容器的启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Springboot提供的SCI接口"><span class="toc-number">3.</span> <span class="toc-text">Springboot提供的SCI接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ServletContextInitializer接口"><span class="toc-number">3.1.</span> <span class="toc-text">ServletContextInitializer接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口使用"><span class="toc-number">3.2.</span> <span class="toc-text">接口使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于该接口的一些想法及猜测"><span class="toc-number">3.3.</span> <span class="toc-text">关于该接口的一些想法及猜测</span></a></li></ol></li></ol>
+		</div>
+		
+		<h2 id="servlet3-0使用Java-SPI机制"><a href="#servlet3-0使用Java-SPI机制" class="headerlink" title="servlet3.0使用Java SPI机制"></a>servlet3.0使用Java SPI机制</h2><p>​    Servlet3.0环境下ServletContainerInitializer(简称SCI)接口的使用.</p>
+<h3 id="SCI定义"><a href="#SCI定义" class="headerlink" title="SCI定义"></a>SCI定义</h3><p>​    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 完整命名: javax.servlet.ServletContainerInitializer</span><br><span class="line">public interface ServletContainerInitializer &#123;</span><br><span class="line">    public void onStartup(Set&lt;Class&lt;?&gt;&gt; c, ServletContext ctx)</span><br><span class="line">        throws ServletException; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="SCI概述"><a href="#SCI概述" class="headerlink" title="SCI概述"></a>SCI概述</h3><p>ServletContainerInitializer 是 Servlet 3.0 新增的一个接口，主要用于在容器启动阶段通过编程风格注册Filter, Servlet以及Listener，以取代通过web.xml配置注册。这样就利于开发内聚的web应用框架.<br>我们以SpringMVC举例, servlet3.0之前我们需要在web.xml中依据Spring的规范新建一堆配置。这样就相当于将框架和容器紧耦合了。而在3.x后注册的功能内聚到Spring里，Spring-web就变成一个纯粹的即插即用的组件，不用依据应用环境定义一套新的配置。</p>
+<h3 id="SCI原理"><a href="#SCI原理" class="headerlink" title="SCI原理"></a>SCI原理</h3><p>1）ServletContainerInitializer接口的实现类通过java SPI声明自己是ServletContainerInitializer 的provider.</p>
+<p>2）容器启动阶段依据java spi获取到所有ServletContainerInitializer的实现类，然后执行其onStartup方法.</p>
+<p>3）另外在实现ServletContainerInitializer时还可以通过@HandlesTypes注解定义本实现类希望处理的类型，容器会    将当前应用中所有这一类型（继承或者实现）的类放在ServletContainerInitializer接口的集合参数c中传递进来。    如果不定义处理类型，或者应用中不存在相应的实现类，则集合参数c为空.</p>
+<p>4）这一类实现了 SCI 的接口，如果做为独立的包发布，在打包时，会在JAR 文件的 META-INF/services/javax.servlet.ServletContainerInitializer 文件中进行注册。 容器在启动时，就会扫描所有带有这些注册信息的类(@HandlesTypes(WebApplicationInitializer.class)这里就是加载WebApplicationInitializer.class类)进行解析，启动时会调用其 onStartup方法——也就是说servlet容器负责加载这些指定类, 而ServletContainerInitializer的实现者(例如Spring-web中的SpringServletContainerInitializer对接口ServletContainerInitializer的实现中,是可以直接获取到这些类的)</p>
+<h3 id="与类加载的区别"><a href="#与类加载的区别" class="headerlink" title="与类加载的区别"></a>与类加载的区别</h3><p>​    类加载是根据限定的名称去加载，并没有相关的标准去加载未知的内容.<br>​    而SCI(全称 ServletContainerInitializer)则是根据约定的标准，扫描META-INF中包含注册信息的 class 并在启动阶段调用其onStartup.</p>
+<h3 id="SpringMVC中的应用"><a href="#SpringMVC中的应用" class="headerlink" title="SpringMVC中的应用"></a>SpringMVC中的应用</h3><p>通过查看ServletContainerInitializer继承层级, 可以发现spring-web中的SpringServletContainerInitializer正是实现了ServletContainerInitializer接口；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">@HandlesTypes(WebApplicationInitializer.class)</span><br><span class="line">public class SpringServletContainerInitializer implements ServletContainerInitializer &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void onStartup(Set&lt;Class&lt;?&gt;&gt; webAppInitializerClasses, ServletContext servletContext)</span><br><span class="line">            throws ServletException &#123;</span><br><span class="line"></span><br><span class="line">        List&lt;WebApplicationInitializer&gt; initializers = new LinkedList&lt;WebApplicationInitializer&gt;();</span><br><span class="line"></span><br><span class="line">        // webAppInitializerClasses 就是servlet3.0规范中为我们收集的 WebApplicationInitializer 接口的实现类的class</span><br><span class="line">        // 从webAppInitializerClasses中筛选并实例化出合格的相应的类</span><br><span class="line">        if (webAppInitializerClasses != null) &#123;</span><br><span class="line">            for (Class&lt;?&gt; waiClass : webAppInitializerClasses) &#123;</span><br><span class="line">                // Be defensive: Some servlet containers provide us with invalid classes,</span><br><span class="line">                // no matter what @HandlesTypes says...</span><br><span class="line">                if (!waiClass.isInterface() &amp;&amp; !Modifier.isAbstract(waiClass.getModifiers()) &amp;&amp;</span><br><span class="line">                        WebApplicationInitializer.class.isAssignableFrom(waiClass)) &#123;</span><br><span class="line">                    try &#123;</span><br><span class="line">                        initializers.add((WebApplicationInitializer) waiClass.newInstance());</span><br><span class="line">                    &#125;</span><br><span class="line">                    catch (Throwable ex) &#123;</span><br><span class="line">                        throw new ServletException(&quot;Failed to instantiate WebApplicationInitializer class&quot;, ex);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (initializers.isEmpty()) &#123;</span><br><span class="line">            servletContext.log(&quot;No Spring WebApplicationInitializer types detected on classpath&quot;);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 这行代码说明我们在实现WebApplicationInitializer可以通过继承Ordered, PriorityOrdered来自定义执行顺序</span><br><span class="line">        AnnotationAwareOrderComparator.sort(initializers);</span><br><span class="line">        servletContext.log(&quot;Spring WebApplicationInitializers detected on classpath: &quot; + initializers);</span><br><span class="line"></span><br><span class="line">        // 迭代每个initializer实现的方法</span><br><span class="line">        for (WebApplicationInitializer initializer : initializers) &#123;</span><br><span class="line">            initializer.onStartup(servletContext);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>1）SpringServletContainerInitializer 由支持Servlet3.0+的Servlet容器实例化并调用.</p>
+<p>2）Servlet容器还会查询classpath下SpringServletContainerInitializer类上修饰的@HandlesTypes注解所标注的    WebApplicationInitializer接口的实现类. 这一步也是容器帮我们完成的.</p>
+<p>3）SpringServletContainerInitializer通过实现ServletContainerInitializer将自身并入到Servlet容器的生命周期中, 并通过自身定义的WebApplicationInitializer将依赖于Spring框架的系统初始化需求与Servlet容器解耦. 即依赖于spring的系统可以通过实现WebApplicationInitializer来实现自定义的初始化逻辑. 而不需要去实现ServletContainerInitializer</p>
+<h3 id="Tomcat调用SCI的时机"><a href="#Tomcat调用SCI的时机" class="headerlink" title="Tomcat调用SCI的时机"></a>Tomcat调用SCI的时机</h3><p>​    现在还有一个疑问, 就是 ServletContainerInitializer 的调用时机?, 因为servlet容器除了会回调SCI之外, 还有回调诸如servlet, listener等. 搞清楚这些先后顺序可以帮助我们快速定位和理解某些奇怪的问题.</p>
+<p>​    这里我们就以Tomcat举例, 以下逻辑总结于Tomcat7.x, 有兴趣的读者可以去StandardContext类中对startInternal的实现中(第5608行 —— 第5618行, 这也是Tomcat中唯一的调用ServletContainerInitializers接口的onStartup方法的位置)求证下:</p>
+<p>1）解析web.xml<br>2）往ServletContext实例中注入 context-param  参数<br>3）回调Servlet3.0的ServletContainerInitializers接口实现类<br>4）触发 Listener 事件(beforeContextInitialized, afterContextInitialized); 这里只会触发 ServletContextListener 类型的</p>
+<p>5）初始化 Filter, 调用其init方法</p>
+<p>6）加载 启动时即加载的servlet</p>
+<p>原文链接：<a href="https://blog.csdn.net/lqzkcx3/article/details/78507169" target="_blank" rel="noopener">https://blog.csdn.net/lqzkcx3/article/details/78507169</a></p>
+<h2 id="springBoot打成war在外部容器的启动"><a href="#springBoot打成war在外部容器的启动" class="headerlink" title="springBoot打成war在外部容器的启动"></a>springBoot打成war在外部容器的启动</h2><p>Springboot在使用外部容器运行时</p>
+<p>需要写一个初始化类继承SpringBootServletInitializer</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class OasysServletInitializer extends SpringBootServletInitializer &#123;</span><br><span class="line">    @Override</span><br><span class="line">    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) &#123;</span><br><span class="line">        return builder.sources(OasysApplication.class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SpringBootServletInitializer实现了WebApplicationInitializer接口，而实现了WebApplicationInitializer的类会被servlet容器扫描，并且调用onStartup()方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public abstract class SpringBootServletInitializer implements WebApplicationInitializer &#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Springboot提供的SCI接口"><a href="#Springboot提供的SCI接口" class="headerlink" title="Springboot提供的SCI接口"></a>Springboot提供的SCI接口</h2><h3 id="ServletContextInitializer接口"><a href="#ServletContextInitializer接口" class="headerlink" title="ServletContextInitializer接口"></a>ServletContextInitializer接口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">package org.springframework.boot.web.servlet;</span><br><span class="line"></span><br><span class="line">import javax.servlet.ServletContainerInitializer;</span><br><span class="line">import javax.servlet.ServletContext;</span><br><span class="line">import javax.servlet.ServletException;</span><br><span class="line"></span><br><span class="line">import org.springframework.web.SpringServletContainerInitializer;</span><br><span class="line">import org.springframework.web.WebApplicationInitializer;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Interface used to configure a Servlet 3.0+ &#123;@link ServletContext context&#125;</span><br><span class="line"> * programmatically. Unlike &#123;@link WebApplicationInitializer&#125;, classes that implement this</span><br><span class="line"> * interface (and do not implement &#123;@link WebApplicationInitializer&#125;) will &lt;b&gt;not&lt;/b&gt; be</span><br><span class="line"> * detected by &#123;@link SpringServletContainerInitializer&#125; and hence will not be</span><br><span class="line"> * automatically bootstrapped by the Servlet container.</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * This interface is designed to act in a similar way to</span><br><span class="line"> * &#123;@link ServletContainerInitializer&#125;, but have a lifecycle that&apos;s managed by Spring and</span><br><span class="line"> * not the Servlet container.</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * For configuration examples see &#123;@link WebApplicationInitializer&#125;.</span><br><span class="line"> *</span><br><span class="line"> * @author Phillip Webb</span><br><span class="line"> * @since 1.4.0</span><br><span class="line"> * @see WebApplicationInitializer</span><br><span class="line"> */</span><br><span class="line">@FunctionalInterface</span><br><span class="line">public interface ServletContextInitializer &#123;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * Configure the given &#123;@link ServletContext&#125; with any servlets, filters, listeners</span><br><span class="line">	 * context-params and attributes necessary for initialization.</span><br><span class="line">	 * @param servletContext the &#123;@code ServletContext&#125; to initialize</span><br><span class="line">	 * @throws ServletException if any call against the given &#123;@code ServletContext&#125;</span><br><span class="line">	 * throws a &#123;@code ServletException&#125;</span><br><span class="line">	 */</span><br><span class="line">	void onStartup(ServletContext servletContext) throws ServletException;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注释：</p>
+<p>1）接口用于以编程方式配置Servlet 3.0+ {@link ServletContext context}。</p>
+<p>2）实现这个接口(并且没有实现{@link WebApplicationInitializer})的类不会被{@link SpringServletContainerInitializer}检测到，因此不会被Servlet容器自动引导。</p>
+<p>3）这个接口的作用类似于{@link ServletContainerInitializer}，但是它的生命周期是由Spring管理的，而不是由Servlet容器管理的。</p>
+<h3 id="接口使用"><a href="#接口使用" class="headerlink" title="接口使用"></a>接口使用</h3><p>在springboot中注册一个servlet可以使用这种方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">public ServletRegistrationBean registrationBean() &#123;</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ServletRegistrationBean    extends   DynamicRegistrationBean </p>
+<p>DynamicRegistrationBean    extends   RegistrationBean </p>
+<p>RegistrationBean implements ServletContextInitializer, Ordered</p>
+<p>通过继承结构可以看出，是通过实现Springboot提供的SCI接口（调用该接口的onStartup()）来完成的。</p>
+<h3 id="关于该接口的一些想法及猜测"><a href="#关于该接口的一些想法及猜测" class="headerlink" title="关于该接口的一些想法及猜测"></a>关于该接口的一些想法及猜测</h3><p>1)实现了该接口的类必须通过@Bean等方式注册进spring容器中，才能被springboot发现从而调用其onStartup()</p>
+<p>2)servlet 3动态加载servlet的机制只能在上下文ServletContext加载时对Servlet，Filter,,Listener进行注册。</p>
+<p>当springboot打包成war包放入外部容器中时，外部容器启动springboot项目入口是实现WebApplicationInitializer接口的SpringBootServletInitializer类，SpringBootServletInitializer实例执行onStartup方法的时候会通过createRootApplicationContext方法来执行run方法，接下来的过程就同以jar包形式启动的应用的run过程一样了，在内部会创建IOC容器并返回，只是以war包形式的应用在创建IOC容器过程中，不再创建Servlet容器了。</p>
+<p>因此整个启动过程都是在ServletContext加载时进行的，使用Springboot提供的SCI接口注册Servlet的Bean也会被springboot发现从而被调用onStartup()方法完成servlet注册(且该Bean是由spring容器管理的，并不会被servlet容器发现)。</p>
+<p>3） springboot的内置容器启动和外置容器启动</p>
+<p>​    内置容器：</p>
+<p>​            jar包:</p>
+<p>​                执行SpringBootApplication的run方法,启动IOC容器,然后创建嵌入式Servlet容器</p>
+<p>​    外置容器：</p>
+<p>​    　war包:  </p>
+<p>​            先是启动Servlet服务器,服务器启动Springboot应用(springBootServletInitizer),然后启动IOC容器</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/SpringBoot/">SpringBoot</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/SpringBoot/">SpringBoot</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2020/05/23/SpringBoot/SpringBoot中的SCI接口/" data-title="SpringBoot中的SCI接口 | Momentonly" data-tsina="" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/05/24/SpringBoot/springboot中yml属性的注入/" title="springboot中yml属性的注入.md">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  springboot中yml属性的注入.md</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/05/22/SpringBoot/SpringBoot数据库连接池/"  title="SpringBoot数据库连接池.md">
+ <strong>NEXT:</strong><br/> 
+ <span>SpringBoot数据库连接池.md
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="SpringBoot中的SCI接口" data-thread-key="SpringBoot/SpringBoot中的SCI接口" data-author-key="Moment Only" data-url="http://yoursite.com/post/SpringBoot/SpringBoot中的SCI接口"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#servlet3-0使用Java-SPI机制"><span class="toc-number">1.</span> <span class="toc-text">servlet3.0使用Java SPI机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SCI定义"><span class="toc-number">1.1.</span> <span class="toc-text">SCI定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SCI概述"><span class="toc-number">1.2.</span> <span class="toc-text">SCI概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SCI原理"><span class="toc-number">1.3.</span> <span class="toc-text">SCI原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#与类加载的区别"><span class="toc-number">1.4.</span> <span class="toc-text">与类加载的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpringMVC中的应用"><span class="toc-number">1.5.</span> <span class="toc-text">SpringMVC中的应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tomcat调用SCI的时机"><span class="toc-number">1.6.</span> <span class="toc-text">Tomcat调用SCI的时机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#springBoot打成war在外部容器的启动"><span class="toc-number">2.</span> <span class="toc-text">springBoot打成war在外部容器的启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Springboot提供的SCI接口"><span class="toc-number">3.</span> <span class="toc-text">Springboot提供的SCI接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ServletContextInitializer接口"><span class="toc-number">3.1.</span> <span class="toc-text">ServletContextInitializer接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口使用"><span class="toc-number">3.2.</span> <span class="toc-text">接口使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于该接口的一些想法及猜测"><span class="toc-number">3.3.</span> <span class="toc-text">关于该接口的一些想法及猜测</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/JavaSE/" title="JavaSE">JavaSE<sup>18</sup></a></li>
+		
+			<li><a href="/categories/JavaWeb/" title="JavaWeb">JavaWeb<sup>13</sup></a></li>
+		
+			<li><a href="/categories/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Logging/" title="Logging">Logging<sup>3</sup></a></li>
+		
+			<li><a href="/categories/Spring/" title="Spring">Spring<sup>11</sup></a></li>
+		
+			<li><a href="/categories/SpringBoot/" title="SpringBoot">SpringBoot<sup>6</sup></a></li>
+		
+			<li><a href="/categories/SpringCloud/" title="SpringCloud">SpringCloud<sup>1</sup></a></li>
+		
+			<li><a href="/categories/database/" title="database">database<sup>12</sup></a></li>
+		
+			<li><a href="/categories/designPattern/" title="designPattern">designPattern<sup>1</sup></a></li>
+		
+			<li><a href="/categories/tools/" title="tools">tools<sup>7</sup></a></li>
+		
+			<li><a href="/categories/web/" title="web">web<sup>8</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/C/" title="C">C<sup>3</sup></a></li>
+		
+			<li><a href="/tags/CSS/" title="CSS">CSS<sup>2</sup></a></li>
+		
+			<li><a href="/tags/HTML/" title="HTML">HTML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JAVA/" title="JAVA">JAVA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDBC/" title="JDBC">JDBC<sup>4</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>17</sup></a></li>
+		
+			<li><a href="/tags/JavaScript/" title="JavaScript">JavaScript<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JavaWeb/" title="JavaWeb">JavaWeb<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>6</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>11</sup></a></li>
+		
+			<li><a href="/tags/SpringBoot/" title="SpringBoot">SpringBoot<sup>6</sup></a></li>
+		
+			<li><a href="/tags/SpringCloud/" title="SpringCloud">SpringCloud<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Transaction/" title="Transaction">Transaction<sup>1</sup></a></li>
+		
+			<li><a href="/tags/XML/" title="XML">XML<sup>1</sup></a></li>
+		
+			<li><a href="/tags/data/" title="data">data<sup>1</sup></a></li>
+		
+			<li><a href="/tags/eclipse/" title="eclipse">eclipse<sup>1</sup></a></li>
+		
+			<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+		
+			<li><a href="/tags/javascript/" title="javascript">javascript<sup>3</sup></a></li>
+		
+			<li><a href="/tags/jsp/" title="jsp">jsp<sup>3</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/C/" style="font-size: 12.86px;">C</a> <a href="/tags/CSS/" style="font-size: 11.43px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JAVA/" style="font-size: 10px;">JAVA</a> <a href="/tags/JDBC/" style="font-size: 14.29px;">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/JavaWeb/" style="font-size: 17.14px;">JavaWeb</a> <a href="/tags/Linux/" style="font-size: 15.71px;">Linux</a> <a href="/tags/Oracle/" style="font-size: 11.43px;">Oracle</a> <a href="/tags/Spring/" style="font-size: 18.57px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 15.71px;">SpringBoot</a> <a href="/tags/SpringCloud/" style="font-size: 10px;">SpringCloud</a> <a href="/tags/Transaction/" style="font-size: 10px;">Transaction</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/data/" style="font-size: 10px;">data</a> <a href="/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/javascript/" style="font-size: 12.86px;">javascript</a> <a href="/tags/jsp/" style="font-size: 12.86px;">jsp</a> <a href="/tags/log/" style="font-size: 11.43px;">log</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/mybatis/" style="font-size: 12.86px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 12.86px;">mysql</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/servlet/" style="font-size: 11.43px;">servlet</a> <a href="/tags/sublime/" style="font-size: 10px;">sublime</a> <a href="/tags/tools/" style="font-size: 14.29px;">tools</a> <a href="/tags/乱码/" style="font-size: 11.43px;">乱码</a> <a href="/tags/跨域/" style="font-size: 10px;">跨域</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2020 
+		
+		<a href="http://yoursite.com" target="_blank" title="Moment Only">Moment Only</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:""};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '', '');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+
